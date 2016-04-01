@@ -1699,7 +1699,7 @@ logout/" width="0" height="0"></iframe>
 				
 					<div id="links">
 						<b>Instagrate to WordPress</b> | We hope you enjoy the plugin | 
-						<a href="http://www.instagrate.co.uk/">Instagrate Pro - more features</a> |
+						<a href="https://instagrate.com/">Instagrate Pro - more features</a> |
 						<a href="http://support.polevaultweb.com/discussions/instagrate-to-wordpress">Support Forum</a> |
 						<a title="Donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R6BY3QARRQP2Q">Donate</a> |
 						<a title="Follow on Twitter" href="http://twitter.com/#!/polevaultweb">@polevaultweb</a> |

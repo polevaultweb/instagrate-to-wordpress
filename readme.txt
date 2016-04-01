@@ -12,7 +12,7 @@ Integrate your Instagram images and your WordPress blog with automatic posting o
 
 == Description ==
 
-**[Instagrate Pro](http://www.instagrate.co.uk/)** The pro version of this plugin with many more features can be found [here](http://www.instagrate.co.uk/)
+**[Instagrate Pro](https://instagrate.com/)** The pro version of this plugin with many more features can be found [here](https://instagrate.com/)
 
 The Instagrate to WordPress plugin allows you to automatically integrate your Instagram account with your WordPress blog.  
 
@@ -49,7 +49,7 @@ Full list of features:
 	
 If you have any issues or feature requests please visit and use the [Support Forum](http://www.polevaultweb.com/support/forum/instagrate-to-wordpress-plugin/)
 
-**[Instagrate Pro](http://www.instagrate.co.uk/)** The pro version of this plugin with many more features can be found [here](http://www.instagrate.co.uk/)
+**[Instagrate Pro](https://instagrate.com/)** The pro version of this plugin with many more features can be found [here](https://instagrate.com/)
 
 [Plugin Page](http://www.polevaultweb.com/plugins/instagrate-to-wordpress/) | [@polevaultweb](http://www.twitter.com/polevaultweb/) | [Donate with PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R6BY3QARRQP2Q)
 
