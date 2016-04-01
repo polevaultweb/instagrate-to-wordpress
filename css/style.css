@@ -1,0 +1,261 @@
+
+p {
+clear:both;
+}
+
+.wrap h2.instagrate_logo {
+	background: url("../images/instagrate_30.png") no-repeat scroll 0 0 transparent;	
+	margin-bottom: 20px;
+	padding-left: 40px;
+	margin-top: 20px;
+	padding-top: 0px;
+	
+	
+}
+
+
+#ipp_content_left
+{
+	width: 50%;
+}
+
+#ipp_content_right
+{
+	width:50%;
+}
+
+h4 {
+margin-bottom: 0px;
+}
+
+#logo:hover
+{
+	opacity: 0.75;
+}
+
+.postbox {
+    margin: 10px 10px 0 0;
+}
+
+label.textinput {
+	width: 110px;
+	margin: 5px 10px 5px 0;
+	float: left;
+}
+
+.success {
+background-color: #D1EED1;
+border: solid 1px #52A852;
+margin: 5px 0 0px;
+ padding: 0 0 0 7px;
+ border-radius: 3px 3px 3px 3px;
+
+}
+
+.info {
+background-color: #DEF1F7;
+border: solid 1px #60C6E5;
+margin: 5px 0 0px;
+padding: 10px;
+border-radius: 3px 3px 3px 3px;
+
+}
+
+.itw_info, .itw_connected, .itw_disconnected, .itw_setup, .itw_saved, .itw_issue{
+border: 1px solid;
+margin: 10px 0px;
+padding:8px 10px 8px 40px;
+background-repeat: no-repeat;
+background-position: 10px 10px;
+border-radius: 3px 3px 3px 3px;
+float: left;
+}
+
+.itw_info p , .itw_connected p , .itw_disconnected p, .itw_setup p, .itw_saved p, .itw_issue p
+{
+
+margin: 0;
+padding: 0;
+}
+.itw_info {
+color: #00529B;
+background-color: #BDE5F8;
+background-image: url('../images/exclamation.png');
+}
+.itw_connected {
+color: #4F8A10;
+background-color: #D1EED1;
+background-image:url('../images/connect.png');
+}
+.itw_setup {
+color: #9F6000;
+background-color: #FEEFB3;
+background-image: url('../images/lock_unlock.png');
+}
+.itw_disconnected {
+color: #D8000C;
+background-color: #FFBABA;
+background-image: url('../images/disconnect.png');
+}
+
+.itw_saved {
+color: #00529B;
+background-color: #BDE5F8;
+background-image: url('../images/disk.png');
+}
+
+.itw_issue {
+color: #9F6000;
+background-color: #FEEFB3;
+background-image: url('../images/error.png');
+}
+
+.itw_connected p span
+{
+	font-weight: bold;
+	
+}
+
+.loggedin {
+
+float: left;
+}
+
+.logout {
+
+float: left;
+margin-left: 5px;
+margin-top: 15px;
+}
+
+
+#wpbody-content .metabox-holder
+{
+padding-top: 0;
+}
+
+.success p {
+padding: 2px;
+margin: 6px 0;
+
+}
+
+input[type="text"], input[type="password"], select
+{
+	width: 200px;
+}
+
+.body_text, .body_title, .img_select
+{
+width:100%;
+}
+
+
+.h2_left
+{
+
+float:left;
+}
+
+.loggedin
+{
+margin-top:10px;
+float:right;
+}
+
+.image_left{
+	float: left;
+	width: 150px;
+	height: 150px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+
+.image_right
+{
+	float: left;
+	height: 150px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+
+a.feed_image
+{
+	display: block;
+	/*border: 1px solid #dfd0cb;
+	border-width: 0 1px 1px 0;
+	margin: 20px 20px 1em 20px;*/
+	float: left;
+	position: relative;
+}
+a.feed_image:hover { border-color: #000; }
+ 
+	a.feed_image:hover .overlay
+	{
+		position: absolute;
+		z-index: 3;
+		width: 150px;
+		height: 150px;
+		
+	}
+		a.feed_image .overlay .caption
+		{
+			position: absolute;
+			height: 150px;
+			width: 150px;
+			-moz-box-sizing:    border-box;
+			-webkit-box-sizing: border-box;
+			box-sizing:        border-box;
+			padding:10px;
+			z-index: 3;
+			text-indent: -9999em;
+			color: #fff;
+			font-size: 20px;
+			line-height: 20px;
+			font-family: "Helvetica, Arial, sans-serif";
+			bottom: 0;
+			overflow: hidden;
+		}
+		a.feed_image:hover .caption
+		{
+			text-indent: 0px;
+			background: rgb(0,0,0);
+			/* for browsers that know rgba */
+			background: rgba(0, 0, 0, 0.75);
+		}
+		a.feed_image img { display: block; }
+
+.clear
+{
+	clear: both;
+}
+
+#itw_footer
+{
+margin-top: 20px;
+height: 60px;
+background-color: #E2E2E2;
+padding: 0 10px;
+border-radius: 5px;
+
+
+}
+
+#itw_footer #links
+{
+float: left;
+width: 70%;
+text-align: left;
+margin: 22px 0 18px;
+}
+
+
+#itw_footer #pvw
+{
+
+float: right;
+width: 30%;
+text-align: right;
+margin: 12px 0 28px;;
+
+}
