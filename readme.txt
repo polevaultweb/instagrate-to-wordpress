@@ -1,20 +1,20 @@
-=== Instagrate to WordPress ===
+=== Intagrate Lite - Instagram Image Publishing ===
 Contributors: polevaultweb
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R6BY3QARRQP2Q
 Plugin URI: http://www.polevaultweb.com/plugins/instagrate-to-wordpress/
 Author URI: http://www.polevaultweb.com/
 Tags: instagram, posts, integration, automatic, post, wordpress, posting, images
 Requires at least: 3.0
-Tested up to: 4.1
-Stable tag: 1.2.5
+Tested up to: 4.2
+Stable tag: 1.2.6
 
 Integrate your Instagram images and your WordPress blog with automatic posting of new images into blog posts.
 
 == Description ==
 
-**[Instagrate Pro](https://instagrate.com/)** The pro version of this plugin with many more features can be found [here](https://instagrate.com/)
+**[Intagrate](https://intagrate.io/)** The pro version of this plugin with many more features can be found [here](https://intagrate.io/)
 
-The Instagrate to WordPress plugin allows you to automatically integrate your Instagram account with your WordPress blog.  
+This plugin allows you to automatically integrate your Instagram images with your WordPress blog.
 
 No more manual embedding Instagram images into your posts, let this plugin take care of it all.
 
@@ -49,7 +49,7 @@ Full list of features:
 	
 If you have any issues or feature requests please visit and use the [Support Forum](http://www.polevaultweb.com/support/forum/instagrate-to-wordpress-plugin/)
 
-**[Instagrate Pro](https://instagrate.com/)** The pro version of this plugin with many more features can be found [here](https://instagrate.com/)
+**[Intagrate](https://intagrate.io/)** The pro version of this plugin with many more features can be found [here](https://intagrate.io/)
 
 [Plugin Page](http://www.polevaultweb.com/plugins/instagrate-to-wordpress/) | [@polevaultweb](http://www.twitter.com/polevaultweb/) | [Donate with PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R6BY3QARRQP2Q)
 
@@ -68,9 +68,11 @@ You can use the built in installer and upgrader, or you can install the plugin m
 
 If you have to upgrade manually simply repeat the installation steps and re-enable the plugin.
 
-**Please note this plugin supersedes InstaPost Press, which has been discontinued because of a naming conflict. If you installed this plugin you will need to deactivate it before you can use this new plugin. Instagrate to WordPress has new features and will continue to be developed**
-
 == Changelog ==
+
+= 1.2.6 =
+
+* Rebranded to Intagrate Lite
 
 = 1.2.5 =
 
