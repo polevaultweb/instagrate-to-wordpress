@@ -5,7 +5,7 @@ Plugin URI: http://www.polevaultweb.com/plugins/instagrate-to-wordpress/
 Author URI: http://www.polevaultweb.com/
 Tags: instagram, posts, integration, automatic, post, wordpress, posting, images
 Requires at least: 3.0
-Tested up to: 4.2
+Tested up to: 4.5.2
 Stable tag: 1.2.6
 
 Integrate your Instagram images and your WordPress blog with automatic posting of new images into blog posts.
