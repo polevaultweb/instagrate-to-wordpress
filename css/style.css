@@ -3,16 +3,16 @@ p {
 clear:both;
 }
 
-.wrap h2.instagrate_logo {
-	background: url("../images/instagrate_30.png") no-repeat scroll 0 0 transparent;	
-	margin-bottom: 20px;
-	padding-left: 40px;
-	margin-top: 20px;
-	padding-top: 0px;
-	
-	
+.wrap h1.instagrate-icon:before {
+	font-size: 30px;
+	margin-right: 15px;
+	margin-top: 2px;
 }
 
+
+.pro-notice {
+	margin: 0;
+}
 
 #ipp_content_left
 {
@@ -62,12 +62,10 @@ border-radius: 3px 3px 3px 3px;
 }
 
 .itw_info, .itw_connected, .itw_disconnected, .itw_setup, .itw_saved, .itw_issue{
-border: 1px solid;
 margin: 10px 0px;
 padding:8px 10px 8px 40px;
 background-repeat: no-repeat;
 background-position: 10px 10px;
-border-radius: 3px 3px 3px 3px;
 float: left;
 }
 
@@ -83,7 +81,6 @@ background-color: #BDE5F8;
 background-image: url('../images/exclamation.png');
 }
 .itw_connected {
-color: #4F8A10;
 background-color: #D1EED1;
 background-image:url('../images/connect.png');
 }
@@ -247,15 +244,4 @@ float: left;
 width: 70%;
 text-align: left;
 margin: 22px 0 18px;
-}
-
-
-#itw_footer #pvw
-{
-
-float: right;
-width: 30%;
-text-align: right;
-margin: 12px 0 28px;;
-
 }
