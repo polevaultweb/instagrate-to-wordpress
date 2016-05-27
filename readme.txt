@@ -3,7 +3,7 @@ Contributors: polevaultweb
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R6BY3QARRQP2Q
 Plugin URI: http://www.polevaultweb.com/plugins/instagrate-to-wordpress/
 Author URI: http://www.polevaultweb.com/
-Tags: instagram, posts, integration, automatic, post, wordpress, posting, images
+Tags: instagram, instagram posts, instagram integration, automatic, post, instagram to wordpress, instagram posting, instagram images, images
 Requires at least: 3.0
 Tested up to: 4.5.2
 Stable tag: 1.2.6
@@ -12,13 +12,15 @@ Integrate your Instagram images and your WordPress blog with automatic posting o
 
 == Description ==
 
-**[Intagrate](https://intagrate.io/)** The pro version of this plugin with many more features can be found [here](https://intagrate.io/)
+**Intagrate** and **Intagrate Lite** are 100% compatible with Instagram’s new API terms. You do not have to create your own API client. [Read more](https://intagrate.io/2016/05/new-name-instagram-platform-compliance/).
+
+**[Intagrate](https://intagrate.io/)**, the pro version of this plugin with many more features can be found [here](https://intagrate.io/)
 
 This plugin allows you to automatically integrate your Instagram images with your WordPress blog.
 
 No more manual embedding Instagram images into your posts, let this plugin take care of it all.
 
-Install the plugin. Log in to Instagram, pick your default WordPress post settings, and you are done. Take a photo or lots on Instagram. The next time someone visits your site, a new post will be created with your each photo from Instagram. 
+Install the plugin. Log in to Instagram, pick your default WordPress post settings, and you are done. Take a photo or lots on Instagram. The next time someone visits your site, a new post will be created with your each photo from Instagram.
 
 This plugin requires the cURL PHP extension to be installed.
 
@@ -49,9 +51,9 @@ Full list of features:
 	
 If you have any issues or feature requests please visit and use the [Support Forum](http://www.polevaultweb.com/support/forum/instagrate-to-wordpress-plugin/)
 
-**[Intagrate](https://intagrate.io/)** The pro version of this plugin with many more features can be found [here](https://intagrate.io/)
+**[Intagrate](https://intagrate.io/)**, the pro version of this plugin with many more features can be found [here](https://intagrate.io/)
 
-[Plugin Page](http://www.polevaultweb.com/plugins/instagrate-to-wordpress/) | [@polevaultweb](http://www.twitter.com/polevaultweb/) | [Donate with PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R6BY3QARRQP2Q)
+[@polevaultweb](http://www.twitter.com/polevaultweb/) | [Donate with PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R6BY3QARRQP2Q)
 
 == Installation ==
 
