@@ -1293,8 +1293,6 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 			<?php else: ?>
 				<?php if ( isset( $loginUrl ) ): ?>
-
-					<div class="clear"></div>
 					<div class="<?php echo $msg_class ?>">
 						<p>
 							<?php echo $msg ?>
@@ -1305,6 +1303,8 @@ logout/" width="0" height="0"></iframe>
 							<?php endif; ?>
 						</p>
 					</div>
+
+					<?php include dirname( __FILE__ ) . '/templates/pro-sidebar.php'; ?>
 
 				<?php else: ?>
 					<div class="loggedin">
@@ -1325,6 +1325,10 @@ logout/" width="0" height="0"></iframe>
 					</div>
 					<div class="clear"></div>
 
+					<?php include dirname( __FILE__ ) . '/templates/pro-sidebar.php'; ?>
+					<div id="ipp_content_wrap">
+						<?php include dirname( __FILE__ ) . '/templates/images.php'; ?>
+						<?php include dirname( __FILE__ ) . '/templates/settings.php'; ?>
 					</div>
 				<?php endif; ?>
 

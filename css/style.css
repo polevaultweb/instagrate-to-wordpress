@@ -14,14 +14,75 @@ clear:both;
 	margin: 0;
 }
 
+#ipp_content_wrap {
+	float: left;
+	width:75%;
+}
+
 #ipp_content_left
 {
-	width: 50%;
+
 }
 
 #ipp_content_right
 {
-	width:50%;
+
+}
+
+#ipp_sidebar
+{
+	width:25%;
+	float: right;
+	max-width:400px;
+}
+.igp-banner img {
+	width: 100%;
+}
+
+.igp-upgrade-details ul {
+	margin-top: 0;
+	margin-left: 16px;
+	list-style-type: disc;
+	font-size: 14px;
+	font-weight: 500;
+}
+.igp-sidebar .subscribe h2 {
+	padding: 0;
+	margin: 0;
+	margin-bottom: 0.5em;
+	color: #666;
+	font-size: 20px;
+	line-height: 1.2em;
+	float: none;
+}
+
+.igp-sidebar .subscribe .field {
+	margin-bottom: 0.5em;
+}
+
+.igp-sidebar .subscribe .field input[type=text], .igp-sidebar .subscribe .field input[type=email] {
+	width: 100%;
+}
+.igp-sidebar .subscribe .intro {
+	margin-bottom: 1em;
+	line-height: 1.4;
+}
+
+.igp-banner h1 {
+	font-size: 28px;
+	font-weight: 200;
+	margin: 0;
+	position: absolute;
+	top: 25px;
+	left: 20px;
+	text-decoration: none;
+}
+
+body.settings_page_instagratetowordpress .metabox-holder {
+	padding-top: 0 !important;
+}
+body.settings_page_instagratetowordpress .postbox {
+	margin-bottom: 0 !important;
 }
 
 h4 {
@@ -162,18 +223,18 @@ float:right;
 
 .image_left{
 	float: left;
-	width: 150px;
-	height: 150px;
-	margin-right: 20px;
-	margin-bottom: 20px;
+	width: 120px;
+	height: 120px;
+	margin-right: 10px;
+	margin-bottom: 10px;
 }
 
 .image_right
 {
 	float: left;
-	height: 150px;
-	margin-right: 20px;
-	margin-bottom: 20px;
+	height: 120px;
+	margin-right: 10px;
+	margin-bottom: 10px;
 }
 
 a.feed_image
@@ -185,21 +246,25 @@ a.feed_image
 	float: left;
 	position: relative;
 }
+
+a.feed_image img {
+	width: 100%;
+}
 a.feed_image:hover { border-color: #000; }
  
 	a.feed_image:hover .overlay
 	{
 		position: absolute;
 		z-index: 3;
-		width: 150px;
-		height: 150px;
+		width: 120px;
+		height: 120px;
 		
 	}
 		a.feed_image .overlay .caption
 		{
 			position: absolute;
-			height: 150px;
-			width: 150px;
+			height: 120px;
+			width: 120px;
 			-moz-box-sizing:    border-box;
 			-webkit-box-sizing: border-box;
 			box-sizing:        border-box;
@@ -207,7 +272,7 @@ a.feed_image:hover { border-color: #000; }
 			z-index: 3;
 			text-indent: -9999em;
 			color: #fff;
-			font-size: 20px;
+			font-size: 14px;
 			line-height: 20px;
 			font-family: "Helvetica, Arial, sans-serif";
 			bottom: 0;
