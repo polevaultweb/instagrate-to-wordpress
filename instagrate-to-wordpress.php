@@ -1324,10 +1324,6 @@ logout/" width="0" height="0"></iframe>
 						</div>
 					</div>
 					<div class="clear"></div>
-					<div class="pro-notice notice-info notice inline">
-						<p>There is a pro version of this plugin now available to buy
-							<a href="http://www.intagrate.io">Intagrate</a></p>
-					</div>
 					<!-- BEGIN ipp_content_left -->
 					<div id="ipp_content_left" class="postbox-container">
 
