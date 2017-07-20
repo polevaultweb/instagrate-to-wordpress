@@ -1710,10 +1710,8 @@ logout/" width="0" height="0"></iframe>
 
 					<div id="links">
 						<b>Intagrate Lite</b> | We hope you enjoy the plugin |
-						<a href="https://intagrate.io/">Intagrate - more features</a> |
-						<a href="http://support.polevaultweb.com/discussions/instagrate-to-wordpress">Support Forum</a> |
-						<a title="Donate" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R6BY3QARRQP2Q">Donate</a> |
-						<a title="Follow on Twitter" href="http://twitter.com/#!/polevaultweb">@polevaultweb</a> |
+						<a href="https://intagrate.io/?utm_source=insideplugin&amp;utm_medium=web&amp;utm_content=sidebar&amp;utm_campaign=intagrate-lite-plugin">Intagrate - more features</a> |
+						<a title="Follow on Twitter" href="http://twitter.com/polevaultweb">@polevaultweb</a> |
 						<a href="http://wordpress.org/extend/plugins/instagrate-to-wordpress/" title="Rate the Plugin on WordPress">Rate the Plugin ★★★★★</a> |
 						<a href="http://led24.de/iconset/">16px Icons</a>
 					</div>
