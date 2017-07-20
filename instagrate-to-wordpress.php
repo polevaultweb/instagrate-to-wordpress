@@ -75,6 +75,10 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 		}
 
+		public static function image( $file ) {
+			return plugin_dir_url( __FILE__ ) . '/images/' . $file;
+		}
+
 		/* Add settings link to Plugin page */
 		public static function register_settings_link( $links, $file ) {
 
