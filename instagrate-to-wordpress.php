@@ -736,9 +736,10 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 				$debug .= '------------------URL: ' . $url . '-- ' . Date( DATE_RFC822 ) . "\n";
 
+				$clean_url  = self::strip_querysting( $url );
 				$tmp        = download_url( $url );
 				$file_array = array(
-					'name'     => basename( $url ),
+					'name'     => basename( $clean_url ),
 					'tmp_name' => $tmp,
 				);
 
@@ -884,7 +885,6 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			} else {
 
 				//put image from instagram into wordpress media library and link to it.
-				$post_image = self::strip_querysting( $post_image );
 				//load into media library
 				$attach = self::attach_image( $post_image, $new_post );
 
