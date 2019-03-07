@@ -5,9 +5,9 @@ Plugin URI: http://www.polevaultweb.com/plugins/instagrate-to-wordpress/
 Author URI: http://www.polevaultweb.com/
 Tags: instagram, instagram posts, instagram integration, automatic, post, instagram to wordpress, instagram posting, instagram images, images
 Requires at least: 3.0
-Tested up to: 5.0.1
-Stable tag: 1.2.8
+Tested up to: 5.1
 Requires PHP: 5.3
+Stable tag: 1.2.9
 
 Integrate your Instagram images and your WordPress blog with automatic posting of new images into blog posts.
 
@@ -72,6 +72,12 @@ You can use the built in installer and upgrader, or you can install the plugin m
 If you have to upgrade manually simply repeat the installation steps and re-enable the plugin.
 
 == Changelog ==
+
+= 1.2.9 =
+Release Date: March 7th, 2019
+
+* Bug Fix: Connecting to Instagram broken
+* PHP 5.3 minimum requirement
 
 = 1.2.8 =
 Release Date: December 13th, 2018
