@@ -30,10 +30,16 @@ define( 'ITW_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ITW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ITW_PLUGIN_BASE', plugin_basename( __FILE__ ) );
 define( 'ITW_PLUGIN_SETTINGS', 'instagratetowordpress' );
-define( 'ITW_RETURN_URI', strtolower( site_url( '/' ) . 'wp-admin/options-general.php?page=' . ITW_PLUGIN_SETTINGS ) );
+define( 'ITW_RETURN_URI', strtolower( admin_url() . 'options-general.php?page=' . ITW_PLUGIN_SETTINGS ) );
 
 require_once ITW_PLUGIN_PATH . 'php/instagram.php';
 require_once ITW_PLUGIN_PATH . 'php/emoji.php';
+
+require_once ITW_PLUGIN_PATH . 'php/oauth/wp-oauth2.php';
+require_once ITW_PLUGIN_PATH . 'php/oauth/access-token.php';
+require_once ITW_PLUGIN_PATH . 'php/oauth/admin-handler.php';
+require_once ITW_PLUGIN_PATH . 'php/oauth/oauth2-client.php';
+require_once ITW_PLUGIN_PATH . 'php/oauth/instagram-cient.php';
 
 if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
@@ -66,6 +72,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			//register the listener function
 			add_action( 'template_redirect', get_class() . '::auto_post_images' );
 
+			itw_Instagram::load_admin();
 		}
 
 		/* Add menu item for plugin to Settings Menu */
@@ -370,7 +377,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 				//get userid
 				$userid = get_option( 'itw_userid' );
 
-				$instagram = new itw_Instagram( CLIENT_ID, CLIENT_SECRET, $access_token );
+				$instagram = new itw_Instagram( $access_token );
 
 				try {
 
@@ -1012,12 +1019,6 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 		public static function settings_page() {
 
 
-			if ( isset( $_POST['itw_logout'] ) && $_POST['itw_logout'] == 'Y' ) {
-
-				self::log_out();
-
-			}
-
 			$oldplugin = 'instapost-press/instapost-press.php';
 
 
@@ -1030,50 +1031,14 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 			} else {
 
-
-				//$instagram = new itw_Instagram(CLIENT_ID, CLIENT_SECRET,null);
 				$msg_class    = 'notice updated';
 				$access_token = get_option( 'itw_accesstoken' );
-
-				//add Instagram authentication scripts
-				if ( isset( $_GET['error'] ) || ( isset( $_GET['code'] ) && $access_token == '' ) ) {
-
-					$ig = new itw_Instagram( CLIENT_ID, CLIENT_SECRET, null );
-
-					if ( isset( $_GET['error'] ) || isset( $_GET['error_reason'] ) || isset( $_GET['error_description'] ) ) {
-
-						$msg       = 'You did not authorise the plugin to access your Instagram account. Maybe try again - ';
-						$msg_class = 'itw_disconnected';
-
-						$loginUrl = $ig->authorizeUrl( REDIRECT_URI . '?return_uri=' . htmlentities( ITW_RETURN_URI ) );
-
-						update_option( 'itw_accesstoken', '' );
-						update_option( 'itw_username', '' );
-						update_option( 'itw_userid', '' );
-						update_option( 'itw_manuallstid', '' );
-					} else {
-
-						$url = ITW_RETURN_URI;
-
-						$access_token = $ig->getAccessToken( $_GET['code'], REDIRECT_URI . '?return_uri=' . $url );
-
-						$accesstkn = $access_token->access_token;
-						$username  = $access_token->user->username;
-						$userid    = $access_token->user->id;
-
-						update_option( 'itw_accesstoken', $accesstkn );
-						update_option( 'itw_username', $username );
-						update_option( 'itw_userid', $userid );
-
-					}
-
-				}
 
 				if ( $msg_class != 'itw_disconnected' ) {
 
 
 					$access_token = get_option( 'itw_accesstoken' );
-					$instagram    = new itw_Instagram( CLIENT_ID, CLIENT_SECRET, $access_token );
+					$instagram    = new itw_Instagram( $access_token );
 
 					//echo $access_token;
 
@@ -1082,7 +1047,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 						$msg       = 'Please login securely to Instagram to authorise the plugin - ';
 						$msg_class = 'notice-info notice';
-						$loginUrl  = $instagram->authorizeUrl( REDIRECT_URI . '?return_uri=' . htmlentities( ITW_RETURN_URI ) );
+						$loginUrl  = $instagram->authorizeUrl( ITW_RETURN_URI );
 
 					} else {
 
@@ -1253,7 +1218,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 								$msg       = 'The Instagram Authorisation token has expired - ';
 								$msg_class = 'itw_disconnected';
-								$loginUrl  = $instagram->authorizeUrl( REDIRECT_URI . '?return_uri=' . htmlentities( ITW_RETURN_URI ) );
+								$loginUrl  = $instagram->authorizeUrl( ITW_RETURN_URI );
 
 							} else {
 
@@ -1315,12 +1280,7 @@ logout/" width="0" height="0"></iframe>
 							</p>
 						</div>
 						<div class="logout">
-							<form name="itw_logout" method="post" action="<?php echo str_replace( '%7E', '~', ITW_RETURN_URI ); ?>">
-								<input type="hidden" name="itw_logout" value="Y">
-
-								<input type="submit" class="button" value="Log out" name="logout" onclick="">
-							</form>
-
+							<a href="<?php echo itw_Instagram::logout_url(); ?>">Log out</a>
 						</div>
 					</div>
 					<div class="clear"></div>
