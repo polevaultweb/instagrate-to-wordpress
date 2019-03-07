@@ -32,15 +32,6 @@ define( 'ITW_PLUGIN_BASE', plugin_basename( __FILE__ ) );
 define( 'ITW_PLUGIN_SETTINGS', 'instagratetowordpress' );
 define( 'ITW_RETURN_URI', strtolower( admin_url() . 'options-general.php?page=' . ITW_PLUGIN_SETTINGS ) );
 
-require_once ITW_PLUGIN_PATH . 'php/instagram.php';
-require_once ITW_PLUGIN_PATH . 'php/emoji.php';
-
-require_once ITW_PLUGIN_PATH . 'php/oauth/wp-oauth2.php';
-require_once ITW_PLUGIN_PATH . 'php/oauth/access-token.php';
-require_once ITW_PLUGIN_PATH . 'php/oauth/admin-handler.php';
-require_once ITW_PLUGIN_PATH . 'php/oauth/oauth2-client.php';
-require_once ITW_PLUGIN_PATH . 'php/oauth/instagram-cient.php';
-
 if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 
@@ -1322,8 +1313,37 @@ logout/" width="0" height="0"></iframe>
 
 if ( class_exists( "instagrate_to_wordpress" ) ) {
 
-	// Load plugin
-	instagrate_to_wordpress::load_plugin();
+	if ( version_compare( PHP_VERSION, '5.3', '<' ) ) {
+		add_action( 'admin_notices', 'intagrate_lite_compatibility' );
+	} else {
+		require_once ITW_PLUGIN_PATH . 'php/instagram.php';
+		require_once ITW_PLUGIN_PATH . 'php/emoji.php';
+
+		require_once ITW_PLUGIN_PATH . 'php/oauth/wp-oauth2.php';
+		require_once ITW_PLUGIN_PATH . 'php/oauth/access-token.php';
+		require_once ITW_PLUGIN_PATH . 'php/oauth/admin-handler.php';
+		require_once ITW_PLUGIN_PATH . 'php/oauth/oauth2-client.php';
+		require_once ITW_PLUGIN_PATH . 'php/oauth/instagram-cient.php';
+
+		// Load plugin
+		instagrate_to_wordpress::load_plugin();
+	}
+
+	/**
+	 * Render a notice about plugin compatibility
+	 */
+	function intagrate_lite_compatibility() {
+		$action       = 'deactivate';
+		$basename     = plugin_basename( __FILE__ );
+		$nonce_action = $action . '-plugin_' . $basename;
+		$page         = 'plugins';
+
+		$deactivate_url  = wp_nonce_url( network_admin_url( $page . '.php?action=' . $action . '&amp;plugin=' . $basename ), $nonce_action );
+		$deactivate_link = sprintf( '<a style="text-decoration:none;" href="%s">%s</a>', $deactivate_url, __( 'deactivate' ) );
+		$text            = sprintf( __( 'Intagrate Lite requires PHP version of 5.3 or higher. Please upgrade PHP or %s the plugin to remove this notice.' ), $deactivate_link );
+
+		printf( '<div class="notice error"><p>%s</p></div>', $text );
+	}
 
 }
 

@@ -7,6 +7,7 @@ Tags: instagram, instagram posts, instagram integration, automatic, post, instag
 Requires at least: 3.0
 Tested up to: 5.0.1
 Stable tag: 1.2.8
+Requires PHP: 5.3
 
 Integrate your Instagram images and your WordPress blog with automatic posting of new images into blog posts.
 
