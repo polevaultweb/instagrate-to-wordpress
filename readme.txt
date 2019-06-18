@@ -1,4 +1,4 @@
-=== Intagrate Lite - Instagram Image Publishing ===
+=== Intagrate Lite - Automatic Image Publishing of Instagram Images ===
 Contributors: polevaultweb
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R6BY3QARRQP2Q
 Plugin URI: http://www.polevaultweb.com/plugins/instagrate-to-wordpress/
