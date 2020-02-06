@@ -1,60 +1,98 @@
 === Intagrate Lite ===
 Contributors: polevaultweb
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R6BY3QARRQP2Q
-Plugin URI: http://www.polevaultweb.com/plugins/instagrate-to-wordpress/
-Author URI: http://www.polevaultweb.com/
+Plugin URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
+Author URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
 Tags: instagram, instagram posts, instagram integration, automatic, post, instagram to wordpress, instagram posting, instagram images, images
 Requires at least: 3.0
-Tested up to: 5.1
+Tested up to: 5.3
 Requires PHP: 5.3
 Stable tag: 1.2.9
 
-Integrate your Instagram images and your WordPress blog with automatic posting of new images into blog posts.
+Automatically post your Instagram images to your WordPress site. Create new posts, save the Instagram image to the media library.
 
 == Description ==
 
-**Intagrate** and **Intagrate Lite** are 100% compatible with Instagram’s new API terms. You do not have to create your own API client. [Read more](https://intagrate.io/2016/05/new-name-instagram-platform-compliance/).
-
-**[Intagrate](https://intagrate.io/)**, the pro version of this plugin with many more features can be found [here](https://intagrate.io/)
-
-This plugin allows you to automatically integrate your Instagram images with your WordPress blog.
+Automatically post your Instagram images to your WordPress site. When ever you post a new photo on Instagram, the plugin will create a post with the image caption as the title, and the Instagram image in the post content. Choose to save the Instagram image to the media library and set it as the featured image of the post.
 
 No more manual embedding Instagram images into your posts, let this plugin take care of it all.
 
-Install the plugin. Log in to Instagram, pick your default WordPress post settings, and you are done. Take a photo or lots on Instagram. The next time someone visits your site, a new post will be created with your each photo from Instagram.
+1. Install the plugin
+2. Log in to Instagram from the plugin's settings page
+3. Take a photo or lots on Instagram!
 
-This plugin requires the cURL PHP extension to be installed.
+A new post will be created with each of the photos from Instagram. Simple, right?
 
-Full list of features:
+I believe it should be easy to post your Instagram images to WordPress, without any manual effort. This plugin allows you to automatically integrate your Instagram images with your WordPress blog. What does this mean for you? A great way to republish your content on your site, or just create an awesome feed of photos in your site.
 
-* Simple connection to Instagram. Login securely to Instagram to authorise this plugin to access your image data. **This plugin does not ask or store your Instagram username and password, you only log into Instagram.**
-* Helpful feed of images in the admin screen.
-* Option to manually set the last image in the feed, so all later images will be posted.
-* Configurable post settings:
-	*	Post title - default as Instagram image title. Custom title text before Instagram title, or embed the Instagram title using %%title%%.
-	*	Post body text - default as Instagram image. Custom body text before Instagram image, or embed the Instagram image using %%image%%. You can also embed the %%title%%.
-	* 	NEW 1.1.0: Post date can be either Instagram image date or the date at posting.
-	* 	NEW 1.1.0: Image can be either saved to media library within WordPress or linked to Instagram image.
-	*	NEW 1.1.0: If you save images to the media library you can now set the image as Featured.
-	* 	NEW 1.1.0: Link to image setting.
-	*	Image size.
-	*	Image CSS class.
-	* 	NEW 1.1.0: Post Format.
-	*	NEW 1.1.2: Post Status. You can set posts as published or as draft.
-	*	Post Category (selected from dropdown of available categories).
-	*	Post Author (selected from dropdown of available authors).
-	* 	Plugin link at the end of the post body text. Can be turned off.
-	*	NEW 1.1.0: Debug mode setting to enable us to troubleshoot further problems with the plugin. Off by default.
-	*	NEW 1.1.3: You can now set the post type, eg. post, page or custom post types, where the image will be created in. Default is Post.
-	*	NEW 1.1.4: Default post title for images that have no title. Can be overridden by custom post title.
-* Advanced settings:
-	*	NEW 1.2: Option to override is_home() check setting on automatic posting if themes do not have a set blog page.
-	
-If you have any issues or feature requests please visit and use the [Support Forum](http://www.polevaultweb.com/support/forum/instagrate-to-wordpress-plugin/)
+== Testimonials - WordPress Site Owners Love it ==
 
-**[Intagrate](https://intagrate.io/)**, the pro version of this plugin with many more features can be found [here](https://intagrate.io/)
+Intagrate Lite provides a simple and effective approach to solving the problem of getting your Instagram images posted to WordPress sites. We've helped over 5,000 sites do this and is the best WordPress plugin to create posts from your Instagram images. Don't just take our word for it though:
 
-[@polevaultweb](http://www.twitter.com/polevaultweb/) | [Donate with PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R6BY3QARRQP2Q)
+*A great way to make a daily-photo feature* - [Parakoos](https://wordpress.org/support/topic/great-way-to-make-a-daily-photo-feature/).
+
+*Awesome Plugin! Works perfectly without any errors. I used it to have a copy of my instagram photos in my blog* - [Matthias Pabst](https://wordpress.org/support/topic/absolutely-reliable/).
+
+*Lots of options, worked perfectly* - [hawbsl](https://wordpress.org/support/topic/worked-perfectly-242/).
+
+== Tell me more ==
+
+Even though the plugin is simple to set up and get started with, there are some great features that allow you to customize how the plugin posts the images.
+
+**What about saving the images to the WordPress Media Library?**
+
+Yes it can do that! You can also choose to set the image as the post's featured image.
+
+**Do I need to create an Instagram API app thingy?**
+
+Nope, Intagrate is 100% compatible with Instagram’s new API terms. You do not have to create your own API client. [Read more](https://intagrate.io/2016/05/new-name-instagram-platform-compliance/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite).
+
+**Can I customize the title of the post?**
+
+Yes, you can. It defaults to the Instagram image title, but you can add custom text and embed the Instagram title using the `%%title%%` tag.
+
+The [Pro version](https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite) allows you to restrict the length of the caption.
+
+**Can I customize the content of the post?**
+
+Yep, It defaults to the Instagram image, but you can add custom text and embed the Instagram image using the `%%image%%` tag. You can also embed the %%title%%.
+
+You can also select the post category, format, and author.
+
+The [Pro version](https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite) gives your lots more template tags to use.
+
+**What's this about Pro?**
+
+Glad you asked! [Intagrate](https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite) is the pro version of the plugin, which offers so much more. Here's what you get over free:
+
+* Priority email support
+* Connect your account and access your complete Instagram media history. Post your images and save them to the media library - own your images forever.
+* Post Instagram Videos
+* Instagram videos can be posted to your WordPress site and displayed with a fully responsive HTML5 video player.
+* Full support for Instagram's new multi images and videos in one post feature.
+* Connect as many Instagram accounts as you want, with the same or different posting configuration. The possibilities are endless.
+* Complete control over which images are posted with a dedicated moderation page.
+* Powerful hashtag filtering of your image and video stream allowing you to filter on multiple hashtags as well as excluding images with certain hashtags.
+* Custom Post Type support. Post images as posts, pages and custom post types
+* Multisite support
+* Tagging your Instagram images? Turn these hashtags into WordPress tags or another custom taxonomy.
+
+[I'm sold! Show me Intagrate](https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite)
+
+And that's just the tip of the iceberg, I'm always working on adding value to Intagrate.
+
+== Frequently Asked Questions ==
+
+= What support is provided? =
+
+Limited free support is provided, and I offer dedicated priority email support for Intagrate customers.
+
+= Does the plugin support WordPress Multisite? =
+
+No, currently the plugin does not support Multisite. The [Pro version](https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite) does.
+
+= Can I use more than one Instagram account? =
+
+No, not at the moment. The plugin only allows one Instagram account at a time. The [Pro version](https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite) allows you to connect multiple accounts.
 
 == Installation ==
 
@@ -203,28 +241,6 @@ Release Date: December 13th, 2018
 
 * First release, bugs expected.
 
-== Frequently Asked Questions ==
-
-= I have an issue with the plugin =
-
-Please visit the [Support Forum](http://www.polevaultweb.com/support/forum/instagrate-to-wordpress-plugin/) and see what has been raised before, if not raise a new topic.
-
-= What about the InstaPost Press plugin? =
-
-This is the newer version of that plugin. It has been discontinued because of a naming conflict. If you installed this plugin you will need to deactivate it before you can use this new plugin.
-
-= Does the plugin support WordPress Multisite? =
-
-No, currently the plugin does not support Multisite.
-
-= Can I use more than one Instagram account? =
-
-No, not at the moment. The plugin only allows one Instagram account at a time.
-
-= I have a feature request =
-
-Please visit and add to the [Feature Requests topic](http://www.polevaultweb.com/support/topic/feature-requests/) on the support forum.
-
 == Screenshots ==
 
 1. Screenshot of the Instagram settings of manual last image.
@@ -238,4 +254,4 @@ Please note this plugin supersedes InstaPost Press, which has been discontinued 
 
 == Disclaimer ==
 
-This plugin uses the Instagram(tm) API and is not endorsed or certified by Instagram or Burbn, inc. All Instagram(tm) logoes and trademarks displayed on this website are property of Burbn, inc.
+This plugin uses the Instagram(tm) API and is not endorsed or certified by Instagram or Facebook. All Instagram(tm) logoes and trademarks displayed on this website are property of Facebook.
