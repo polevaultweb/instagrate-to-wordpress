@@ -254,4 +254,4 @@ Please note this plugin supersedes InstaPost Press, which has been discontinued 
 
 == Disclaimer ==
 
-This plugin uses the Instagram(tm) API and is not endorsed or certified by Instagram or Facebook. All Instagram(tm) logoes and trademarks displayed on this website are property of Facebook.
+This plugin uses the Instagram(tm) API and is not endorsed or certified by Instagram or Facebook. All Instagram(tm) logos and trademarks displayed on this website are property of Facebook.
