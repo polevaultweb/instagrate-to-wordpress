@@ -243,10 +243,9 @@ Release Date: December 13th, 2018
 
 == Screenshots ==
 
-1. Screenshot of the Instagram settings of manual last image.
+1. Screenshot of the Instagram images feed
 2. Screenshot of the WordPress blog post settings.
-3. Screenshot of the admin feed of images from Instagram.
-4. Screenshot of the plugin link setting.
+3. Screenshot of more of the WordPress blog post settings.
 
 == Upgrade Notice ==
 
