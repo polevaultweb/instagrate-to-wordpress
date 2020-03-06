@@ -6,7 +6,8 @@
 				</h3>
 				<div class="inside">
 					<?php foreach ( $feed->data as $item ): ?>
-						<?php $title = ( isset( $item->caption->text ) ? $item->caption->text : "" );
+						<?php
+						$title = ( isset( $item->caption ) ? $item->caption : "" );
 						$title       = instagrate_to_wordpress::strip_title( $title );
 						$title       = itw_truncateString( $title, 80 );
 
@@ -20,7 +21,7 @@
 
 															</span>
 														</span>
-								<img src="<?php echo $item->images->thumbnail->url; ?>" alt="<?php echo $title ?>" /><br />
+								<img src="<?php echo $item->media_url; ?>" alt="<?php echo $title ?>" /><br />
 							</a>
 						</div>
 

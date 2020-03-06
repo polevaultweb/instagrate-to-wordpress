@@ -4,110 +4,123 @@ class itw_Instagram {
 
 	private $apiUrl = 'https://api.instagram.com/v1/';
 
-	protected $client_id = '483189bb620d4cfb8cd13b5a15e9f3d4';
+	protected $client_id = '179980706756164';
+	protected $redirect_uri = 'https://oauth.polevaultweb.com/v2/';
 	protected $access_token;
+
+	/**
+	 * @var Polevaultweb\IntagrateLite\WPOAuth2\WPOAuth2
+	 */
+	protected static $wpoauth;
+
+	protected static $http;
 
 	public function __construct( $access_token = '' ) {
 		$this->access_token = $access_token;
 	}
 
+	public static function http() {
+		if ( empty( self::$http ) ) {
+			self::$http = new Instagrate_Lite_Http();
+		}
+
+		return self::$http;
+	}
+
 	public static function load_admin() {
-		$admin_handler = new \Polevaultweb\IG\WP_OAuth2\Admin_Handler( ITW_RETURN_URI );
-		$admin_handler->init();
+		add_filter( 'pvw_wp_oauth2_provider_display_name', get_class() . '::pvw_wp_oauth2_provider_display_name' );
+		self::$wpoauth = Polevaultweb\IntagrateLite\WPOAuth2\WPOAuth2::instance( 'https://oauth.polevaultweb.com/v2/', Intagrate_Lite_Instagram_Access_Token::class );
+		self::$wpoauth->register_admin_handler(  ITW_RETURN_URI );
+	}
+
+	public static function pvw_wp_oauth2_provider_display_name() {
+		return 'Instagram';
 	}
 
 	public function authorizeUrl( $redirect_uri ) {
-		$oauth = new \Polevaultweb\IG\WP_OAuth2\Instagram_Client( $this->client_id );
-
-		return $oauth->get_authorize_url( $redirect_uri, array( 'scope' => 'basic' ) );
+		return self::$wpoauth->get_authorize_url( 'instagram-facebook', $this->client_id, $redirect_uri, array( 'scope' => 'user_profile,user_media' ) );
 	}
 
 	public static function logout_url() {
-		return Polevaultweb\IG\WP_OAuth2\WP_OAuth2::get_disconnect_url( 'instagram', ITW_RETURN_URI );
+		return self::$wpoauth->get_disconnect_url( 'instagram-facebook', ITW_RETURN_URI );
 	}
 
-	private function urlEncodeParams( $params ) {
-		$postdata = '';
-		if ( ! empty( $params ) ) {
-			foreach ( $params as $key => $value ) {
-				$postdata .= '&' . $key . '=' . urlencode( $value );
-			}
+	public function get_access_token( $account_id ) {
+		$account_settings = get_post_meta( $account_id, '_instagrate_pro_settings', true );
+		if ( empty( $account_settings ) || empty( $account_settings['token'] ) ) {
+			return false;
 		}
 
-		return $postdata;
+		if ( isset( $account_settings['token_expires'] ) && ( time() - HOUR_IN_SECONDS ) < $account_settings['token_expires'] ) {
+			return $account_settings['token'];
+		}
+
+		global $igp_account_id;
+		$igp_account_id = $account_id;
+
+		$new_token = $this->wpoauth->refresh_access_token( $this->get_client_id(), 'instagram-facebook' );
+
+		return $new_token;
 	}
 
-	public function http( $url, $params, $method ) {
-		$c = curl_init();
-
-
-		// If they are authenticated and there is a access token passed, send it along with the request
-		// If the access token is invalid, an error will be raised upon the request
-		if ( $this->access_token ) {
-			$url = $url . '?access_token=' . $this->access_token;
+	/**
+	 * Get Instagram User
+	 *
+	 * @param $access
+	 * @param $user_id
+	 *
+	 * @return string|object
+	 */
+	public function get_user( $access, $user_id ) {
+		$url  = $user_id . '/';
+		$data = $this->http()->do_http_request( $access, $url, array('fields'=> 'id,username') );
+		if ( ! $data ) {
+			return '';
 		}
 
-
-		// If the request is a GET and we need to pass along more params, "URL Encode" them.
-		if ( $method == 'GET' ) {
-			$url = $url . $this->urlEncodeParams( $params );
-
-		}
-
-		curl_setopt( $c, CURLOPT_URL, $url );
-
-		if ( $method == 'POST' ) {
-
-			//var_dump( $params);
-			curl_setopt( $c, CURLOPT_POST, true );
-			curl_setopt( $c, CURLOPT_POSTFIELDS, $params );
-		}
-
-		if ( $method == 'DELETE' ) {
-			curl_setopt( $c, CURLOPT_CUSTOMREQUEST, 'DELETE' );
-		}
-
-		// Withtout the next line I get cURL errors
-		curl_setopt( $c, CURLOPT_SSL_VERIFYPEER, false );
-		curl_setopt( $c, CURLOPT_SSL_VERIFYHOST, 2 );    // 2 is the default so this is not required
-
-		curl_setopt( $c, CURLOPT_RETURNTRANSFER, true );
-
-
-		$r = json_decode( curl_exec( $c ) );
-
-		//check for NULL response
-		if ( $r == null ) {
-
-			throw new InstagramApiError( 'Error: Instagram Servers Down' );
-
-		}
-
-		// Throw an error if maybe an access token expired or wasn't right
-		// or if an ID doesn't exist or something
-		if ( isset( $r->meta->error_type ) ) {
-			throw new InstagramApiError( 'Error: ' . $r->meta->error_message );
-		}
-
-		return $r;
-
-		// close cURL resource, and free up system resources
-		curl_close( $c );
+		return $data;
 	}
 
-	// Giving you some easy functions (get, post, delete)
-	public function get( $endpoint, $params = array(), $method = 'GET' ) {
-		return $this->http( $this->apiUrl . $endpoint, $params, $method );
+	/**
+	 * Get Instagram User
+	 *
+	 * @param $access
+	 * @param $user_id
+	 *
+	 * @return string|object
+	 */
+	public function get_user_media( $access, $user_id ) {
+		$url  = $user_id . '/media';
+		$data = $this->http()->do_http_request( $access, $url, array('fields'=> 'id,media_type,media_url,thumbnail_url,timestamp,username,children,caption,permalink' ) );
+		if ( ! $data ) {
+			return '';
+		}
+
+		return $data;
 	}
 
-	public function post( $endpoint, $params = array(), $method = 'POST' ) {
-		return $this->http( $this->apiUrl . $endpoint, $params, $method );
-	}
+	/**
+	 * Get Instagram media
+	 *
+	 * @param      $access
+	 * @param      $media_id
+	 * @param bool $is_child
+	 *
+	 * @return string
+	 */
+	function get_media( $access, $media_id, $is_child = false ) {
+		$url    = $media_id . '/';
+		$fields = 'id,media_type,media_url,thumbnail_url,timestamp';
+		if ( ! $is_child ) {
+			$fields .= ',username,children,caption,permalink';
+		}
+		$data = $this->http()->do_http_request( $access, $url, array( 'fields' => $fields ) );
+		if ( ! $data ) {
+			return false;
+		}
 
-	public function delete( $endpoint, $params = array(), $method = 'DELETE' ) {
-		return $this->http( $this->apiUrl . $endpoint, $params, $method );
+		return $data;
 	}
-
 }
 
 class InstagramApiError extends Exception {

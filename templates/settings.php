@@ -34,7 +34,7 @@
 
 							foreach ( $feed->data as $item ):
 
-								$title = ( isset( $item->caption->text ) ? $item->caption->text : "" );
+								$title = ( isset( $item->caption ) ? $item->caption : "" );
 								$title = instagrate_to_wordpress::strip_title( $title );
 								$title = itw_truncateString( $title, 80 );
 								$id    = $item->id;

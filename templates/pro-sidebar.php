@@ -21,8 +21,8 @@
 							<ul>
 								<li>Unlimited Instagram accounts</li>
 								<li>Post Entire image history</li>
-								<li>Video integration</li>
-								<li>Post images by hashtag and username</li>
+								<li>Video support</li>
+								<li>Image moderation support</li>
 								<li>Email support</li>
 								<li>Much much <a href="https://intagrate.io/features/?utm_source=insideplugin&amp;utm_medium=web&amp;utm_content=sidebar&amp;utm_campaign=intagrate-lite-plugin">more!</a> </li>
 							</ul>

@@ -352,6 +352,50 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 		}
 
+		/**
+		 * @param itw_Instagram $instagram
+		 * @param $token
+		 * @param $user_id
+		 * @param $starting_id
+		 *
+		 * @return array
+		 */
+		protected static function get_user_media( $instagram, $token, $user_id, $starting_id ) {
+			$images = array();
+
+			$data = $instagram->get_user_media($token, $user_id );
+			if ( empty( $data ) ) {
+				return $images;
+			}
+
+			foreach ( $data->data as $item ) {
+				if ( $item->id === $starting_id ) {
+					return $images;
+				}
+
+				$images[] = $item;
+			}
+
+			$url = isset( $data->paging->next ) ? $data->paging->next : null;
+
+			while ( ! empty( $url ) ) {
+				$data = $instagram->http()->do_http_request( $token, '', '', $url );
+				if ( empty( $data ) ) {
+					return $images;
+				}
+
+				foreach ( $data->data as $item ) {
+					if ( $item->id === $starting_id ) {
+						return $images;
+					}
+
+					$images[] = $item;
+				}
+
+				$url = isset( $data->paging->next ) ? $data->paging->next : null;
+			}
+		}
+
 		/* Instagram post feed array */
 		public static function get_images() {
 
@@ -372,40 +416,34 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 				try {
 
-					$params = array( 'min_id' => $manuallstid );
 
-					$data = $instagram->get( 'users/' . $userid . '/media/recent', $params );
+					$ig_images = self::get_user_media( $instagram, $access_token, $userid, $manuallstid );
 
-					if ( $data != null ) {
-
-						if ( $data->meta->code == 200 ):
-
-
-							foreach ( $data->data as $item ):
-
-								$images[] = array(
-									"id"           => $item->id,
-									"title"        => ( isset( $item->caption->text ) ? self::strip_title( $item->caption->text ) : "" ),
-									"image_small"  => $item->images->thumbnail->url,
-									"image_middle" => $item->images->low_resolution->url,
-									"image_large"  => $item->images->standard_resolution->url,
-									"created"      => $item->created_time,
-								);
-
-							endforeach;
-
-						endif;
-
-						$orderByDate = array();
-
-						//order array by earliest image
-						foreach ( $images as $key => $row ) {
-							$orderByDate[ $key ] = strtotime( $row['created'] );
-						}
-
-						array_multisort( $orderByDate, SORT_ASC, $images );
-
+					if ( empty( $ig_images ) ) {
+						return array();
 					}
+
+					foreach ( $ig_images as $image ):
+						$images[] = array(
+							"id"           => $image->id,
+							"title"        => ( isset( $image->caption ) ? self::strip_title( $image->caption ) : "" ),
+							"image_small"  => $image->media_url,
+							"image_middle" => $image->media_url,
+							"image_large"  => $image->media_url,
+							"created"      => $image->timestamp,
+						);
+
+					endforeach;
+
+
+					$orderByDate = array();
+
+					//order array by earliest image
+					foreach ( $images as $key => $row ) {
+						$orderByDate[ $key ] = strtotime( $row['created'] );
+					}
+
+					array_multisort( $orderByDate, SORT_ASC, $images );
 
 				} catch ( InstagramApiError $e ) {
 
@@ -433,13 +471,8 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			$images = array();
 
 			foreach ( $data->data as $item ):
-
 				$images[] = array(
 					"id"           => $item->id,
-					"title"        => ( isset( $item->caption->text ) ? filter_var( $item->caption->text, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH ) : "" ),
-					"image_small"  => $item->images->thumbnail->url,
-					"image_middle" => $item->images->low_resolution->url,
-					"image_large"  => $item->images->standard_resolution->url,
 				);
 
 			endforeach;
@@ -581,7 +614,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 									$debug .= "--------Image Id:" . $images[ $i ]["id"] . " Does not equal Last Id:" . $manuallstid . "\n";
 
 									// only allow the posting to happen if image timestamp is 2 minutes ago, to stop double posting through API
-									if ( ( time() - $images[ $i ]["created"] ) > 120 ) {
+									if ( ( time() - strtotime( $images[ $i ]["created"] ) ) > 120 ) {
 
 										//get image variables
 										$title = $images[ $i ]["title"];
@@ -598,7 +631,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 										if ( $date_check == 'instagram' ) {
 
-											$post_date     = $images[ $i ]["created"];
+											$post_date     = strtotime( $images[ $i ]["created"] );
 											$post_date     = date( 'Y-m-d H:i:s', $post_date );
 											$post_date_gmt = $post_date;
 
@@ -1053,12 +1086,20 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 							$msg_class = 'itw_connected notice updated';
 
 
-							$feed = $instagram->get( 'users/' . $userid . '/media/recent' );
+							$feed = $instagram->get_user_media( $access_token, $userid );
+
+							if ( $feed && isset( $feed->data ) ) {
+								foreach( $feed->data as $key => $media ) {
+								if ('VIDEO' === $media->media_type ) {
+										$media->media_url = $media->thumbnail_url;
+									}
+
+									$feed->data[$key] = $media;
+								}
+							}
 
 							if ( $feed != null ) {
 
-								if ( $feed->meta->code == 200 ) {
-									//var_dump($feed);
 									if ( isset( $_POST['itw_hidden'] ) && $_POST['itw_hidden'] == 'Y' ) {
 
 										update_option( 'itw_configured', 'Installed' );
@@ -1177,13 +1218,6 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 									}
 
-								} else {
-
-									$msg       = 'Error: ' . $feed->meta->error_type . ' - ' . $feed->meta->error_message;
-									$msg_class = 'itw_disconnected';
-									$loginUrl  = 'hide';
-
-								}
 
 							} else {
 
@@ -1319,11 +1353,14 @@ if ( class_exists( "instagrate_to_wordpress" ) ) {
 		require_once ITW_PLUGIN_PATH . 'php/instagram.php';
 		require_once ITW_PLUGIN_PATH . 'php/emoji.php';
 
-		require_once ITW_PLUGIN_PATH . 'php/oauth/wp-oauth2.php';
-		require_once ITW_PLUGIN_PATH . 'php/oauth/access-token.php';
-		require_once ITW_PLUGIN_PATH . 'php/oauth/admin-handler.php';
-		require_once ITW_PLUGIN_PATH . 'php/oauth/oauth2-client.php';
-		require_once ITW_PLUGIN_PATH . 'php/oauth/instagram-cient.php';
+		require_once ITW_PLUGIN_PATH . 'lib/WPOAuth2.php';
+		require_once ITW_PLUGIN_PATH . 'lib/TokenManager.php';
+		require_once ITW_PLUGIN_PATH . 'lib/AdminHandler.php';
+		require_once ITW_PLUGIN_PATH . 'lib/AccessTokenInterface.php';
+		require_once ITW_PLUGIN_PATH . 'lib/AbstractAccessToken.php';
+		require_once ITW_PLUGIN_PATH . 'lib/AccessToken.php';
+		require_once ITW_PLUGIN_PATH . 'lib/class-http.php';
+		require_once ITW_PLUGIN_PATH . 'php/class-wpoauth-access-token.php';
 
 		// Load plugin
 		instagrate_to_wordpress::load_plugin();
@@ -1346,5 +1383,3 @@ if ( class_exists( "instagrate_to_wordpress" ) ) {
 	}
 
 }
-
-?>
