@@ -5,7 +5,7 @@ class itw_Instagram {
 	private $apiUrl = 'https://api.instagram.com/v1/';
 
 	protected $client_id = '179980706756164';
-	protected $redirect_uri = 'https://oauth.polevaultweb.com/v2/';
+	protected $redirect_uri = 'https://l.intagrate.io/';
 	protected $access_token;
 
 	/**
@@ -29,7 +29,7 @@ class itw_Instagram {
 
 	public static function load_admin() {
 		add_filter( 'pvw_wp_oauth2_provider_display_name', get_class() . '::pvw_wp_oauth2_provider_display_name' );
-		self::$wpoauth = Polevaultweb\IntagrateLite\WPOAuth2\WPOAuth2::instance( 'https://oauth.polevaultweb.com/v2/', Intagrate_Lite_Instagram_Access_Token::class );
+		self::$wpoauth = Polevaultweb\IntagrateLite\WPOAuth2\WPOAuth2::instance( 'https://l.intagrate.io/', Intagrate_Lite_Instagram_Access_Token::class );
 		self::$wpoauth->register_admin_handler(  ITW_RETURN_URI );
 	}
 
