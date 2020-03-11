@@ -36,6 +36,10 @@ class Instagrate_Lite_Http {
 				'timeout'    => $this->http_timeout,
 			)
 		);
+
+		if ( defined( 'INTAGRATE_LITE_DEBUG' ) && defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
+			error_log( print_r( wp_remote_retrieve_body( $contents ), true ) );
+		}
 		if ( is_wp_error( $contents ) ) {
 			return false;
 		}
@@ -53,9 +57,14 @@ class Instagrate_Lite_Http {
 			$data = json_decode( $contents );
 
 			return $data;
-		} else {
-			return false;
 		}
+
+		$body = json_decode( wp_remote_retrieve_body( $contents ) );
+		if ( $body && isset( $body->error ) ) {
+			throw new InstagramApiError( $body->error->message, $body->error->code );
+		}
+
+		return false;
 	}
 
 	/**

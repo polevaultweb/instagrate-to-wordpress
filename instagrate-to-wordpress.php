@@ -399,16 +399,16 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 		/* Instagram post feed array */
 		public static function get_images() {
 
-			$access_token = false;
-
 			$images = array();
+
+			//get access token
+			$access_token = get_option( 'itw_accesstoken' );
 
 			if ( ! $access_token ):
 
 				//get current last id
 				$manuallstid = get_option( 'itw_manuallstid' );
-				//get access token
-				$access_token = get_option( 'itw_accesstoken' );
+
 				//get userid
 				$userid = get_option( 'itw_userid' );
 
@@ -1232,9 +1232,17 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 
 						} catch ( InstagramApiError $e ) {
+							if ( $e->getCode() == 10 && $e->getMessage() == 'Application does not have permission for this action' ) {
+								update_option( 'itw_accesstoken', '' );
+								update_option( 'itw_username', '' );
+								update_option( 'itw_userid', '' );
+								update_option( 'itw_manuallstid', '' );
 
+								$msg       = 'You did not approve the necessary API permissions when connecting to Instagram. Please reconnect.';
+								$msg_class = 'itw_disconnected';
+								$loginUrl  = $instagram->authorizeUrl( ITW_RETURN_URI );
 
-							if ( $e->getMessage() != 'Error: Instagram Servers Down' ) {
+							} else if ( $e->getMessage() != 'Error: Instagram Servers Down' ) {
 
 								update_option( 'itw_accesstoken', '' );
 								update_option( 'itw_username', '' );

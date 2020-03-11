@@ -10,7 +10,10 @@ class Intagrate_Lite_Instagram_Access_Token extends AbstractAccessToken {
 		$userid    = $values['user_id'];
 
 		$user     = ( new itw_Instagram() )->get_user( $this->token, $values['user_id'] );
-		$username = $user->username;
+		$username = '';
+		if ( isset ( $user->username ) ) {
+			$username = $user->username;
+		}
 
 		update_option( 'itw_accesstoken', $accesstkn );
 		update_option( 'itw_username', $username );
