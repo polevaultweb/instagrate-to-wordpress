@@ -404,7 +404,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			//get access token
 			$access_token = get_option( 'itw_accesstoken' );
 
-			if ( ! $access_token ):
+			if ( $access_token ):
 
 				//get current last id
 				$manuallstid = get_option( 'itw_manuallstid' );
