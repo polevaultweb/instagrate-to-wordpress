@@ -1242,6 +1242,15 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 								$msg_class = 'itw_disconnected';
 								$loginUrl  = $instagram->authorizeUrl( ITW_RETURN_URI );
 
+							} else if ( $e->getCode() == 190 ) {
+								update_option( 'itw_accesstoken', '' );
+								update_option( 'itw_username', '' );
+								update_option( 'itw_userid', '' );
+								update_option( 'itw_manuallstid', '' );
+
+								$msg       = 'You did not authorize the plugin to access your Instagram account. Please reconnect.';
+								$msg_class = 'itw_disconnected';
+								$loginUrl  = $instagram->authorizeUrl( ITW_RETURN_URI );
 							} else if ( $e->getMessage() != 'Error: Instagram Servers Down' ) {
 
 								update_option( 'itw_accesstoken', '' );
