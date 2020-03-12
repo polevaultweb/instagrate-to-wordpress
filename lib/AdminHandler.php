@@ -79,11 +79,13 @@ class AdminHandler {
 		$this->redirect( 'disconnection', $provider );
 	}
 
-	protected function redirect( $notice = null, $provider = '' ) {
-		$url = add_query_arg( array(
+	protected function redirect( $notice = null, $provider = '', $args = array() ) {
+		$args = array_merge( array(
 			'notice'    => $notice,
 			'wp-oauth2' => $provider,
-		), apply_filters( 'pvw_wp_oauth2_redirect_url', $this->redirect ) );
+		), $args );
+
+		$url = add_query_arg( $args, apply_filters( 'pvw_wp_oauth2_redirect_url', $this->redirect ) );
 
 		wp_redirect( $url );
 		exit;
@@ -141,7 +143,8 @@ class AdminHandler {
 		$error = filter_input( INPUT_GET, 'error' );
 		if ( $error ) {
 			// Show error notice
-			$this->redirect( 'error', $provider );
+			$error_desp = filter_input( INPUT_GET, 'error_description' );
+			$this->redirect( 'error', $provider, array( 'error' => $error, 'error_description' => $error_desp ) );
 		}
 
 		$token = filter_input( INPUT_GET, 'token' );
