@@ -555,16 +555,15 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 				// Check if auto_post_process has NOT already been 
 				$marker = get_transient( 'itw_posting' );
-				$marker = false;
+
 				$last_run = get_option( 'itw_last_run' );
 
 				if ( $last_run === false ) {
 
 					$last_run = 0;
 				}
-				$last_run =0;
 
-				if ( ( false === $marker || $marker != 'processing' ) && ( time() - $last_run > 10 ) ) {
+				if ( ( false === $marker || $marker != 'processing' ) && ( time() - $last_run > 60 ) ) {
 
 
 					try {
@@ -615,7 +614,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 									$debug .= "--------Image Id:" . $images[ $i ]["id"] . " Does not equal Last Id:" . $manuallstid . "\n";
 
 									// only allow the posting to happen if image timestamp is 2 minutes ago, to stop double posting through API
-									if ( ( time() - strtotime( $images[ $i ]["created"] ) ) > 1 ) {
+									if ( ( time() - strtotime( $images[ $i ]["created"] ) ) > 120 ) {
 
 										//get image variables
 										$title = $images[ $i ]["title"];
