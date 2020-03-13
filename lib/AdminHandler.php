@@ -142,9 +142,15 @@ class AdminHandler {
 
 		$error = filter_input( INPUT_GET, 'error' );
 		if ( $error ) {
+			$error_args = array( 'error' => $error );
 			// Show error notice
 			$error_desp = filter_input( INPUT_GET, 'error_description' );
-			$this->redirect( 'error', $provider, array( 'error' => $error, 'error_description' => $error_desp ) );
+
+			if ( $error_desp ) {
+				$error_args['error_description'] = $error_desp;
+			}
+
+			$this->redirect( 'error', $provider, $error_args );
 		}
 
 		$token = filter_input( INPUT_GET, 'token' );
@@ -195,7 +201,9 @@ class AdminHandler {
 
 		$error_description = filter_input( INPUT_GET, 'error_description' );
 		$message           = $error_description ? $error_description : __( 'An unknown error occurred.' );
-		$class = apply_filters( 'pvw_wp_oauth2_error_notice_class', 'error' );
+		$message           = apply_filters( 'pvw_wp_oauth2_error_notice_message', $message );
+		$class             = apply_filters( 'pvw_wp_oauth2_error_notice_class', 'error' );
+
 		printf( '<div class="' . $class . '"><p><strong>' . $provider . ' %s</strong> &mdash; %s</p></div>', __( 'Connection Error' ), $message );
 	}
 
