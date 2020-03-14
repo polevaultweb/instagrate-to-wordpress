@@ -236,9 +236,35 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 		}
 
+		protected static function maybe_display_basic_display_reconnect_notice() {
+			if ( isset( $_GET['page'] ) && $_GET['page'] == ITW_PLUGIN_SETTINGS ) {
+				// No need to show on the plugin page
+				return;
+			}
+
+			$expires = get_option( 'itw_accesstoken_expires');
+			if ( $expires ) {
+				// Connected to the Basic Display API
+				return;
+			}
+
+			$token = get_option( 'itw_accesstoken');
+			if ( ! $token ) {
+				// Not even connected
+				return;
+			}
+
+			$settings_link = '<a href="options-general.php?page=' . ITW_PLUGIN_SETTINGS . '">' . __( 'reconnecting', ITW_PLUGIN_SETTINGS ) . '</a>';
+			?>
+			<div class="notice notice-error">
+				<p><strong>Intagrate Lite</strong> &mdash; <?php printf( __( 'Instagram have updated their API and the plugin needs %s to continue to post images.' ), $settings_link );  ?></p>
+			</div>
+			<?php
+		}
+
 		/* Display check for user to make sure a blog page is selected */
 		public static function plugin_admin_notice() {
-
+			self::maybe_display_basic_display_reconnect_notice();
 			if ( isset( $_GET['page'] ) && $_GET['page'] == ITW_PLUGIN_SETTINGS ) {
 
 				if ( 'page' == get_option( 'show_on_front' ) ) {
