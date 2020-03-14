@@ -396,13 +396,17 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			}
 		}
 
+		protected static function get_access_token() {
+			return ( new itw_Instagram() )->get_access_token();
+		}
+
 		/* Instagram post feed array */
 		public static function get_images() {
 
 			$images = array();
 
 			//get access token
-			$access_token = get_option( 'itw_accesstoken' );
+			$access_token = self::get_access_token();
 
 			if ( $access_token ):
 
@@ -1056,12 +1060,11 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			} else {
 
 				$msg_class    = 'notice updated';
-				$access_token = get_option( 'itw_accesstoken' );
 
 				if ( $msg_class != 'itw_disconnected' ) {
 
 
-					$access_token = get_option( 'itw_accesstoken' );
+					$access_token = self::get_access_token();
 					$instagram    = new itw_Instagram( $access_token );
 
 					//echo $access_token;

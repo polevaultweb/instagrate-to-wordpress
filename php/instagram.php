@@ -45,20 +45,24 @@ class itw_Instagram {
 		return self::$wpoauth->get_disconnect_url( 'instagram-facebook', ITW_RETURN_URI );
 	}
 
-	public function get_access_token( $account_id ) {
-		$account_settings = get_post_meta( $account_id, '_instagrate_pro_settings', true );
-		if ( empty( $account_settings ) || empty( $account_settings['token'] ) ) {
+	public function get_access_token() {
+		$token = self::$wpoauth->token_manager->get_access_token('instagram-facebook');
+
+		if ( empty( $token ) ) {
 			return false;
 		}
 
-		if ( isset( $account_settings['token_expires'] ) && ( time() - HOUR_IN_SECONDS ) < $account_settings['token_expires'] ) {
-			return $account_settings['token'];
+		$expires = get_option( 'itw_accesstoken_expires' );
+
+		if ( ! $expires ) {
+			return false;
 		}
 
-		global $igp_account_id;
-		$igp_account_id = $account_id;
+		if ( $expires && ( time() - HOUR_IN_SECONDS ) < $expires ) {
+			return $token;
+		}
 
-		$new_token = $this->wpoauth->refresh_access_token( $this->get_client_id(), 'instagram-facebook' );
+		$new_token = self::$wpoauth->refresh_access_token( $this->client_id, 'instagram-facebook' );
 
 		return $new_token;
 	}

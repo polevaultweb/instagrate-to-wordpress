@@ -16,21 +16,24 @@ class Intagrate_Lite_Instagram_Access_Token extends AbstractAccessToken {
 		}
 
 		update_option( 'itw_accesstoken', $accesstkn );
+		update_option( 'itw_accesstoken_expires', $this->expires );
 		update_option( 'itw_username', $username );
 		update_option( 'itw_userid', $userid );
+		update_option( 'itw_manuallstid', '' );
 	}
 
 	public function delete() {
 		session_destroy();
 
 		update_option( 'itw_accesstoken', '' );
+		update_option( 'itw_accesstoken_expires', '' );
 		update_option( 'itw_username', '' );
 		update_option( 'itw_userid', '' );
 		update_option( 'itw_manuallstid', '' );
 	}
 
 	public function get_token() {
-		return get_option( 'itw_accesstoken', '' );
+		return get_option( 'itw_accesstoken' );
 	}
 
 	public function get_refresh_token() {
