@@ -4,7 +4,7 @@ Plugin URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plu
 Author URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
 Tags: instagram, instagram posts, instagram integration, automatic, post, instagram to wordpress, instagram posting, instagram images, images
 Requires at least: 3.0
-Tested up to: 5.3
+Tested up to: 5.4
 Requires PHP: 5.3
 Stable tag: 1.2.9
 
@@ -44,7 +44,7 @@ Yes it can do that! You can also choose to set the image as the post's featured 
 
 **Do I need to create an Instagram API app thingy?**
 
-Nope, Intagrate is 100% compatible with Instagram’s new API terms. You do not have to create your own API client. [Read more](https://intagrate.io/2016/05/new-name-instagram-platform-compliance/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite).
+Nope, Intagrate is 100% compatible with the [new Facebook Instagram API](https://intagrate.io/?p=1510&utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite) and [Instagram’s API terms](https://intagrate.io/2016/05/new-name-instagram-platform-compliance/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite). You do not have to create your own API client.
 
 **Can I customize the title of the post?**
 
