@@ -6,7 +6,7 @@ Tags: instagram, instagram posts, instagram integration, automatic, post, instag
 Requires at least: 3.0
 Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 1.2.9
+Stable tag: 1.3
 
 Automatically post your Instagram images to your WordPress site. Create new posts, save the Instagram image to the media library.
 
@@ -110,6 +110,11 @@ You can use the built in installer and upgrader, or you can install the plugin m
 If you have to upgrade manually simply repeat the installation steps and re-enable the plugin.
 
 == Changelog ==
+
+= 1.3 =
+Release Date: March 19th, 2020
+
+* Updated to be compatible with the Facebook Instagram API (the legacy API is being shutdown). [Read more](https://intagrate.io/?p=1510&utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite).
 
 = 1.2.9 =
 Release Date: March 7th, 2019
