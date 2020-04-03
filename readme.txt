@@ -2,17 +2,19 @@
 Contributors: polevaultweb
 Plugin URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
 Author URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
-Tags: instagram, instagram posts, instagram integration, automatic, post, instagram to wordpress, instagram posting, instagram images, images
+Tags: Instagram, Instagram feed, Instagram Photos, Instagram Posts, Instagram embed
 Requires at least: 3.0
 Tested up to: 5.4
-Requires PHP: 5.3
+Requires PHP: 5.5
 Stable tag: 1.3
 
-Automatically post your Instagram images to your WordPress site. Create new posts, save the Instagram image to the media library.
+Automatically post your Instagram images to your WordPress site. Create new WordPress posts from your Instagram images, save the Instagram image to the media library.
 
 == Description ==
 
-Automatically post your Instagram images to your WordPress site. When ever you post a new photo on Instagram, the plugin will create a post with the image caption as the title, and the Instagram image in the post content. Choose to save the Instagram image to the media library and set it as the featured image of the post.
+Automatically post your Instagram images to your WordPress site. When ever you post a new photo on Instagram, the plugin will create a post with the Instagram image caption as the title, and the Instagram image in the post content. Choose to save the Instagram image to the media library and set it as the featured image of the post.
+
+https://www.youtube.com/watch?v=Oa92bZZCpEE
 
 No more manual embedding Instagram images into your posts, let this plugin take care of it all.
 
@@ -38,9 +40,9 @@ Intagrate Lite provides a simple and effective approach to solving the problem o
 
 Even though the plugin is simple to set up and get started with, there are some great features that allow you to customize how the plugin posts the images.
 
-**What about saving the images to the WordPress Media Library?**
+**What about saving the Instagram images to the WordPress Media Library?**
 
-Yes it can do that! You can also choose to set the image as the post's featured image.
+Yes it can do that! You can also choose to set the Instagram image as the post's featured image.
 
 **Do I need to create an Instagram API app thingy?**
 
@@ -65,7 +67,7 @@ The [Pro version](https://intagrate.io/?utm_source=wordpress.org&utm_medium=free
 Glad you asked! [Intagrate](https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite) is the pro version of the plugin, which offers so much more. Here's what you get over free:
 
 * Priority email support
-* Connect your account and access your complete Instagram media history. Post your images and save them to the media library - own your images forever.
+* Connect your Instagram account and access your complete Instagram media history. Post your Instagram images and videos and save them to the media library - own your images forever.
 * Post Instagram Videos
 * Instagram videos can be posted to your WordPress site and displayed with a fully responsive HTML5 video player.
 * Full support for Instagram's new multi images and videos in one post feature.
@@ -105,7 +107,7 @@ You can use the built in installer and upgrader, or you can install the plugin m
 1. Delete any existing `instagrate-to-wordpress` folder from the `/wp-content/plugins/` directory
 2. Upload `instagrate-to-wordpress` folder to the `/wp-content/plugins/` directory
 3. Activate the plugin through the 'Plugins' menu in WordPress
-4. Go to the options panel under the 'Settings' menu and add your Instagram account details and set the rest of configuration you want.
+4. Go to the options panel under the 'Settings' menu and connect to your Instagram account details and set the rest of configuration you want.
 
 If you have to upgrade manually simply repeat the installation steps and re-enable the plugin.
 
