@@ -1143,13 +1143,10 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 										update_option( 'itw_imageclass', $imageclass );
 
 										if ( isset( $_POST['itw_imagelink'] ) ) {
-
 											$imagelink = $_POST['itw_imagelink'];
 											update_option( 'itw_imagelink', $imagelink );
-
 										} else {
-
-
+											delete_option( 'itw_imagelink' );
 											$imagelink = false;
 										}
 
@@ -1178,13 +1175,10 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 										update_option( 'itw_imagefeat', $imagefeat );
 
 										if ( isset( $_POST['itw_pluginlink'] ) ) {
-
 											$pluginlink = $_POST['itw_pluginlink'];
 											update_option( 'itw_pluginlink', $pluginlink );
-
 										} else {
-
-
+											delete_option( 'itw_pluginlink' );
 											$pluginlink = false;
 										}
 
@@ -1194,8 +1188,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 											update_option( 'itw_debugmode', $debugmode );
 
 										} else {
-
-
+											delete_option( 'itw_debugmode' );
 											$debugmode = false;
 										}
 
@@ -1209,7 +1202,11 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 										update_option( 'itw_defaulttitle', $defaulttitle );
 
 										if ( isset( $_POST['itw_ishome'] ) ) {
-											update_option( 'itw_ishome', $_POST['itw_ishome'] );
+											$is_home = $_POST['itw_ishome'];
+											update_option( 'itw_ishome', $is_home );
+										} else {
+											$is_home = false;
+											delete_option( 'itw_ishome' );
 										}
 
 
