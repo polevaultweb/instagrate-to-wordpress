@@ -434,7 +434,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			//get access token
 			$access_token = self::get_access_token();
 
-			if ( $access_token ):
+			if ( $access_token ) {
 
 				//get current last id
 				$manuallstid = get_option( 'itw_manuallstid' );
@@ -476,20 +476,10 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 					array_multisort( $orderByDate, SORT_ASC, $images );
 
 				} catch ( InstagramApiError $e ) {
-
-
-					if ( $e->getMessage() != 'Error: Instagram Servers Down' ) {
-
-						update_option( 'itw_accesstoken', '' );
-						update_option( 'itw_username', '' );
-						update_option( 'itw_userid', '' );
-						update_option( 'itw_manuallstid', '' );
-
-					}
-
+					error_log( 'Intagrate Lite: ' . 'get_images - ' . $e->getMessage() . ' (' . $e->getCode() . ')' );
 				}
 
-			endif;
+			}
 
 			return $images;
 
@@ -1258,6 +1248,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 
 						} catch ( InstagramApiError $e ) {
+							error_log( 'Intagrate Lite: ' . 'settings - ' . $e->getMessage() . ' (' .$e->getCode() . ')' );
 							if ( $e->getCode() == 10 && $e->getMessage() == 'Application does not have permission for this action' ) {
 								update_option( 'itw_accesstoken', '' );
 								update_option( 'itw_username', '' );
