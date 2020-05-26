@@ -7,10 +7,18 @@ class Intagrate_Lite_Instagram_Access_Token extends AbstractAccessToken {
 	public function save() {
 		if ( ! empty( $this->values ) ) {
 			// Only for new connections, not refreshing tokens
-			$values = maybe_unserialize( $this->values );
-			$userid = $values['user_id'];
+			// Extract the user_id from the serialized data using a manual method
+			// as unserialize breaks the 64 bit integer on 32 bit systems
+			$start_string = '"user_id";i:';
+			$start = strpos($this->values, $start_string);
+			$userid = substr($this->values, $start + strlen( $start_string ) , - 2 );
 
-			$user     = ( new itw_Instagram() )->get_user( $this->token, $values['user_id'] );
+			if ( empty( $userid ) ) {
+				error_log( 'Intagrate Lite: Error getting user_id from access token values ' );
+				error_log( print_r( $this->values, true ) );
+			}
+
+			$user     = ( new itw_Instagram() )->get_user( $this->token, $userid );
 			$username = '';
 			if ( isset ( $user->username ) ) {
 				$username = $user->username;
