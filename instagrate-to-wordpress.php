@@ -39,14 +39,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 		/* Plugin loading method */
 		public static function load_plugin() {
-
-			//cache fix
-			session_cache_limiter( false );
-			if ( ! session_id() ) {
-				session_start();
-			}
-
-			//settings menu
+						//settings menu
 			add_action( 'admin_menu', get_class() . '::register_settings_menu' );
 			//settings link
 			add_filter( 'plugin_action_links', get_class() . '::register_settings_link', 10, 2 );
@@ -756,13 +749,6 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 		/* Log out of instagram */
 		public static function log_out() {
-			//ob_start();
-
-			//clear cookies for instagram credentials
-			//setcookie ("sessionid", "", time() - 3600, "/","instagram.com");			
-
-			//Clear user settings in db
-			session_destroy();
 
 			update_option( 'itw_accesstoken', '' );
 			update_option( 'itw_username', '' );
