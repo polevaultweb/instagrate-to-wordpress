@@ -6,7 +6,7 @@ Tags: Instagram, Instagram feed, Instagram Photos, Instagram Posts, Instagram em
 Requires at least: 3.0
 Tested up to: 5.4
 Requires PHP: 5.5
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 
 Automatically post your Instagram images to your WordPress site. Create new WordPress posts from your Instagram images, save the Instagram image to the media library.
 
@@ -112,6 +112,11 @@ You can use the built in installer and upgrader, or you can install the plugin m
 If you have to upgrade manually simply repeat the installation steps and re-enable the plugin.
 
 == Changelog ==
+
+= 1.3.4 =
+Release Date: July 13th, 2020
+
+* Bug Fix: Warning: Cannot modify header information - headers already sent notices
 
 = 1.3.3 =
 Release Date: May 26th, 2020
