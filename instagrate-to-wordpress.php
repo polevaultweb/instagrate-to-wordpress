@@ -4,7 +4,7 @@ Plugin Name: Intagrate Lite
 Plugin URI: https://intagrate.io
 Description: Plugin for automatic posting of Instagram images into a WordPress blog.
 Author: polevaultweb
-Version: 1.3.3
+Version: 1.3.4
 Author URI: https://polevaultweb.com/
 
 Copyright 2012  polevaultweb  (email : info@polevaultweb.com)
@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 //plugin version
-define( 'ITW_PLUGIN_VERSION', '1.3.3' );
+define( 'ITW_PLUGIN_VERSION', '1.3.4' );
 define( 'ITW_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ITW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ITW_PLUGIN_BASE', plugin_basename( __FILE__ ) );
@@ -39,14 +39,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 		/* Plugin loading method */
 		public static function load_plugin() {
-
-			//cache fix
-			session_cache_limiter( false );
-			if ( ! session_id() ) {
-				session_start();
-			}
-
-			//settings menu
+						//settings menu
 			add_action( 'admin_menu', get_class() . '::register_settings_menu' );
 			//settings link
 			add_filter( 'plugin_action_links', get_class() . '::register_settings_link', 10, 2 );
@@ -756,13 +749,6 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 		/* Log out of instagram */
 		public static function log_out() {
-			//ob_start();
-
-			//clear cookies for instagram credentials
-			//setcookie ("sessionid", "", time() - 3600, "/","instagram.com");			
-
-			//Clear user settings in db
-			session_destroy();
 
 			update_option( 'itw_accesstoken', '' );
 			update_option( 'itw_username', '' );
