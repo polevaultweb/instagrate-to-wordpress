@@ -53,6 +53,7 @@
 							</div>
 
 							<input type="hidden" name="list" value="gSSwmSVrDx7maZb9763bd8cg"/>
+							<input type="hidden" name="subform" value="yes"/>
 
 							<div class="field submit-button">
 								<input type="submit" class="button" value="Send me the coupon">
