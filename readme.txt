@@ -6,17 +6,17 @@ Tags: Instagram, Instagram feed, Instagram Photos, Instagram Posts, Instagram em
 Requires at least: 3.0
 Tested up to: 5.4
 Requires PHP: 5.5
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 
 Automatically post your Instagram images to your WordPress site. Create new WordPress posts from your Instagram images, save the Instagram image to the media library.
 
 == Description ==
 
-Automatically post your Instagram images to your WordPress site. When ever you post a new photo on Instagram, the plugin will create a post with the Instagram image caption as the title, and the Instagram image in the post content. Choose to save the Instagram image to the media library and set it as the featured image of the post.
+Automatically post your [Instagram](https://www.instagram.com/) images to your WordPress site. When ever you post a new photo on Instagram, the plugin will create a post with the Instagram image caption as the title, and the Instagram image in the post content. Choose to save the Instagram image to the media library and set it as the featured image of the post.
 
 https://www.youtube.com/watch?v=Oa92bZZCpEE
 
-No more manual embedding Instagram images into your posts, let this plugin take care of it all.
+No more [manual embedding Instagram images](https://intagrate.io/2020/03/how-to-embed-an-instagram-post-on-wordpress/) into your posts, let this plugin take care of it all.
 
 1. Install the plugin
 2. Log in to Instagram from the plugin's settings page
@@ -112,6 +112,11 @@ You can use the built in installer and upgrader, or you can install the plugin m
 If you have to upgrade manually simply repeat the installation steps and re-enable the plugin.
 
 == Changelog ==
+
+= 1.3.5 =
+Release Date: Aug 7th, 2020
+
+* Bug Fix: Upgrade email subscribe form not working
 
 = 1.3.4 =
 Release Date: July 13th, 2020
