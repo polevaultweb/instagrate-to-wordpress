@@ -96,6 +96,10 @@ No, currently the plugin does not support Multisite. The [Pro version](https://i
 
 No, not at the moment. The plugin only allows one Instagram account at a time. The [Pro version](https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite) allows you to connect multiple accounts.
 
+= How can I report security bugs? =
+
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/instagrate-to-wordpress)
+
 == Installation ==
 
 This plugin requires the cURL PHP extension to be installed.
