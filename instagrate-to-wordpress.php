@@ -67,7 +67,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 		}
 
 		public static function image( $file ) {
-			return plugin_dir_url( __FILE__ ) . '/images/' . $file;
+			return plugin_dir_url( __FILE__ ) . '/assets/images/' . $file;
 		}
 
 		/* Add settings link to Plugin page */
@@ -93,7 +93,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			if ( isset( $_GET['page'] ) && $_GET['page'] == ITW_PLUGIN_SETTINGS ) {
 
 				//register styles
-				wp_register_style( 'itw_style', ITW_PLUGIN_URL . 'css/style.css' );
+				wp_register_style( 'itw_style', ITW_PLUGIN_URL . 'assets/css/style.css' );
 
 				//enqueue styles	
 				wp_enqueue_style( 'itw_style' );
