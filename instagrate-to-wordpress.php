@@ -413,6 +413,8 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 				$url = isset( $data->paging->next ) ? $data->paging->next : null;
 			}
+
+			return $images;
 		}
 
 		protected static function get_access_token() {
