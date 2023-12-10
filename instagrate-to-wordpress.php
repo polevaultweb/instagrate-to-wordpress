@@ -851,14 +851,14 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 			//Image class
 			if ( $imageclass != '' ) {
-				$imageclass = 'class="' . $imageclass . '" ';
+				$imageclass = 'class="' . esc_attr( $imageclass ) . '" ';
 			}
 
 			$debug .= "--------------Image Class: " . $imageclass . ' -- ' . Date( DATE_RFC822 ) . "\n";
 
 			//Image size
 			if ( $imagesize != '' ) {
-				$imagesize = 'width="' . $imagesize . '" height="' . $imagesize . '" ';
+				$imagesize = 'width="' . esc_attr( $imagesize ) . '" height="' . esc_attr( $imagesize ) . '" ';
 			}
 
 			$debug .= "--------------Image Size: " . $imagesize . ' -- ' . Date( DATE_RFC822 ) . "\n";
@@ -870,12 +870,12 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 				if ( $pos === false ) {
 
 					//no %%title%% found so put instagram title after custom title
-					$post_title = $customtitle;
+					$post_title = esc_html( $customtitle );
 
 				} else {
 
 					//%%title%% found so replace it with instagram title
-					$post_title = str_replace( "%%title%%", $post_title, $customtitle );
+					$post_title = str_replace( "%%title%%", $post_title, esc_html( $customtitle ) );
 				}
 
 				$debug .= "--------------Custom Ttle: " . $post_title . ' -- ' . Date( DATE_RFC822 ) . "\n";
@@ -884,14 +884,14 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 				if ( $post_title == '' || $post_title == null ) {
 
-					$post_title = $defaulttitle;
+					$post_title = esc_html( $defaulttitle );
 				}
 
 			}
 
 
 			$debug .= "--------------Post Author: " . $postauthor . ' -- ' . Date( DATE_RFC822 ) . "\n";
-			$debug .= "--------------Post Category: " . $postcats . ' -- ' . Date( DATE_RFC822 ) . "\n";
+			$debug .= "--------------Post Category: " . intval( $postcats ) . ' -- ' . Date( DATE_RFC822 ) . "\n";
 			$debug .= "--------------Post Status: " . $poststatus . ' -- ' . Date( DATE_RFC822 ) . "\n";
 			$debug .= "--------------Post Type: " . $posttype . ' -- ' . Date( DATE_RFC822 ) . "\n";
 
@@ -899,10 +899,10 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			$my_post = array(
 				'post_title'    => $post_title,
 				'post_content'  => '',
-				'post_author'   => $postauthor,
-				'post_category' => array( $postcats ),
+				'post_author'   => intval( $postauthor ),
+				'post_category' => array( intval( $postcats ) ),
 				'post_status'   => 'draft', //$poststatus,
-				'post_type'     => $posttype,
+				'post_type'     => esc_attr( $posttype ),
 				'post_date'     => $post_date, //The time post was made.
 				'post_date_gmt' => $post_date_gmt //[ Y-m-d H:i:s ] //The time post was made, in GMT.
 			);
@@ -952,7 +952,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			//image link
 			if ( $imagelink && $image != '' ) {
 				//add link to instagram shot
-				$image = '<a href="' . $post_image . '" title="' . $post_title . '" >' . $image . '</a>';
+				$image = '<a href="' . esc_url( $post_image ) . '" title="' . $post_title . '" >' . $image . '</a>';
 			}
 
 
@@ -1011,7 +1011,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 			//apply format if not standard
 			if ( $postformat != 'Standard' ) {
-				set_post_format( $new_post, $postformat );
+				set_post_format( $new_post, esc_html( $postformat ) );
 			}
 
 			//apply featured image if needed
@@ -1024,7 +1024,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			// Update post with content
 			$update_post                 = array();
 			$update_post['ID']           = $new_post;
-			$update_post['post_status']  = $poststatus;
+			$update_post['post_status']  = esc_attr( $poststatus );
 			$update_post['post_content'] = $post_body;
 
 			// Update the post into the database
@@ -1084,7 +1084,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 							$username  = get_option( 'itw_username' );
 							$userid    = get_option( 'itw_userid' );
-							$msg       = $username;
+							$msg       = esc_attr( $username );
 							$msg_class = 'itw_connected notice updated';
 
 
