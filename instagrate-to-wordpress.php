@@ -1,5 +1,5 @@
 <?php
-/*  
+/*
 Plugin Name: Intagrate Lite
 Plugin URI: https://intagrate.io
 Description: Plugin for automatic posting of Instagram images into a WordPress blog.
@@ -10,7 +10,7 @@ Author URI: https://polevaultweb.com/
 Copyright 2012  polevaultweb  (email : info@polevaultweb.com)
 
 This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as 
+it under the terms of the GNU General Public License, version 2, as
 published by the Free Software Foundation.
 
 This program is distributed in the hope that it will be useful,
@@ -95,7 +95,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 				//register styles
 				wp_register_style( 'itw_style', ITW_PLUGIN_URL . 'assets/css/style.css' );
 
-				//enqueue styles	
+				//enqueue styles
 				wp_enqueue_style( 'itw_style' );
 				wp_enqueue_style( 'dashboard' );
 				//enqueue scripts
@@ -359,7 +359,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 				}
 				update_option( 'itw_postcats', $cat );
-				//set post date 
+				//set post date
 				update_option( 'itw_post_date', 'now' );
 
 			}
@@ -563,7 +563,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 				$debug .= "--START Auto post function START " . Date( DATE_RFC822 ) . "\n";
 				$debug .= "--Marker: " . get_transient( 'itw_posting' ) . "\n";
 
-				// Check if auto_post_process has NOT already been 
+				// Check if auto_post_process has NOT already been
 				$marker = get_transient( 'itw_posting' );
 
 				$last_run = get_option( 'itw_last_run' );
@@ -961,7 +961,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 				$customtext = stripslashes( htmlspecialchars_decode( $customtext ) );
 
-				//check if %%image%% has been used 
+				//check if %%image%% has been used
 				$pos = strpos( strtolower( $customtext ), '%%image%%' );
 				if ( $pos === false ) {
 
@@ -1006,7 +1006,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			$debug .= "--------------START wp_insert_post " . Date( DATE_RFC822 ) . "\n";
 
 
-			//apply custom meta to make sure the image won't get duplicated 
+			//apply custom meta to make sure the image won't get duplicated
 			add_post_meta( $new_post, 'instagrate_id', $image_id );
 
 			//apply format if not standard
@@ -1102,7 +1102,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 							if ( $feed != null ) {
 
-									if ( isset( $_POST['itw_hidden'] ) && $_POST['itw_hidden'] == 'Y' ) {
+									if ( isset( $_POST['itw_hidden'] ) && $_POST['itw_hidden'] == 'Y' && check_admin_referer( 'itw-settings' ) ) {
 
 										update_option( 'itw_configured', 'Installed' );
 
