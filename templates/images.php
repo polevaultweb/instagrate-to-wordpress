@@ -17,11 +17,11 @@
 							<a class="feed_image" href="#">
 														<span class="overlay">
 															<span class="caption">
-																<?php echo $title ?><br />
+																<?php echo esc_html( $title); ?><br />
 
 															</span>
 														</span>
-								<img src="<?php echo $item->media_url; ?>" alt="<?php echo $title ?>" /><br />
+								<img src="<?php echo esc_url( $item->media_url ); ?>" alt="<?php echo esc_html( $title ); ?>" /><br />
 							</a>
 						</div>
 
