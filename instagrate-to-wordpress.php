@@ -286,13 +286,8 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 		/* Plugin debug functions */
 		public static function plugin_debug_write( $string ) {
-
-			//Set the filepath and filename for the WP Hook Sniff text report */
-			$itw_debug_path_file = ITW_PLUGIN_PATH . "debug.txt";
-
-			$fh = fopen( $itw_debug_path_file, "a" ) or die( "can't open file" );
-			fwrite( $fh, $string );
-			fclose( $fh );
+			// Requires WP_DEBUG=true and WP_DEBUG_LOG=true
+			error_log( $string );
 
 		}
 
