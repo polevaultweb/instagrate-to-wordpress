@@ -12,6 +12,7 @@ composer.json export-ignore
 composer.lock export-ignore
 phpstan.neon.dist export-ignore
 /vendor export-ignore
+/release export-ignore
 
 # Standards for multi-platform colaboration
 

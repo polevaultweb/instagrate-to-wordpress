@@ -1,2 +1,4 @@
 debug.txt
-/vendor/
+/vendor
+/release
+/node_modules
