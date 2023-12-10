@@ -1367,17 +1367,11 @@ if ( class_exists( "instagrate_to_wordpress" ) ) {
 	if ( version_compare( PHP_VERSION, '5.3', '<' ) ) {
 		add_action( 'admin_notices', 'intagrate_lite_compatibility' );
 	} else {
-		require_once ITW_PLUGIN_PATH . 'php/instagram.php';
-		require_once ITW_PLUGIN_PATH . 'php/emoji.php';
-
-		require_once ITW_PLUGIN_PATH . 'lib/WPOAuth2.php';
-		require_once ITW_PLUGIN_PATH . 'lib/TokenManager.php';
-		require_once ITW_PLUGIN_PATH . 'lib/AdminHandler.php';
-		require_once ITW_PLUGIN_PATH . 'lib/AccessTokenInterface.php';
-		require_once ITW_PLUGIN_PATH . 'lib/AbstractAccessToken.php';
-		require_once ITW_PLUGIN_PATH . 'lib/AccessToken.php';
-		require_once ITW_PLUGIN_PATH . 'lib/class-http.php';
-		require_once ITW_PLUGIN_PATH . 'php/class-wpoauth-access-token.php';
+		require_once ITW_PLUGIN_PATH .'vendor/autoload.php';
+		require_once ITW_PLUGIN_PATH . 'includes/instagram.php';
+		require_once ITW_PLUGIN_PATH . 'includes/emoji.php';
+		require_once ITW_PLUGIN_PATH . 'includes/class-http.php';
+		require_once ITW_PLUGIN_PATH . 'includes/class-wpoauth-access-token.php';
 
 		// Load plugin
 		instagrate_to_wordpress::load_plugin();

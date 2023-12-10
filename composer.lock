@@ -4,8 +4,46 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e9b307a0bb42f997c2e65e5e994c608e",
-    "packages": [],
+    "content-hash": "224d02b32272836ad73283d018cdc094",
+    "packages": [
+        {
+            "name": "polevaultweb/wp-oauth2",
+            "version": "dev-more-configurable",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/polevaultweb/wp-oauth2.git",
+                "reference": "759d5c0a933e152742fc7a291d4bb9f1ddbd93d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/polevaultweb/wp-oauth2/zipball/759d5c0a933e152742fc7a291d4bb9f1ddbd93d8",
+                "reference": "759d5c0a933e152742fc7a291d4bb9f1ddbd93d8",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Polevaultweb\\WPOAuth2\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Iain Poulson",
+                    "homepage": "https://polevaultweb.com/"
+                }
+            ],
+            "description": "WordPress library for connecting to services via oAuth from inside a WordPress plugin.",
+            "support": {
+                "issues": "https://github.com/polevaultweb/wp-oauth2/issues",
+                "source": "https://github.com/polevaultweb/wp-oauth2/tree/more-configurable"
+            },
+            "time": "2021-06-17T12:52:13+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "php-stubs/wordpress-stubs",
@@ -258,7 +296,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "polevaultweb/wp-oauth2": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

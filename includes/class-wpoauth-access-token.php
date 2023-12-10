@@ -1,6 +1,6 @@
 <?php
 
-use Polevaultweb\IntagrateLite\WPOAuth2\AbstractAccessToken;
+use Polevaultweb\WPOAuth2\AbstractAccessToken;
 
 class Intagrate_Lite_Instagram_Access_Token extends AbstractAccessToken {
 
