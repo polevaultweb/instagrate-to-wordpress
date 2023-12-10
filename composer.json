@@ -1,0 +1,12 @@
+{
+    "name": "polevaultweb/instagrate-to-wordpress",
+    "authors": [
+        {
+            "name": "Iain",
+            "email": "support@polevaultweb.com"
+        }
+    ],
+    "require-dev": {
+        "szepeviktor/phpstan-wordpress": "^1.3"
+    }
+}
