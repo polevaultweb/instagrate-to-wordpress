@@ -834,31 +834,31 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 			$orig_title = $post_title;
 
-			$imagesize    = get_option( 'itw_imagesize' );
-			$imageclass   = get_option( 'itw_imageclass' );
-			$postcats     = get_option( 'itw_postcats' );
-			$postauthor   = get_option( 'itw_postauthor' );
-			$postformat   = get_option( 'itw_postformat' );
-			$customtitle  = get_option( 'itw_customtitle' );
-			$customtext   = get_option( 'itw_customtext' );
+			$imagesize    = esc_attr( get_option( 'itw_imagesize' ) );
+			$imageclass   = esc_attr( get_option( 'itw_imageclass' ) );
+			$postcats     = intval( get_option( 'itw_postcats', 0 ) );
+			$postauthor   = intval( get_option( 'itw_postauthor', 0 ) );
+			$postformat   = esc_attr( get_option( 'itw_postformat' ) );
+			$customtitle  = esc_html( get_option( 'itw_customtitle' ) );
+			$customtext   = esc_html( get_option( 'itw_customtext' ) );
 			$pluginlink   = get_option( 'itw_pluginlink' );
 			$imagelink    = get_option( 'itw_imagelink' );
 			$imagesave    = get_option( 'itw_imagesave' );
 			$imagefeat    = get_option( 'itw_imagefeat' );
-			$poststatus   = get_option( 'itw_poststatus' );
-			$posttype     = get_option( 'itw_posttype' );
-			$defaulttitle = get_option( 'itw_defaulttitle' );
+			$poststatus   = esc_attr( get_option( 'itw_poststatus' ) );
+			$posttype     = esc_attr( get_option( 'itw_posttype' ) );
+			$defaulttitle = esc_html( get_option( 'itw_defaulttitle' ) );
 
 			//Image class
 			if ( $imageclass != '' ) {
-				$imageclass = 'class="' . esc_attr( $imageclass ) . '" ';
+				$imageclass = 'class="' . $imageclass . '" ';
 			}
 
 			$debug .= "--------------Image Class: " . $imageclass . ' -- ' . Date( DATE_RFC822 ) . "\n";
 
 			//Image size
 			if ( $imagesize != '' ) {
-				$imagesize = 'width="' . esc_attr( $imagesize ) . '" height="' . esc_attr( $imagesize ) . '" ';
+				$imagesize = 'width="' . $imagesize . '" height="' . $imagesize . '" ';
 			}
 
 			$debug .= "--------------Image Size: " . $imagesize . ' -- ' . Date( DATE_RFC822 ) . "\n";
@@ -870,12 +870,12 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 				if ( $pos === false ) {
 
 					//no %%title%% found so put instagram title after custom title
-					$post_title = esc_html( $customtitle );
+					$post_title = $customtitle;
 
 				} else {
 
 					//%%title%% found so replace it with instagram title
-					$post_title = str_replace( "%%title%%", $post_title, esc_html( $customtitle ) );
+					$post_title = str_replace( "%%title%%", $post_title, $customtitle );
 				}
 
 				$debug .= "--------------Custom Ttle: " . $post_title . ' -- ' . Date( DATE_RFC822 ) . "\n";
@@ -884,14 +884,14 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 				if ( $post_title == '' || $post_title == null ) {
 
-					$post_title = esc_html( $defaulttitle );
+					$post_title = $defaulttitle;
 				}
 
 			}
 
 
 			$debug .= "--------------Post Author: " . $postauthor . ' -- ' . Date( DATE_RFC822 ) . "\n";
-			$debug .= "--------------Post Category: " . intval( $postcats ) . ' -- ' . Date( DATE_RFC822 ) . "\n";
+			$debug .= "--------------Post Category: " . $postcats . ' -- ' . Date( DATE_RFC822 ) . "\n";
 			$debug .= "--------------Post Status: " . $poststatus . ' -- ' . Date( DATE_RFC822 ) . "\n";
 			$debug .= "--------------Post Type: " . $posttype . ' -- ' . Date( DATE_RFC822 ) . "\n";
 
@@ -899,10 +899,10 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			$my_post = array(
 				'post_title'    => $post_title,
 				'post_content'  => '',
-				'post_author'   => intval( $postauthor ),
-				'post_category' => array( intval( $postcats ) ),
+				'post_author'   => $postauthor,
+				'post_category' => array( $postcats ),
 				'post_status'   => 'draft', //$poststatus,
-				'post_type'     => esc_attr( $posttype ),
+				'post_type'     => $posttype,
 				'post_date'     => $post_date, //The time post was made.
 				'post_date_gmt' => $post_date_gmt //[ Y-m-d H:i:s ] //The time post was made, in GMT.
 			);
@@ -1011,7 +1011,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 			//apply format if not standard
 			if ( $postformat != 'Standard' ) {
-				set_post_format( $new_post, esc_html( $postformat ) );
+				set_post_format( $new_post, $postformat );
 			}
 
 			//apply featured image if needed
@@ -1024,7 +1024,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			// Update post with content
 			$update_post                 = array();
 			$update_post['ID']           = $new_post;
-			$update_post['post_status']  = esc_attr( $poststatus );
+			$update_post['post_status']  = $poststatus;
 			$update_post['post_content'] = $post_body;
 
 			// Update the post into the database
@@ -1194,23 +1194,22 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 										self::set_default_options( $lastid );
 
 										$manuallstid = get_option( 'itw_manuallstid' );
-										$imagesize   = get_option( 'itw_imagesize' );
-										$imageclass  = get_option( 'itw_imageclass' );
+										$imagesize    = esc_attr( get_option( 'itw_imagesize' ) );
+										$imageclass   = esc_attr( get_option( 'itw_imageclass' ) );
 										$imagelink   = get_option( 'itw_imagelink' );
-										$postcats    = get_option( 'itw_postcats' );
-										$postauthor  = get_option( 'itw_postauthor' );
-										$postformat  = get_option( 'itw_postformat' );
+										$postcats     = intval( get_option( 'itw_postcats', 0 ) );
+										$postauthor   = intval( get_option( 'itw_postauthor', 0 ) );
+										$postformat   = esc_attr( get_option( 'itw_postformat' ) );
 										$postdate    = get_option( 'itw_post_date' );
-										$customtitle = get_option( 'itw_customtitle' );
-										$customtext  = get_option( 'itw_customtext' );
+										$customtitle  = esc_html( get_option( 'itw_customtitle' ) );
+										$customtext = esc_html( get_option( 'itw_customtext' ) );
 										$pluginlink  = get_option( 'itw_pluginlink' );
 										$imagesave   = get_option( 'itw_imagesave' );
 										$imagefeat   = get_option( 'itw_imagefeat' );
-
 										$debugmode    = get_option( 'itw_debugmode' );
-										$poststatus   = get_option( 'itw_poststatus' );
-										$posttype     = get_option( 'itw_posttype' );
-										$defaulttitle = get_option( 'itw_defaulttitle' );
+										$poststatus   = esc_attr( get_option( 'itw_poststatus' ) );
+										$posttype     = esc_attr( get_option( 'itw_posttype' ) );
+										$defaulttitle = esc_html( get_option( 'itw_defaulttitle' ) );
 										$is_home      = get_option( 'itw_ishome', false );
 
 									}
