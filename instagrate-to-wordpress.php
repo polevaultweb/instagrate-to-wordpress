@@ -1075,11 +1075,9 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 						$msg_class = 'notice-info notice';
 						$loginUrl  = $instagram->authorizeUrl( ITW_RETURN_URI );
 
-					} else {
+					} else if ( ! isset( $_POST['_wpnonce' ] ) || check_admin_referer( 'itw-settings' ) ) {
 
 						//logged in
-
-
 						try {
 
 							$username  = get_option( 'itw_username' );
@@ -1102,7 +1100,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 							if ( $feed != null ) {
 
-									if ( isset( $_POST['itw_hidden'] ) && $_POST['itw_hidden'] == 'Y' && check_admin_referer( 'itw-settings' ) ) {
+									if ( isset( $_POST['itw_hidden'] ) && $_POST['itw_hidden'] == 'Y' ) {
 
 										update_option( 'itw_configured', 'Installed' );
 
