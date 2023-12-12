@@ -6,7 +6,7 @@ Tags: Instagram, Instagram feed, Instagram Photos, Instagram Posts, Instagram em
 Requires at least: 3.0
 Tested up to: 6.6
 Requires PHP: 5.5
-Stable tag: 1.3.6
+Stable Tag: 1.3.6
 
 Automatically post your Instagram images to your WordPress site. Create new WordPress posts from your Instagram images, save the Instagram image to the media library.
 
