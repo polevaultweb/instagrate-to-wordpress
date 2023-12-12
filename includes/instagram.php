@@ -6,7 +6,7 @@ class itw_Instagram {
 
 	private $apiUrl = 'https://api.instagram.com/v1/';
 
-	protected $client_id = '179980706756164';
+	protected $client_id = '476691356355592';
 	protected $redirect_uri = 'https://l.intagrate.io/';
 	protected $access_token;
 
