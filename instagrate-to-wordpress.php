@@ -1,16 +1,16 @@
 <?php
-/*  
+/*
 Plugin Name: Intagrate Lite
 Plugin URI: https://intagrate.io
 Description: Plugin for automatic posting of Instagram images into a WordPress blog.
 Author: polevaultweb
-Version: 1.3.5
+Version: 1.3.6
 Author URI: https://polevaultweb.com/
 
 Copyright 2012  polevaultweb  (email : info@polevaultweb.com)
 
 This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as 
+it under the terms of the GNU General Public License, version 2, as
 published by the Free Software Foundation.
 
 This program is distributed in the hope that it will be useful,
@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 //plugin version
-define( 'ITW_PLUGIN_VERSION', '1.3.5' );
+define( 'ITW_PLUGIN_VERSION', '1.3.6' );
 define( 'ITW_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ITW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ITW_PLUGIN_BASE', plugin_basename( __FILE__ ) );
@@ -67,7 +67,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 		}
 
 		public static function image( $file ) {
-			return plugin_dir_url( __FILE__ ) . '/images/' . $file;
+			return plugin_dir_url( __FILE__ ) . '/assets/images/' . $file;
 		}
 
 		/* Add settings link to Plugin page */
@@ -93,9 +93,9 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			if ( isset( $_GET['page'] ) && $_GET['page'] == ITW_PLUGIN_SETTINGS ) {
 
 				//register styles
-				wp_register_style( 'itw_style', ITW_PLUGIN_URL . 'css/style.css' );
+				wp_register_style( 'itw_style', ITW_PLUGIN_URL . 'assets/css/style.css' );
 
-				//enqueue styles	
+				//enqueue styles
 				wp_enqueue_style( 'itw_style' );
 				wp_enqueue_style( 'dashboard' );
 				//enqueue scripts
@@ -286,13 +286,8 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 		/* Plugin debug functions */
 		public static function plugin_debug_write( $string ) {
-
-			//Set the filepath and filename for the WP Hook Sniff text report */
-			$itw_debug_path_file = ITW_PLUGIN_PATH . "debug.txt";
-
-			$fh = fopen( $itw_debug_path_file, "a" ) or die( "can't open file" );
-			fwrite( $fh, $string );
-			fclose( $fh );
+			// Requires WP_DEBUG=true and WP_DEBUG_LOG=true
+			error_log( $string );
 
 		}
 
@@ -364,7 +359,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 				}
 				update_option( 'itw_postcats', $cat );
-				//set post date 
+				//set post date
 				update_option( 'itw_post_date', 'now' );
 
 			}
@@ -413,6 +408,8 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 				$url = isset( $data->paging->next ) ? $data->paging->next : null;
 			}
+
+			return $images;
 		}
 
 		protected static function get_access_token() {
@@ -566,7 +563,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 				$debug .= "--START Auto post function START " . Date( DATE_RFC822 ) . "\n";
 				$debug .= "--Marker: " . get_transient( 'itw_posting' ) . "\n";
 
-				// Check if auto_post_process has NOT already been 
+				// Check if auto_post_process has NOT already been
 				$marker = get_transient( 'itw_posting' );
 
 				$last_run = get_option( 'itw_last_run' );
@@ -837,20 +834,20 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 			$orig_title = $post_title;
 
-			$imagesize    = get_option( 'itw_imagesize' );
-			$imageclass   = get_option( 'itw_imageclass' );
-			$postcats     = get_option( 'itw_postcats' );
-			$postauthor   = get_option( 'itw_postauthor' );
-			$postformat   = get_option( 'itw_postformat' );
-			$customtitle  = get_option( 'itw_customtitle' );
-			$customtext   = get_option( 'itw_customtext' );
+			$imagesize    = esc_attr( get_option( 'itw_imagesize' ) );
+			$imageclass   = esc_attr( get_option( 'itw_imageclass' ) );
+			$postcats     = intval( get_option( 'itw_postcats', 0 ) );
+			$postauthor   = intval( get_option( 'itw_postauthor', 0 ) );
+			$postformat   = esc_attr( get_option( 'itw_postformat' ) );
+			$customtitle  = esc_html( get_option( 'itw_customtitle' ) );
+			$customtext   = esc_html( get_option( 'itw_customtext' ) );
 			$pluginlink   = get_option( 'itw_pluginlink' );
 			$imagelink    = get_option( 'itw_imagelink' );
 			$imagesave    = get_option( 'itw_imagesave' );
 			$imagefeat    = get_option( 'itw_imagefeat' );
-			$poststatus   = get_option( 'itw_poststatus' );
-			$posttype     = get_option( 'itw_posttype' );
-			$defaulttitle = get_option( 'itw_defaulttitle' );
+			$poststatus   = esc_attr( get_option( 'itw_poststatus' ) );
+			$posttype     = esc_attr( get_option( 'itw_posttype' ) );
+			$defaulttitle = esc_html( get_option( 'itw_defaulttitle' ) );
 
 			//Image class
 			if ( $imageclass != '' ) {
@@ -955,7 +952,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			//image link
 			if ( $imagelink && $image != '' ) {
 				//add link to instagram shot
-				$image = '<a href="' . $post_image . '" title="' . $post_title . '" >' . $image . '</a>';
+				$image = '<a href="' . esc_url( $post_image ) . '" title="' . $post_title . '" >' . $image . '</a>';
 			}
 
 
@@ -964,7 +961,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 				$customtext = stripslashes( htmlspecialchars_decode( $customtext ) );
 
-				//check if %%image%% has been used 
+				//check if %%image%% has been used
 				$pos = strpos( strtolower( $customtext ), '%%image%%' );
 				if ( $pos === false ) {
 
@@ -1009,7 +1006,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			$debug .= "--------------START wp_insert_post " . Date( DATE_RFC822 ) . "\n";
 
 
-			//apply custom meta to make sure the image won't get duplicated 
+			//apply custom meta to make sure the image won't get duplicated
 			add_post_meta( $new_post, 'instagrate_id', $image_id );
 
 			//apply format if not standard
@@ -1081,13 +1078,11 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 					} else {
 
 						//logged in
-
-
 						try {
 
 							$username  = get_option( 'itw_username' );
 							$userid    = get_option( 'itw_userid' );
-							$msg       = $username;
+							$msg       = esc_attr( $username );
 							$msg_class = 'itw_connected notice updated';
 
 
@@ -1105,7 +1100,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 							if ( $feed != null ) {
 
-									if ( isset( $_POST['itw_hidden'] ) && $_POST['itw_hidden'] == 'Y' ) {
+									if ( isset( $_POST['itw_hidden'] ) && $_POST['itw_hidden'] == 'Y' && check_admin_referer( 'itw-settings' ) ) {
 
 										update_option( 'itw_configured', 'Installed' );
 
@@ -1199,23 +1194,22 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 										self::set_default_options( $lastid );
 
 										$manuallstid = get_option( 'itw_manuallstid' );
-										$imagesize   = get_option( 'itw_imagesize' );
-										$imageclass  = get_option( 'itw_imageclass' );
+										$imagesize    = esc_attr( get_option( 'itw_imagesize' ) );
+										$imageclass   = esc_attr( get_option( 'itw_imageclass' ) );
 										$imagelink   = get_option( 'itw_imagelink' );
-										$postcats    = get_option( 'itw_postcats' );
-										$postauthor  = get_option( 'itw_postauthor' );
-										$postformat  = get_option( 'itw_postformat' );
+										$postcats     = intval( get_option( 'itw_postcats', 0 ) );
+										$postauthor   = intval( get_option( 'itw_postauthor', 0 ) );
+										$postformat   = esc_attr( get_option( 'itw_postformat' ) );
 										$postdate    = get_option( 'itw_post_date' );
-										$customtitle = get_option( 'itw_customtitle' );
-										$customtext  = get_option( 'itw_customtext' );
+										$customtitle  = esc_html( get_option( 'itw_customtitle' ) );
+										$customtext = esc_html( get_option( 'itw_customtext' ) );
 										$pluginlink  = get_option( 'itw_pluginlink' );
 										$imagesave   = get_option( 'itw_imagesave' );
 										$imagefeat   = get_option( 'itw_imagefeat' );
-
 										$debugmode    = get_option( 'itw_debugmode' );
-										$poststatus   = get_option( 'itw_poststatus' );
-										$posttype     = get_option( 'itw_posttype' );
-										$defaulttitle = get_option( 'itw_defaulttitle' );
+										$poststatus   = esc_attr( get_option( 'itw_poststatus' ) );
+										$posttype     = esc_attr( get_option( 'itw_posttype' ) );
+										$defaulttitle = esc_html( get_option( 'itw_defaulttitle' ) );
 										$is_home      = get_option( 'itw_ishome', false );
 
 									}
@@ -1370,17 +1364,11 @@ if ( class_exists( "instagrate_to_wordpress" ) ) {
 	if ( version_compare( PHP_VERSION, '5.3', '<' ) ) {
 		add_action( 'admin_notices', 'intagrate_lite_compatibility' );
 	} else {
-		require_once ITW_PLUGIN_PATH . 'php/instagram.php';
-		require_once ITW_PLUGIN_PATH . 'php/emoji.php';
-
-		require_once ITW_PLUGIN_PATH . 'lib/WPOAuth2.php';
-		require_once ITW_PLUGIN_PATH . 'lib/TokenManager.php';
-		require_once ITW_PLUGIN_PATH . 'lib/AdminHandler.php';
-		require_once ITW_PLUGIN_PATH . 'lib/AccessTokenInterface.php';
-		require_once ITW_PLUGIN_PATH . 'lib/AbstractAccessToken.php';
-		require_once ITW_PLUGIN_PATH . 'lib/AccessToken.php';
-		require_once ITW_PLUGIN_PATH . 'lib/class-http.php';
-		require_once ITW_PLUGIN_PATH . 'php/class-wpoauth-access-token.php';
+		require_once ITW_PLUGIN_PATH .'vendor/autoload.php';
+		require_once ITW_PLUGIN_PATH . 'includes/instagram.php';
+		require_once ITW_PLUGIN_PATH . 'includes/emoji.php';
+		require_once ITW_PLUGIN_PATH . 'includes/class-http.php';
+		require_once ITW_PLUGIN_PATH . 'includes/class-wpoauth-access-token.php';
 
 		// Load plugin
 		instagrate_to_wordpress::load_plugin();

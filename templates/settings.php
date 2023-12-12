@@ -298,7 +298,7 @@
 
 						<p class="submit">
 							<input type="submit" class="button-primary" name="Submit" value="<?php _e( 'Update Options', 'ipp_trdom' ) ?>" />
-
+							<?php wp_nonce_field( 'itw-settings' ); ?>
 						</p>
 			</form>
 

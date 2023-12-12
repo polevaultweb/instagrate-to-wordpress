@@ -4,9 +4,9 @@ Plugin URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plu
 Author URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
 Tags: Instagram, Instagram feed, Instagram Photos, Instagram Posts, Instagram embed
 Requires at least: 3.0
-Tested up to: 5.6
+Tested up to: 6.6
 Requires PHP: 5.5
-Stable tag: 1.3.5
+Stable tag: 1.3.6
 
 Automatically post your Instagram images to your WordPress site. Create new WordPress posts from your Instagram images, save the Instagram image to the media library.
 
@@ -96,6 +96,10 @@ No, currently the plugin does not support Multisite. The [Pro version](https://i
 
 No, not at the moment. The plugin only allows one Instagram account at a time. The [Pro version](https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite) allows you to connect multiple accounts.
 
+= How can I report security bugs? =
+
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/instagrate-to-wordpress)
+
 == Installation ==
 
 This plugin requires the cURL PHP extension to be installed.
@@ -112,6 +116,11 @@ You can use the built in installer and upgrader, or you can install the plugin m
 If you have to upgrade manually simply repeat the installation steps and re-enable the plugin.
 
 == Changelog ==
+
+= 1.3.6 =
+Release Date: Dec 12th, 2023
+
+* Security: Fixes after Patchstack's Security audit
 
 = 1.3.5 =
 Release Date: Aug 7th, 2020
@@ -177,18 +186,18 @@ Release Date: December 13th, 2018
 * Fix - Session notice fix
 * Fix - Other notices
 
-= 1.2.2 = 
+= 1.2.2 =
 
 * WordPress 3.5 compatible
 * Fix - Media attaching images handled better
 * Improvement - Plugin posts on a category page so is_home() override isn't needed.
 
 
-= 1.2.1 = 
+= 1.2.1 =
 
 * Further Fix - Post is only published once image is set. This is a fix for users with auto social posting plugins who weren't seeing images in their social posts. Thanks Dutch Doscher!
 
-= 1.2 = 
+= 1.2 =
 
 * New - Option to override is_home() check setting on automatic posting if themes do not have a set blog page.
 * Fix - Post is only published once image is set. This is a fix for users with auto social posting plugins who weren't seeing images in their social posts.
@@ -261,7 +270,7 @@ Release Date: December 13th, 2018
 * When a custom post title is added without the %%title%% text, it no longer adds the Instagram image title as well.
 * You can now use the %%title%% text within the post body.
 
-= 1.0.2 = 
+= 1.0.2 =
 
 * Category dropdown in WordPress post settings now shows all categories even if no posts exist for the category. Also order by name.
 

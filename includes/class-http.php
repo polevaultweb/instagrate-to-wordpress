@@ -44,7 +44,7 @@ class Instagrate_Lite_Http {
 			return false;
 		}
 		if ( 200 == $contents['response']['code'] ) {
-			if ( is_wp_error( $contents ) || ! isset( $contents['body'] ) ) {
+			if ( ! isset( $contents['body'] ) ) {
 				return false;
 			}
 			$contents = $contents['body'];
