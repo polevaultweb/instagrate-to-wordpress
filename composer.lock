@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/polevaultweb/wp-oauth2.git",
-                "reference": "759d5c0a933e152742fc7a291d4bb9f1ddbd93d8"
+                "reference": "ca7290d43e61c7fdb09d6a956be349a1926bdb97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/polevaultweb/wp-oauth2/zipball/759d5c0a933e152742fc7a291d4bb9f1ddbd93d8",
-                "reference": "759d5c0a933e152742fc7a291d4bb9f1ddbd93d8",
+                "url": "https://api.github.com/repos/polevaultweb/wp-oauth2/zipball/ca7290d43e61c7fdb09d6a956be349a1926bdb97",
+                "reference": "ca7290d43e61c7fdb09d6a956be349a1926bdb97",
                 "shasum": ""
             },
             "type": "library",
@@ -41,7 +41,7 @@
                 "issues": "https://github.com/polevaultweb/wp-oauth2/issues",
                 "source": "https://github.com/polevaultweb/wp-oauth2/tree/more-configurable"
             },
-            "time": "2021-06-17T12:52:13+00:00"
+            "time": "2023-12-11T16:30:10+00:00"
         }
     ],
     "packages-dev": [
