@@ -247,13 +247,13 @@
 
 						<p class="itw_info">Set the default post title if an Instagram image has no title. Can be overridden by the Custom Title Text.</p>
 						<p>
-							<label class="textinput">Default Title Text:</label><input type="text" class="body_title" name="itw_defaulttitle" value="<?php echo $defaulttitle; ?>">
+							<label class="textinput">Default Title Text:</label><input type="text" class="body_title" name="itw_defaulttitle" value="<?php echo esc_html( $defaulttitle ); ?>">
 							<small>eg. Instagram Image</small>
 						</p>
 
 						<p class="itw_info">If the below custom text fields are left blank, only the Instagram text and image will be used in your post. To position the Instagram data with your custom text use the syntax %%title%% and %%image%%. The %%image%% text cannot be used in the Custom Title Text, and if it doesn't appear in the Body Text the Image will appear at the end of the post body.</p>
 						<p>
-							<label class="textinput">Custom Title Text:</label><input type="text" class="body_title" name="itw_customtitle" value="<?php echo $customtitle; ?>">
+							<label class="textinput">Custom Title Text:</label><input type="text" class="body_title" name="itw_customtitle" value="<?php echo esc_html( $customtitle ); ?>">
 							<small>eg. %%title%% - from Instagram</small>
 						</p>
 

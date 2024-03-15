@@ -1133,8 +1133,8 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 										$postdate = $_POST['itw_post_date'];
 										update_option( 'itw_post_date', $postdate );
 
-										$customtitle = $_POST['itw_customtitle'];
-										update_option( 'itw_customtitle', $customtitle );
+										$customtitle = filter_input( INPUT_POST, 'itw_customtitle', FILTER_UNSAFE_RAW );
+										update_option( 'itw_customtitle', sanitize_text_field( $customtitle ) );
 
 										$customtext = htmlspecialchars( $_POST['itw_customtext'] );
 										update_option( 'itw_customtext', $customtext );
@@ -1169,8 +1169,8 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 										$posttype = $_POST['itw_posttype'];
 										update_option( 'itw_posttype', $posttype );
 
-										$defaulttitle = $_POST['itw_defaulttitle'];
-										update_option( 'itw_defaulttitle', $defaulttitle );
+										$defaulttitle = filter_input( INPUT_POST, 'itw_defaulttitle', FILTER_UNSAFE_RAW );
+										update_option( 'itw_defaulttitle', sanitize_text_field( $defaulttitle ) );
 
 										if ( isset( $_POST['itw_ishome'] ) ) {
 											$is_home = $_POST['itw_ishome'];
