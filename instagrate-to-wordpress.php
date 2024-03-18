@@ -4,7 +4,7 @@ Plugin Name: Intagrate Lite
 Plugin URI: https://intagrate.io
 Description: Plugin for automatic posting of Instagram images into a WordPress blog.
 Author: polevaultweb
-Version: 1.3.7
+Version: 1.3.8
 Author URI: https://polevaultweb.com/
 
 Copyright 2012  polevaultweb  (email : info@polevaultweb.com)
@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 //plugin version
-define( 'ITW_PLUGIN_VERSION', '1.3.7' );
+define( 'ITW_PLUGIN_VERSION', '1.3.8' );
 define( 'ITW_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ITW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ITW_PLUGIN_BASE', plugin_basename( __FILE__ ) );
@@ -1133,8 +1133,8 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 										$postdate = $_POST['itw_post_date'];
 										update_option( 'itw_post_date', $postdate );
 
-										$customtitle = $_POST['itw_customtitle'];
-										update_option( 'itw_customtitle', $customtitle );
+										$customtitle = filter_input( INPUT_POST, 'itw_customtitle', FILTER_UNSAFE_RAW );
+										update_option( 'itw_customtitle', sanitize_text_field( $customtitle ) );
 
 										$customtext = htmlspecialchars( $_POST['itw_customtext'] );
 										update_option( 'itw_customtext', $customtext );
@@ -1169,8 +1169,8 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 										$posttype = $_POST['itw_posttype'];
 										update_option( 'itw_posttype', $posttype );
 
-										$defaulttitle = $_POST['itw_defaulttitle'];
-										update_option( 'itw_defaulttitle', $defaulttitle );
+										$defaulttitle = filter_input( INPUT_POST, 'itw_defaulttitle', FILTER_UNSAFE_RAW );
+										update_option( 'itw_defaulttitle', sanitize_text_field( $defaulttitle ) );
 
 										if ( isset( $_POST['itw_ishome'] ) ) {
 											$is_home = $_POST['itw_ishome'];
