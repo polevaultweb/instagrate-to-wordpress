@@ -78,7 +78,7 @@ class itw_Instagram {
 	 * @return string|object
 	 */
 	public function get_user( $access, $user_id ) {
-		$url  = $user_id . '/';
+		$url  = 'me/';
 		$data = $this->http()->do_http_request( $access, $url, array('fields'=> 'id,username') );
 		if ( ! $data ) {
 			return '';
@@ -96,7 +96,7 @@ class itw_Instagram {
 	 * @return string|object
 	 */
 	public function get_user_media( $access, $user_id ) {
-		$url  = $user_id . '/media';
+		$url  = 'me/media';
 		$data = $this->http()->do_http_request( $access, $url, array('fields'=> 'id,media_type,media_url,thumbnail_url,timestamp,username,children,caption,permalink' ) );
 		if ( ! $data ) {
 			return '';
