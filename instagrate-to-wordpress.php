@@ -6,6 +6,7 @@ Description: Plugin for automatic posting of Instagram images into a WordPress b
 Author: polevaultweb
 Version: 1.3.9
 Author URI: https://polevaultweb.com/
+License: GPLv3+
 
 Copyright 2012  polevaultweb  (email : info@polevaultweb.com)
 

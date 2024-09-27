@@ -4,7 +4,7 @@ Plugin URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plu
 Author URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
 Tags: Instagram, Instagram feed, Instagram Photos, Instagram Posts, Instagram embed
 Requires at least: 3.0
-Tested up to: 6.5
+Tested up to: 6.6
 Requires PHP: 5.5
 Stable Tag: 1.3.9
 
