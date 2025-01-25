@@ -4,13 +4,15 @@ Plugin URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plu
 Author URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
 Tags: Instagram, Instagram feed, Instagram Photos, Instagram Posts, Instagram embed
 Requires at least: 3.0
-Tested up to: 6.5
+Tested up to: 6.7
 Requires PHP: 5.5
-Stable Tag: 1.3.9
+Stable Tag: 1.4
 
 Automatically post your Instagram images to your WordPress site. Create new WordPress posts from your Instagram images, save the Instagram image to the media library.
 
 == Description ==
+
+**As of Dec 2024 due to [Instagram API changes](https://developers.facebook.com/blog/post/2024/09/04/update-on-instagram-basic-display-api/), only Instagram professional accounts (Creator and Business) can be connected to the plugin.**
 
 Automatically post your [Instagram](https://www.instagram.com/) images to your WordPress site. When ever you post a new photo on Instagram, the plugin will create a post with the Instagram image caption as the title, and the Instagram image in the post content. Choose to save the Instagram image to the media library and set it as the featured image of the post.
 
@@ -84,6 +86,10 @@ And that's just the tip of the iceberg, I'm always working on adding value to In
 
 == Frequently Asked Questions ==
 
+= What type of Instagram accounts can be used? =
+
+As of Dec 2024 due to [Instagram API changes](https://developers.facebook.com/blog/post/2024/09/04/update-on-instagram-basic-display-api/), only Professional Instagram accounts can be connected to the plugin. These are Creator and Business accounts.
+
 = What support is provided? =
 
 Limited free support is provided, and I offer dedicated priority email support for Intagrate customers.
@@ -116,6 +122,11 @@ You can use the built in installer and upgrader, or you can install the plugin m
 If you have to upgrade manually simply repeat the installation steps and re-enable the plugin.
 
 == Changelog ==
+
+= 1.4 =
+Release Date: Jan 25th, 2025
+
+* New: Implemented Instagram Business Basic API to replace the [deprecated Basic Display API](https://developers.facebook.com/blog/post/2024/09/04/update-on-instagram-basic-display-api/) for compliance with platform requirements.
 
 = 1.3.9 =
 Release Date: June 25th, 2024
