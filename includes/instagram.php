@@ -6,7 +6,7 @@ class itw_Instagram {
 
 	private $apiUrl = 'https://api.instagram.com/v1/';
 
-	protected $client_id = '476691356355592';
+	protected $client_id = '827131036205995';
 	protected $redirect_uri = 'https://l.intagrate.io/';
 	protected $access_token;
 
@@ -40,7 +40,7 @@ class itw_Instagram {
 	}
 
 	public function authorizeUrl( $redirect_uri ) {
-		return self::$wpoauth->get_authorize_url( 'instagram-facebook', $this->client_id, $redirect_uri, array( 'scope' => 'user_profile,user_media' ) );
+		return self::$wpoauth->get_authorize_url( 'instagram-facebook', $this->client_id, $redirect_uri, array( 'scope' => 'instagram_business_basic' ) );
 	}
 
 	public static function logout_url() {
