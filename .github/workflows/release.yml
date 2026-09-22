@@ -15,8 +15,11 @@ concurrency:
 
 jobs:
   deploy:
-    uses: WPUserManager/.github/.github/workflows/deploy.yml@master
+    uses: WPUserManager/.github/.github/workflows/deploy.yml@explicit-secrets
     with:
       plugin-slug: instagrate-to-wordpress
       dry-run: ${{ github.event_name != 'push' }}
-    secrets: inherit
+    # Named, not inherited: inherit doesn't cross from polevaultweb to WPUserManager.
+    secrets:
+      SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+      SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
