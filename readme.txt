@@ -4,9 +4,9 @@ Plugin URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plu
 Author URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
 Tags: Instagram, Instagram feed, Instagram Photos, Instagram Posts, Instagram embed
 Requires at least: 3.0
-Tested up to: 6.7
+Tested up to: 7.1
 Requires PHP: 5.5
-Stable Tag: 1.4
+Stable Tag: 1.4.1
 
 Automatically post your Instagram images to your WordPress site. Create new WordPress posts from your Instagram images, save the Instagram image to the media library.
 
@@ -122,6 +122,12 @@ You can use the built in installer and upgrader, or you can install the plugin m
 If you have to upgrade manually simply repeat the installation steps and re-enable the plugin.
 
 == Changelog ==
+
+= 1.4.1 =
+Release Date: Sep 22nd, 2026
+
+* Fix: Instagram accounts disconnecting after about 60 days, because the access token was only refreshed after it had expired
+* Tweak: Tested up to WordPress 7.1
 
 = 1.4 =
 Release Date: Jan 25th, 2025

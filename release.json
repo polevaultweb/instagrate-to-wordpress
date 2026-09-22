@@ -1,0 +1,11 @@
+{
+  "type": "core",
+  "name": "Intagrate Lite",
+  "url": "https://wordpress.org/plugins/instagrate-to-wordpress/",
+  "build": "distignore",
+  "channels": { "wordpress_org": true, "edd": false },
+  "main_file": "instagrate-to-wordpress.php",
+  "version_checks": [
+    { "file": "instagrate-to-wordpress.php", "pattern": "define\\(\\s*'ITW_PLUGIN_VERSION',\\s*'([^']+)'" }
+  ]
+}
