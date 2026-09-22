@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   deploy:
-    uses: WPUserManager/.github/.github/workflows/deploy.yml@intagrate-support
+    uses: WPUserManager/.github/.github/workflows/deploy.yml@master
     with:
       plugin-slug: instagrate-to-wordpress
       dry-run: ${{ github.event_name != 'push' }}
