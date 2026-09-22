@@ -60,11 +60,17 @@ class itw_Instagram {
 			return false;
 		}
 
-		if ( $expires && ( time() - HOUR_IN_SECONDS ) < $expires ) {
+		// Instagram only refreshes a token that hasn't expired, so refresh in its last week
+		if ( ( time() + WEEK_IN_SECONDS ) < $expires ) {
 			return $token;
 		}
 
 		$new_token = self::$wpoauth->refresh_access_token( $this->client_id, 'instagram-facebook' );
+
+		if ( ! $new_token && time() < $expires ) {
+			// Refresh failed but the current token is still valid, try again next time
+			return $token;
+		}
 
 		return $new_token;
 	}
