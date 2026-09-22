@@ -1,0 +1,18 @@
+# Left out of the release zip and the wordpress.org SVN trunk.
+# Read by the shared deploy workflow (rsync --exclude-from).
+/.git
+/.github
+/.editorconfig
+/.gitattributes
+/.gitignore
+/.distignore
+/node_modules
+/release
+/composer.json
+/composer.lock
+/package.json
+/package-lock.json
+/phpstan.neon.dist
+/release.json
+/README.md
+/tests
