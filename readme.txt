@@ -1,4 +1,4 @@
-=== Intagrate Lite ===
+=== Intagrate Lite - Auto Post and Import Instagram Photos to WordPress ===
 Contributors: polevaultweb
 Plugin URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
 Author URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
@@ -8,13 +8,13 @@ Tested up to: 7.1
 Requires PHP: 5.5
 Stable Tag: 1.4.1
 
-Automatically post your Instagram images to your WordPress site. Create new WordPress posts from your Instagram images, save the Instagram image to the media library.
+Automatically post and import your Instagram photos to WordPress. Create new posts from your Instagram images and save them to the media library.
 
 == Description ==
 
 **As of Dec 2024 due to [Instagram API changes](https://developers.facebook.com/blog/post/2024/09/04/update-on-instagram-basic-display-api/), only Instagram professional accounts (Creator and Business) can be connected to the plugin.**
 
-Automatically post your [Instagram](https://www.instagram.com/) images to your WordPress site. When ever you post a new photo on Instagram, the plugin will create a post with the Instagram image caption as the title, and the Instagram image in the post content. Choose to save the Instagram image to the media library and set it as the featured image of the post.
+Automatically post and import your [Instagram](https://www.instagram.com/) images to your WordPress site. Whenever you post a new photo on Instagram, the plugin will create a post with the Instagram image caption as the title, and the Instagram image in the post content. Choose to save the Instagram image to the media library and set it as the featured image of the post.
 
 https://www.youtube.com/watch?v=Oa92bZZCpEE
 
