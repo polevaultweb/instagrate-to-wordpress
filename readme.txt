@@ -3,10 +3,12 @@ Contributors: polevaultweb
 Plugin URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
 Author URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
 Tags: Instagram, Instagram feed, Instagram Photos, Instagram Posts, Instagram embed
-Requires at least: 3.0
+Requires at least: 3.1
 Tested up to: 7.1
 Requires PHP: 5.5
 Stable Tag: 1.4.2
+License: GPLv3 or later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Automatically post and import your Instagram photos to WordPress. Create new posts from your Instagram images and save them to the media library.
 
@@ -130,6 +132,8 @@ Release Date: Oct 4th, 2026
 * Tweak: All strings use the instagrate-to-wordpress text domain so they can be translated
 * Tweak: Plugin files can no longer be loaded directly
 * Tweak: composer.json is included in the plugin
+* Tweak: Output on the settings page and in admin notices is escaped, and saved settings are sanitized
+* Tweak: Readme declares the GPL licence and the minimum WordPress version the plugin needs
 
 = 1.4.1 =
 Release Date: Sep 22nd, 2026

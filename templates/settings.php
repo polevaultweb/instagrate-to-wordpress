@@ -2,6 +2,13 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// Markup allowed in the select lists built below
+$itw_select_html = array(
+	'select' => array( 'name' => true, 'class' => true ),
+	'option' => array( 'value' => true, 'selected' => true ),
+	'p'      => array(),
+);
 ?>
 <!-- BEGIN ipp_content_left -->
 <div id="ipp_content_left" class="postbox-container">
@@ -12,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<!-- BEGIN meta-box-sortables ui-sortable -->
 		<div class="meta-box-sortables ui-sortable">
 
-			<form name="itw_form" method="post" autocomplete="off" action="<?php echo str_replace( '%7E', '~', ITW_RETURN_URI ); ?>">
+			<form name="itw_form" method="post" autocomplete="off" action="<?php echo esc_url( str_replace( '%7E', '~', ITW_RETURN_URI ) ); ?>">
 				<input type="hidden" name="itw_hidden" value="Y">
 
 				<!-- BEGIN wordpress -->
@@ -22,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<br>
 					</div>
 
-					<?php echo "<h3 class='hndle'><span>" . __( 'Settings', 'instagrate-to-wordpress' ) . "</span></h3>"; ?>
+					<h3 class='hndle'><span><?php esc_html_e( 'Settings', 'instagrate-to-wordpress' ); ?></span></h3>
 
 					<!-- BEGIN inside -->
 					<div class="inside">
@@ -34,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php
 
 							if ( isset( $_POST['itw_manuallstid'] ) ) {
-								$manuallstid = $_POST['itw_manuallstid'];
+								$manuallstid = sanitize_text_field( wp_unslash( $_POST['itw_manuallstid'] ) );
 							}
 
 							foreach ( $feed->data as $item ):
@@ -50,12 +57,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 									$selected = "selected='selected'";
 								}
 
-								$options[] = "<option value='{$id}' $selected >{$title}</option>";
+								$options[] = "<option value='" . esc_attr( $id ) . "' $selected >" . esc_html( $title ) . "</option>";
 
 							endforeach; ?>
 
 							<select name="itw_manuallstid" class="img_select">
-								<?php echo implode( "\n", $options ); ?>
+								<?php echo wp_kses( implode( "\n", $options ), $itw_select_html ); ?>
 							</select>
 						</p>
 						<h4>WordPress Post</h4>
@@ -63,11 +70,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<p class="itw_info">Default WordPress post settings</p>
 
 						<p>
-							<label class="textinput">Image Size:</label><input type="text" name="itw_imagesize" value="<?php echo $imagesize; ?>">
+							<label class="textinput">Image Size:</label><input type="text" name="itw_imagesize" value="<?php echo esc_attr( $imagesize ); ?>">
 						</p>
 
 						<p>
-							<label class="textinput">Image CSS Class:</label><input type="text" name="itw_imageclass" value="<?php echo $imageclass; ?>">
+							<label class="textinput">Image CSS Class:</label><input type="text" name="itw_imageclass" value="<?php echo esc_attr( $imageclass ); ?>">
 						</p>
 
 						<p>
@@ -163,7 +170,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 										}
 
 										$output .= '<option' . $selected . '>';
-										$output .= $option;
+										$output .= esc_html( $option );
 										$output .= '</option>';
 
 									}
@@ -186,7 +193,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 							$output .= '</select></p>';
 
-							echo $output;
+							echo wp_kses( $output, $itw_select_html );
 							?>
 
 						<p><label class="textinput">Post Date:</label>
@@ -240,12 +247,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 								}
 
 								$output .= '<option value="' . esc_attr( $pt->name ) . '"' . $selected . '>';
-								$output .= $pt->labels->singular_name;
+								$output .= esc_html( $pt->labels->singular_name );
 								$output .= '</option>';
 							endforeach;
 
 							$output .= '</select>';
-							echo $output;
+							echo wp_kses( $output, $itw_select_html );
 							?>
 
 						</p>
@@ -263,7 +270,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</p>
 
 						<p>
-							<label class="textinput">Custom Body Text:</label><textarea class="body_text" rows="10" name="itw_customtext"><?php echo stripslashes( $customtext ); ?></textarea>
+							<label class="textinput">Custom Body Text:</label><textarea class="body_text" rows="10" name="itw_customtext"><?php echo esc_textarea( stripslashes( $customtext ) ); ?></textarea>
 							<small>eg. Check out this new image %%image%% from Instagram</small>
 						</p>
 
@@ -302,7 +309,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</p>
 
 						<p class="submit">
-							<input type="submit" class="button-primary" name="Submit" value="<?php _e( 'Update Options', 'instagrate-to-wordpress' ) ?>" />
+							<input type="submit" class="button-primary" name="Submit" value="<?php esc_attr_e( 'Update Options', 'instagrate-to-wordpress' ) ?>" />
 							<?php wp_nonce_field( 'itw-settings' ); ?>
 						</p>
 			</form>

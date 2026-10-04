@@ -99,7 +99,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			if ( isset( $_GET['page'] ) && $_GET['page'] == ITW_PLUGIN_SETTINGS ) {
 
 				//register styles
-				wp_register_style( 'itw_style', ITW_PLUGIN_URL . 'assets/css/style.css' );
+				wp_register_style( 'itw_style', ITW_PLUGIN_URL . 'assets/css/style.css', array(), ITW_PLUGIN_VERSION );
 
 				//enqueue styles
 				wp_enqueue_style( 'itw_style' );
@@ -195,9 +195,8 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 		public static function remove_links() {
 			global $wpdb;
 			$link             = '<!-- This post is created by Intagrate Lite, a WordPress Plugin by polevaultweb.com - http://www.polevaultweb.com/plugins/instagrate-to-wordpress/ -->';
-			$post_content_sql = "UPDATE $wpdb->posts SET `post_content` = replace(post_content, '{$link}', '');";
 			// run the sql
-			$wpdb->query( $post_content_sql );
+			$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->posts} SET `post_content` = replace(post_content, %s, '')", $link ) );
 		}
 
 		/* Register custom uninstall function */
@@ -253,10 +252,13 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 				return;
 			}
 
-			$settings_link = '<a href="options-general.php?page=' . ITW_PLUGIN_SETTINGS . '">' . __( 'reconnecting', 'instagrate-to-wordpress' ) . '</a>';
+			$settings_link = '<a href="' . esc_url( 'options-general.php?page=' . ITW_PLUGIN_SETTINGS ) . '">' . esc_html__( 'reconnecting', 'instagrate-to-wordpress' ) . '</a>';
 			?>
 			<div class="notice notice-error">
-				<p><strong>Intagrate Lite</strong> &mdash; <?php printf( __( 'Instagram have updated their API and the plugin needs %s to continue to post images.', 'instagrate-to-wordpress' ), $settings_link );  ?></p>
+				<p><strong>Intagrate Lite</strong> &mdash; <?php
+				/* translators: %s: link to the settings page */
+				printf( esc_html__( 'Instagram have updated their API and the plugin needs %s to continue to post images.', 'instagrate-to-wordpress' ), wp_kses_post( $settings_link ) );
+				?></p>
 			</div>
 			<?php
 		}
@@ -271,7 +273,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 					if ( 0 == get_option( 'page_for_posts' ) ) {
 
 						echo '<div class="updated">
-								<p>You must select a page to display your posts in <a href="' . home_url() . '/wp-admin/options-reading.php">Settings -> Reading</a></p>
+								<p>You must select a page to display your posts in <a href="' . esc_url( home_url() . '/wp-admin/options-reading.php' ) . '">Settings -> Reading</a></p>
 							</div>';
 
 					}
@@ -550,8 +552,8 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 			//debug
 			$debug = "------------------------------------------------------------------------------------------------------------------------------------------\n";
-			$debug .= "Intagrate Lite - Plugin Debug Output: " . Date( DATE_RFC822 ) . "\n";
-			$debug .= "PAGE LOAD " . Date( DATE_RFC822 ) . "\n";
+			$debug .= "Intagrate Lite - Plugin Debug Output: " . gmdate( DATE_RFC822 ) . "\n";
+			$debug .= "PAGE LOAD " . gmdate( DATE_RFC822 ) . "\n";
 			$debug .= "------------------------------------------------------------------------------------------------------------------------------------------\n";
 
 			$debug .= "Home page is: " . get_home_template() . "\n";
@@ -564,9 +566,9 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 				$ishomecheck = ( $is_home ? "set" : "not set" );
 				$ishome      = ( is_home() ? 'TRUE' : 'FALSE' );
-				$debug .= "--START Blog is_home() check " . $ishome . " " . Date( DATE_RFC822 ) . "\n";
-				$debug .= "--CHECK is_home() override " . $ishomecheck . " " . Date( DATE_RFC822 ) . "\n";
-				$debug .= "--START Auto post function START " . Date( DATE_RFC822 ) . "\n";
+				$debug .= "--START Blog is_home() check " . $ishome . " " . gmdate( DATE_RFC822 ) . "\n";
+				$debug .= "--CHECK is_home() override " . $ishomecheck . " " . gmdate( DATE_RFC822 ) . "\n";
+				$debug .= "--START Auto post function START " . gmdate( DATE_RFC822 ) . "\n";
 				$debug .= "--Marker: " . get_transient( 'itw_posting' ) . "\n";
 
 				// Check if auto_post_process has NOT already been
@@ -590,7 +592,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 						$manuallstid = get_option( 'itw_manuallstid' );
 
 						//debug
-						$debug .= "----START Auto post function: " . Date( DATE_RFC822 ) . "\n";
+						$debug .= "----START Auto post function: " . gmdate( DATE_RFC822 ) . "\n";
 						$debug .= "----Marker: " . get_transient( 'itw_posting' ) . "\n";
 						$debug .= "----Last ID:" . $manuallstid . "\n";
 
@@ -610,17 +612,17 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 							$last_id = 0;
 
 							//debug
-							$debug .= "------START Auto post function Image Loop:  " . Date( DATE_RFC822 ) . "\n";
+							$debug .= "------START Auto post function Image Loop:  " . gmdate( DATE_RFC822 ) . "\n";
 
 							//loop through array to get image data
 							for ( $i = 0; $i < $count; $i++ ) {
 
 								//debug
-								$debug .= "--------" . $i . ": Loop:  " . Date( DATE_RFC822 ) . "\n";
+								$debug .= "--------" . $i . ": Loop:  " . gmdate( DATE_RFC822 ) . "\n";
 
 								$img_exists       = self::instagrate_id_exists( $images[ $i ]["id"] );
 								$img_exists_check = $img_exists ? 'TRUE' : 'FALSE';
-								$debug .= "--------CHECK If image exists:  " . $img_exists_check . " " . Date( DATE_RFC822 ) . "\n";
+								$debug .= "--------CHECK If image exists:  " . $img_exists_check . " " . gmdate( DATE_RFC822 ) . "\n";
 
 
 								//Don't include image of $manuallstid
@@ -640,7 +642,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 										$image_id = $images[ $i ]["id"];
 
 										//debug
-										$debug .= "----------Auto post function Ready to Post:  " . Date( DATE_RFC822 ) . "\n";
+										$debug .= "----------Auto post function Ready to Post:  " . gmdate( DATE_RFC822 ) . "\n";
 										$debug .= "----------Title: " . $title . "\n";
 										$debug .= "----------Image: " . $image . "\n";
 
@@ -648,13 +650,13 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 										if ( $date_check == 'instagram' ) {
 
 											$post_date     = strtotime( $images[ $i ]["created"] );
-											$post_date     = date( 'Y-m-d H:i:s', $post_date );
+											$post_date     = gmdate( 'Y-m-d H:i:s', $post_date );
 											$post_date_gmt = $post_date;
 
 										} else {
 
-											$post_date_gmt = date( 'Y-m-d H:i:s', current_time( 'timestamp', 1 ) - ( ( $count - $i ) * 20 ) );
-											$post_date     = date( 'Y-m-d H:i:s', current_time( 'timestamp', 0 ) - ( ( $count - $i ) * 20 ) );
+											$post_date_gmt = gmdate( 'Y-m-d H:i:s', current_time( 'timestamp', 1 ) - ( ( $count - $i ) * 20 ) );
+											$post_date     = gmdate( 'Y-m-d H:i:s', current_time( 'timestamp', 0 ) - ( ( $count - $i ) * 20 ) );
 
 										}
 
@@ -664,7 +666,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 									} else {
 
 										//debug
-										$debug .= "------END Auto post function: " . Date( DATE_RFC822 ) . "\n";
+										$debug .= "------END Auto post function: " . gmdate( DATE_RFC822 ) . "\n";
 										$debug .= "------Image created within 2 minutes of posting loop\n";
 										$debug .= "------Image Created:" . $images[ $i ]["created"] . "\n";
 										$debug .= "------Posting Time:" . time() . "\n";
@@ -680,7 +682,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 									//debug
 									$debug .= "--------" . $images[ $i ]["id"] . " == " . $manuallstid . "\n";
 									$debug .= "--------Image Id already exists " . $img_exists_check . "\n";
-									$debug .= "--------END Auto post function STOP as last ID already posted " . Date( DATE_RFC822 ) . "\n";
+									$debug .= "--------END Auto post function STOP as last ID already posted " . gmdate( DATE_RFC822 ) . "\n";
 
 								}
 
@@ -695,10 +697,10 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 								//echo '<h1>'.$images[0]["id"].'</h1>';
 								//debug
-								$debug .= "----------START End loop write Last Image ID: " . Date( DATE_RFC822 ) . "\n";
+								$debug .= "----------START End loop write Last Image ID: " . gmdate( DATE_RFC822 ) . "\n";
 								$debug .= "----------First Image ID of Loop: " . $images[0]["id"] . "\n";
 								$debug .= "----------Current Last ID: " . get_option( 'itw_manuallstid' ) . "\n";
-								$debug .= "----------Writing Last ID " . Date( DATE_RFC822 ) . "\n";
+								$debug .= "----------Writing Last ID " . gmdate( DATE_RFC822 ) . "\n";
 								//update_option('itw_manuallstid', $images[0]["id"]);
 								update_option( 'itw_manuallstid', $last_id );
 								$debug .= "----------Written Last ID: " . get_option( 'itw_manuallstid' ) . "\n";
@@ -709,7 +711,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 					} catch ( Exception $e ) {
 
 						//var_dump $e;
-						$debug .= "------EXCEPTION - " . $e->getMessage() . " " . Date( DATE_RFC822 ) . "\n";
+						$debug .= "------EXCEPTION - " . $e->getMessage() . " " . gmdate( DATE_RFC822 ) . "\n";
 
 					}
 
@@ -717,7 +719,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 					set_transient( 'itw_posting', 'done', 60 * 5 );
 
 					//debug
-					$debug .= "------END Auto post function Image Loop:  " . Date( DATE_RFC822 ) . "\n";
+					$debug .= "------END Auto post function Image Loop:  " . gmdate( DATE_RFC822 ) . "\n";
 					$debug .= "------Marker:  " . get_transient( 'itw_posting' ) . "\n";
 
 				} else {
@@ -725,20 +727,20 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 					//transient exists already posting ignore
 					//debug
 
-					$debug .= "----END Auto post function failed as Transient Exists: " . $marker . " (Already posting) " . Date( DATE_RFC822 ) . "\n";
+					$debug .= "----END Auto post function failed as Transient Exists: " . $marker . " (Already posting) " . gmdate( DATE_RFC822 ) . "\n";
 					$debug .= "----END Auto post function failed as started less than a minute since last run - " . $last_run . " Now - " . time() . "\n";
 
 				}
 
 
 				//debug
-				$debug .= "--END Auto post function END " . Date( DATE_RFC822 ) . "\n";
+				$debug .= "--END Auto post function END " . gmdate( DATE_RFC822 ) . "\n";
 
 			} else {
 
 				//not blog page so don't run
 				//debug
-				$debug .= "--END Blog is_home() check FALSE " . Date( DATE_RFC822 ) . "\n";
+				$debug .= "--END Blog is_home() check FALSE " . gmdate( DATE_RFC822 ) . "\n";
 
 			}
 
@@ -770,11 +772,11 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 			$attach = array();
 
-			$debug = "----------------Attaching Image:  -- " . Date( DATE_RFC822 ) . "\n";
+			$debug = "----------------Attaching Image:  -- " . gmdate( DATE_RFC822 ) . "\n";
 
 			try {
 
-				$debug .= '------------------URL: ' . $url . '-- ' . Date( DATE_RFC822 ) . "\n";
+				$debug .= '------------------URL: ' . $url . '-- ' . gmdate( DATE_RFC822 ) . "\n";
 
 				$clean_url  = self::strip_querysting( $url );
 				$tmp        = download_url( $url );
@@ -785,9 +787,9 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 				// Check for download errors
 				if ( is_wp_error( $tmp ) ) {
-					$debug .= '------------------Download Error: ' . $url . '-- ' . Date( DATE_RFC822 ) . "\n";
-					$debug .= '------------------Download Error: ' . $tmp->get_error_message() . '-- ' . Date( DATE_RFC822 ) . "\n";
-					@unlink( $file_array['tmp_name'] );
+					$debug .= '------------------Download Error: ' . $url . '-- ' . gmdate( DATE_RFC822 ) . "\n";
+					$debug .= '------------------Download Error: ' . $tmp->get_error_message() . '-- ' . gmdate( DATE_RFC822 ) . "\n";
+					wp_delete_file( $file_array['tmp_name'] );
 					$attach[0] = 0;
 				}
 
@@ -795,20 +797,20 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 				// Check for handle sideload errors.
 
 				if ( is_wp_error( $id ) ) {
-					$debug .= '------------------media_handle_sideload Error: ' . $url . '-- ' . Date( DATE_RFC822 ) . "\n";
-					$debug .= '------------------media_handle_sideload Error: ' . $id->get_error_message() . '-- ' . Date( DATE_RFC822 ) . "\n";
-					@unlink( $file_array['tmp_name'] );
+					$debug .= '------------------media_handle_sideload Error: ' . $url . '-- ' . gmdate( DATE_RFC822 ) . "\n";
+					$debug .= '------------------media_handle_sideload Error: ' . $id->get_error_message() . '-- ' . gmdate( DATE_RFC822 ) . "\n";
+					wp_delete_file( $file_array['tmp_name'] );
 					$attach[0] = 0;
 				} else {
 
 					$attach[0] = $id;
-					$debug .= '------------------media_handle_sideload success - ID: ' . $id . '-- ' . Date( DATE_RFC822 ) . "\n";
+					$debug .= '------------------media_handle_sideload success - ID: ' . $id . '-- ' . gmdate( DATE_RFC822 ) . "\n";
 				}
 
 			} catch ( Exception $e ) {
 
 
-				$debug .= '------------------CATCH media_handle_sideload ERROR: -- ' . Date( DATE_RFC822 ) . "\n";
+				$debug .= '------------------CATCH media_handle_sideload ERROR: -- ' . gmdate( DATE_RFC822 ) . "\n";
 
 			}
 
@@ -832,11 +834,11 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 		public static function blog_post( $post_title, $post_image, $image_id, $post_date, $post_date_gmt ) {
 
 
-			$debug = "------------START Blog_post " . Date( DATE_RFC822 ) . "\n";
-			$debug .= "--------------Post Title: " . $post_title . ' -- ' . Date( DATE_RFC822 ) . "\n";
-			$debug .= "--------------Post Image: " . $post_image . ' -- ' . Date( DATE_RFC822 ) . "\n";
-			$debug .= "--------------Post Date: " . $post_date . ' -- ' . Date( DATE_RFC822 ) . "\n";
-			$debug .= "--------------Post Date GMT: " . $post_date_gmt . ' -- ' . Date( DATE_RFC822 ) . "\n";
+			$debug = "------------START Blog_post " . gmdate( DATE_RFC822 ) . "\n";
+			$debug .= "--------------Post Title: " . $post_title . ' -- ' . gmdate( DATE_RFC822 ) . "\n";
+			$debug .= "--------------Post Image: " . $post_image . ' -- ' . gmdate( DATE_RFC822 ) . "\n";
+			$debug .= "--------------Post Date: " . $post_date . ' -- ' . gmdate( DATE_RFC822 ) . "\n";
+			$debug .= "--------------Post Date GMT: " . $post_date_gmt . ' -- ' . gmdate( DATE_RFC822 ) . "\n";
 
 			$orig_title = $post_title;
 
@@ -860,14 +862,14 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 				$imageclass = 'class="' . $imageclass . '" ';
 			}
 
-			$debug .= "--------------Image Class: " . $imageclass . ' -- ' . Date( DATE_RFC822 ) . "\n";
+			$debug .= "--------------Image Class: " . $imageclass . ' -- ' . gmdate( DATE_RFC822 ) . "\n";
 
 			//Image size
 			if ( $imagesize != '' ) {
 				$imagesize = 'width="' . $imagesize . '" height="' . $imagesize . '" ';
 			}
 
-			$debug .= "--------------Image Size: " . $imagesize . ' -- ' . Date( DATE_RFC822 ) . "\n";
+			$debug .= "--------------Image Size: " . $imagesize . ' -- ' . gmdate( DATE_RFC822 ) . "\n";
 
 			//Custom Post Title
 			if ( $customtitle != '' ) {
@@ -884,7 +886,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 					$post_title = str_replace( "%%title%%", $post_title, $customtitle );
 				}
 
-				$debug .= "--------------Custom Ttle: " . $post_title . ' -- ' . Date( DATE_RFC822 ) . "\n";
+				$debug .= "--------------Custom Ttle: " . $post_title . ' -- ' . gmdate( DATE_RFC822 ) . "\n";
 
 			} else {
 
@@ -896,10 +898,10 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			}
 
 
-			$debug .= "--------------Post Author: " . $postauthor . ' -- ' . Date( DATE_RFC822 ) . "\n";
-			$debug .= "--------------Post Category: " . $postcats . ' -- ' . Date( DATE_RFC822 ) . "\n";
-			$debug .= "--------------Post Status: " . $poststatus . ' -- ' . Date( DATE_RFC822 ) . "\n";
-			$debug .= "--------------Post Type: " . $posttype . ' -- ' . Date( DATE_RFC822 ) . "\n";
+			$debug .= "--------------Post Author: " . $postauthor . ' -- ' . gmdate( DATE_RFC822 ) . "\n";
+			$debug .= "--------------Post Category: " . $postcats . ' -- ' . gmdate( DATE_RFC822 ) . "\n";
+			$debug .= "--------------Post Status: " . $poststatus . ' -- ' . gmdate( DATE_RFC822 ) . "\n";
+			$debug .= "--------------Post Type: " . $posttype . ' -- ' . gmdate( DATE_RFC822 ) . "\n";
 
 			// Create post object
 			$my_post = array(
@@ -933,12 +935,12 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 				if ( $attach[0] != 0 ) {
 					$attach_id = $attach[0];
 
-					$debug .= "--------------Attach Id: " . $attach_id . ' -- ' . Date( DATE_RFC822 ) . "\n";
+					$debug .= "--------------Attach Id: " . $attach_id . ' -- ' . gmdate( DATE_RFC822 ) . "\n";
 
 					//get new shot image url from media attachment
 					$post_image = wp_get_attachment_url( $attach_id );
 
-					$debug .= "--------------Attach Post Image: " . $post_image . ' -- ' . Date( DATE_RFC822 ) . "\n";
+					$debug .= "--------------Attach Post Image: " . $post_image . ' -- ' . gmdate( DATE_RFC822 ) . "\n";
 
 					$image = '<img src="' . $post_image . '" ' . $imageclass . ' alt="' . $post_title . '" ' . $imagesize . ' />';
 
@@ -1006,10 +1008,10 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 				$post_body = $post_body . ' <br/><small>Posted by <a href="http://wordpress.org/extend/plugins/instagrate-to-wordpress/">Intagrate Lite</a></small>';
 			}
 
-			$debug .= "--------------Post Content: " . $post_body . ' -- ' . Date( DATE_RFC822 ) . "\n";
-			$debug .= "--------------Post Format: " . $postformat . ' -- ' . Date( DATE_RFC822 ) . "\n";
+			$debug .= "--------------Post Content: " . $post_body . ' -- ' . gmdate( DATE_RFC822 ) . "\n";
+			$debug .= "--------------Post Format: " . $postformat . ' -- ' . gmdate( DATE_RFC822 ) . "\n";
 
-			$debug .= "--------------START wp_insert_post " . Date( DATE_RFC822 ) . "\n";
+			$debug .= "--------------START wp_insert_post " . gmdate( DATE_RFC822 ) . "\n";
 
 
 			//apply custom meta to make sure the image won't get duplicated
@@ -1037,10 +1039,10 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			wp_update_post( $update_post );
 
 
-			$debug .= "--------------END wp_insert_post " . Date( DATE_RFC822 ) . "\n";
+			$debug .= "--------------END wp_insert_post " . gmdate( DATE_RFC822 ) . "\n";
 
 
-			$debug .= "------------END blog_post" . Date( DATE_RFC822 ) . "\n";
+			$debug .= "------------END blog_post" . gmdate( DATE_RFC822 ) . "\n";
 
 
 			return $debug;
@@ -1110,33 +1112,33 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 										update_option( 'itw_configured', 'Installed' );
 
-										$manuallstid = $_POST['itw_manuallstid'];
+										$manuallstid = isset( $_POST['itw_manuallstid'] ) ? sanitize_text_field( wp_unslash( $_POST['itw_manuallstid'] ) ) : '';
 										update_option( 'itw_manuallstid', $manuallstid );
 
-										$imagesize = $_POST['itw_imagesize'];
+										$imagesize = isset( $_POST['itw_imagesize'] ) ? sanitize_text_field( wp_unslash( $_POST['itw_imagesize'] ) ) : '';
 										update_option( 'itw_imagesize', $imagesize );
 
-										$imageclass = $_POST['itw_imageclass'];
+										$imageclass = isset( $_POST['itw_imageclass'] ) ? sanitize_text_field( wp_unslash( $_POST['itw_imageclass'] ) ) : '';
 										update_option( 'itw_imageclass', $imageclass );
 
 										if ( isset( $_POST['itw_imagelink'] ) ) {
-											$imagelink = $_POST['itw_imagelink'];
+											$imagelink = isset( $_POST['itw_imagelink'] ) ? sanitize_text_field( wp_unslash( $_POST['itw_imagelink'] ) ) : '';
 											update_option( 'itw_imagelink', $imagelink );
 										} else {
 											delete_option( 'itw_imagelink' );
 											$imagelink = false;
 										}
 
-										$postcats = $_POST['itw_postcats'];
+										$postcats = isset( $_POST['itw_postcats'] ) ? sanitize_text_field( wp_unslash( $_POST['itw_postcats'] ) ) : '';
 										update_option( 'itw_postcats', $postcats );
 
-										$postauthor = $_POST['itw_postauthor'];
+										$postauthor = isset( $_POST['itw_postauthor'] ) ? sanitize_text_field( wp_unslash( $_POST['itw_postauthor'] ) ) : '';
 										update_option( 'itw_postauthor', $postauthor );
 
-										$postformat = $_POST['itw_postformat'];
+										$postformat = isset( $_POST['itw_postformat'] ) ? sanitize_text_field( wp_unslash( $_POST['itw_postformat'] ) ) : '';
 										update_option( 'itw_postformat', $postformat );
 
-										$postdate = $_POST['itw_post_date'];
+										$postdate = isset( $_POST['itw_post_date'] ) ? sanitize_text_field( wp_unslash( $_POST['itw_post_date'] ) ) : '';
 										update_option( 'itw_post_date', $postdate );
 
 										$customtitle = filter_input( INPUT_POST, 'itw_customtitle', FILTER_UNSAFE_RAW );
@@ -1145,14 +1147,14 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 										$customtext = htmlspecialchars( $_POST['itw_customtext'] );
 										update_option( 'itw_customtext', $customtext );
 
-										$imagesave = $_POST['itw_imagesave'];
+										$imagesave = isset( $_POST['itw_imagesave'] ) ? sanitize_text_field( wp_unslash( $_POST['itw_imagesave'] ) ) : '';
 										update_option( 'itw_imagesave', $imagesave );
 
-										$imagefeat = $_POST['itw_imagefeat'];
+										$imagefeat = isset( $_POST['itw_imagefeat'] ) ? sanitize_text_field( wp_unslash( $_POST['itw_imagefeat'] ) ) : '';
 										update_option( 'itw_imagefeat', $imagefeat );
 
 										if ( isset( $_POST['itw_pluginlink'] ) ) {
-											$pluginlink = $_POST['itw_pluginlink'];
+											$pluginlink = isset( $_POST['itw_pluginlink'] ) ? sanitize_text_field( wp_unslash( $_POST['itw_pluginlink'] ) ) : '';
 											update_option( 'itw_pluginlink', $pluginlink );
 										} else {
 											delete_option( 'itw_pluginlink' );
@@ -1161,7 +1163,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 										if ( isset( $_POST['itw_debugmode'] ) ) {
 
-											$debugmode = $_POST['itw_debugmode'];
+											$debugmode = isset( $_POST['itw_debugmode'] ) ? sanitize_text_field( wp_unslash( $_POST['itw_debugmode'] ) ) : '';
 											update_option( 'itw_debugmode', $debugmode );
 
 										} else {
@@ -1169,17 +1171,17 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 											$debugmode = false;
 										}
 
-										$poststatus = $_POST['itw_poststatus'];
+										$poststatus = isset( $_POST['itw_poststatus'] ) ? sanitize_text_field( wp_unslash( $_POST['itw_poststatus'] ) ) : '';
 										update_option( 'itw_poststatus', $poststatus );
 
-										$posttype = $_POST['itw_posttype'];
+										$posttype = isset( $_POST['itw_posttype'] ) ? sanitize_text_field( wp_unslash( $_POST['itw_posttype'] ) ) : '';
 										update_option( 'itw_posttype', $posttype );
 
 										$defaulttitle = filter_input( INPUT_POST, 'itw_defaulttitle', FILTER_UNSAFE_RAW );
 										update_option( 'itw_defaulttitle', sanitize_text_field( $defaulttitle ) );
 
 										if ( isset( $_POST['itw_ishome'] ) ) {
-											$is_home = $_POST['itw_ishome'];
+											$is_home = isset( $_POST['itw_ishome'] ) ? sanitize_text_field( wp_unslash( $_POST['itw_ishome'] ) ) : '';
 											update_option( 'itw_ishome', $is_home );
 										} else {
 											$is_home = false;
@@ -1189,7 +1191,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 										?>
 
-										<div class="itw_saved"><p><?php _e( 'Plugin settings saved!', 'instagrate-to-wordpress' ); ?></p></div>
+										<div class="itw_saved"><p><?php esc_html_e( 'Plugin settings saved!', 'instagrate-to-wordpress' ); ?></p></div>
 										<div class="clear"></div>
 										<?php
 									} else {
@@ -1294,7 +1296,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 					<p>
 						This plugin is a newer version of <b>InstaPost Press</b> which has been discontinued.</p>
 					<p>Please deactivate and delete <b>InstaPost Press</b>
-						<a href="<?php echo itw_pluginsURL() . '#instapost-press' ?>">here</a>.
+						<a href="<?php echo esc_url( itw_pluginsURL() . '#instapost-press' ) ?>">here</a>.
 					</p>
 					<p> Once done you can configure the settings of this plugin and begin to use it!
 					</p>
@@ -1303,11 +1305,11 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 			<?php else: ?>
 				<?php if ( isset( $loginUrl ) ): ?>
-					<div class="<?php echo $msg_class ?>">
+					<div class="<?php echo esc_attr( $msg_class ) ?>">
 						<p>
-							<?php echo $msg ?>
+							<?php echo esc_html( $msg ) ?>
 							<?php if ( $loginUrl != 'hide' ): ?>
-								<a href="<?php echo $loginUrl; ?>">Log in</a>
+								<a href="<?php echo esc_url( $loginUrl ); ?>">Log in</a>
 								<iframe id="logoutframe" src="https://instagram.com/accounts/
 logout/" width="0" height="0"></iframe>
 							<?php endif; ?>
@@ -1320,12 +1322,12 @@ logout/" width="0" height="0"></iframe>
 					<div class="loggedin">
 						<div class="itw_connected notice updated inline">
 							<p>
-								Connected to Instagram as <span><?php echo $msg; ?></span>
+								Connected to Instagram as <span><?php echo esc_html( $msg ); ?></span>
 
 							</p>
 						</div>
 						<div class="logout">
-							<a href="<?php echo itw_Instagram::logout_url(); ?>">Log out</a>
+							<a href="<?php echo esc_url( itw_Instagram::logout_url() ); ?>">Log out</a>
 						</div>
 					</div>
 					<div class="clear"></div>
@@ -1390,10 +1392,11 @@ if ( class_exists( "instagrate_to_wordpress" ) ) {
 		$page         = 'plugins';
 
 		$deactivate_url  = wp_nonce_url( network_admin_url( $page . '.php?action=' . $action . '&amp;plugin=' . $basename ), $nonce_action );
-		$deactivate_link = sprintf( '<a style="text-decoration:none;" href="%s">%s</a>', $deactivate_url, __( 'deactivate', 'instagrate-to-wordpress' ) );
+		$deactivate_link = sprintf( '<a style="text-decoration:none;" href="%s">%s</a>', esc_url( $deactivate_url ), esc_html__( 'deactivate', 'instagrate-to-wordpress' ) );
+		/* translators: %s: link to deactivate the plugin */
 		$text            = sprintf( __( 'Intagrate Lite requires PHP version of 5.3 or higher. Please upgrade PHP or %s the plugin to remove this notice.', 'instagrate-to-wordpress' ), $deactivate_link );
 
-		printf( '<div class="notice error"><p>%s</p></div>', $text );
+		printf( '<div class="notice error"><p>%s</p></div>', wp_kses_post( $text ) );
 	}
 
 }
