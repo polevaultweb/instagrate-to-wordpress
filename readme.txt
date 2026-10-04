@@ -134,6 +134,7 @@ Release Date: Oct 4th, 2026
 * Tweak: composer.json is included in the plugin
 * Tweak: Output on the settings page and in admin notices is escaped, and saved settings are sanitized
 * Tweak: Readme declares the GPL licence and the minimum WordPress version the plugin needs
+* Tweak: Intagrate logo on the settings page
 
 = 1.4.1 =
 Release Date: Sep 22nd, 2026

@@ -1287,7 +1287,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			<!-- BEGIN Wrap -->
 			<div class="wrap">
 			<div class="h2_left">
-				<h1 class="instagrate-icon dashicons-before dashicons-camera">Intagrate Lite</h1>
+				<h1 class="instagrate-icon"><img src="<?php echo esc_url( ITW_PLUGIN_URL . 'assets/images/logo.svg' ); ?>" alt="" width="36" height="28">Intagrate Lite</h1>
 			</div>
 
 			<?php if ( isset( $oldplugintest ) ): ?>
