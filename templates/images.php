@@ -1,3 +1,8 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+?>
 <div id="ipp_content_right" class="postbox-container">
 	<div class="metabox-holder">
 		<div class="meta-box-sortables ui-sortable">
