@@ -4,7 +4,8 @@ Plugin Name: Intagrate Lite
 Plugin URI: https://intagrate.io
 Description: Plugin for automatic posting of Instagram images into a WordPress blog.
 Author: polevaultweb
-Version: 1.4.1
+Version: 1.4.2
+Text Domain: instagrate-to-wordpress
 Author URI: https://polevaultweb.com/
 License: GPLv3+
 
@@ -25,8 +26,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 //plugin version
-define( 'ITW_PLUGIN_VERSION', '1.4.1' );
+define( 'ITW_PLUGIN_VERSION', '1.4.2' );
 define( 'ITW_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ITW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ITW_PLUGIN_BASE', plugin_basename( __FILE__ ) );
@@ -80,7 +85,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			}
 
 			if ( $file == $this_plugin ) {
-				$settings_link = '<a href="options-general.php?page=' . ITW_PLUGIN_SETTINGS . '">' . __( 'Settings', ITW_PLUGIN_SETTINGS ) . '</a>';
+				$settings_link = '<a href="options-general.php?page=' . ITW_PLUGIN_SETTINGS . '">' . __( 'Settings', 'instagrate-to-wordpress' ) . '</a>';
 				array_unshift( $links, $settings_link );
 			}
 
@@ -248,10 +253,10 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 				return;
 			}
 
-			$settings_link = '<a href="options-general.php?page=' . ITW_PLUGIN_SETTINGS . '">' . __( 'reconnecting', ITW_PLUGIN_SETTINGS ) . '</a>';
+			$settings_link = '<a href="options-general.php?page=' . ITW_PLUGIN_SETTINGS . '">' . __( 'reconnecting', 'instagrate-to-wordpress' ) . '</a>';
 			?>
 			<div class="notice notice-error">
-				<p><strong>Intagrate Lite</strong> &mdash; <?php printf( __( 'Instagram have updated their API and the plugin needs %s to continue to post images.' ), $settings_link );  ?></p>
+				<p><strong>Intagrate Lite</strong> &mdash; <?php printf( __( 'Instagram have updated their API and the plugin needs %s to continue to post images.', 'instagrate-to-wordpress' ), $settings_link );  ?></p>
 			</div>
 			<?php
 		}
@@ -1184,7 +1189,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 										?>
 
-										<div class="itw_saved"><p><?php _e( 'Plugin settings saved!' ); ?></p></div>
+										<div class="itw_saved"><p><?php _e( 'Plugin settings saved!', 'instagrate-to-wordpress' ); ?></p></div>
 										<div class="clear"></div>
 										<?php
 									} else {
@@ -1385,8 +1390,8 @@ if ( class_exists( "instagrate_to_wordpress" ) ) {
 		$page         = 'plugins';
 
 		$deactivate_url  = wp_nonce_url( network_admin_url( $page . '.php?action=' . $action . '&amp;plugin=' . $basename ), $nonce_action );
-		$deactivate_link = sprintf( '<a style="text-decoration:none;" href="%s">%s</a>', $deactivate_url, __( 'deactivate' ) );
-		$text            = sprintf( __( 'Intagrate Lite requires PHP version of 5.3 or higher. Please upgrade PHP or %s the plugin to remove this notice.' ), $deactivate_link );
+		$deactivate_link = sprintf( '<a style="text-decoration:none;" href="%s">%s</a>', $deactivate_url, __( 'deactivate', 'instagrate-to-wordpress' ) );
+		$text            = sprintf( __( 'Intagrate Lite requires PHP version of 5.3 or higher. Please upgrade PHP or %s the plugin to remove this notice.', 'instagrate-to-wordpress' ), $deactivate_link );
 
 		printf( '<div class="notice error"><p>%s</p></div>', $text );
 	}

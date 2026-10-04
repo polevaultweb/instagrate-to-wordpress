@@ -1,3 +1,8 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+?>
 <!-- BEGIN ipp_content_left -->
 <div id="ipp_content_left" class="postbox-container">
 
@@ -17,7 +22,7 @@
 						<br>
 					</div>
 
-					<?php echo "<h3 class='hndle'><span>" . __( 'Settings', 'itw_trdom' ) . "</span></h3>"; ?>
+					<?php echo "<h3 class='hndle'><span>" . __( 'Settings', 'instagrate-to-wordpress' ) . "</span></h3>"; ?>
 
 					<!-- BEGIN inside -->
 					<div class="inside">
@@ -297,7 +302,7 @@
 						</p>
 
 						<p class="submit">
-							<input type="submit" class="button-primary" name="Submit" value="<?php _e( 'Update Options', 'ipp_trdom' ) ?>" />
+							<input type="submit" class="button-primary" name="Submit" value="<?php _e( 'Update Options', 'instagrate-to-wordpress' ) ?>" />
 							<?php wp_nonce_field( 'itw-settings' ); ?>
 						</p>
 			</form>

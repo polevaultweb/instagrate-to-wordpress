@@ -1,3 +1,8 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+?>
 <div id="ipp_sidebar" class="postbox-container">
 
 	<div class="metabox-holder">

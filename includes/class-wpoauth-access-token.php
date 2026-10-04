@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 use Polevaultweb\WPOAuth2\AbstractAccessToken;
 
