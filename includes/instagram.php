@@ -1,10 +1,11 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 use Polevaultweb\WPOAuth2\WPOAuth2;
 
 class itw_Instagram {
-
-	private $apiUrl = 'https://api.instagram.com/v1/';
 
 	protected $client_id = '827131036205995';
 	protected $redirect_uri = 'https://l.intagrate.io/';

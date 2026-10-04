@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 class Instagrate_Lite_Http {
 
@@ -61,7 +64,7 @@ class Instagrate_Lite_Http {
 
 		$body = json_decode( wp_remote_retrieve_body( $contents ) );
 		if ( $body && isset( $body->error ) ) {
-			throw new InstagramApiError( $body->error->message, $body->error->code );
+			throw new InstagramApiError( esc_html( $body->error->message ), (int) $body->error->code );
 		}
 
 		return false;

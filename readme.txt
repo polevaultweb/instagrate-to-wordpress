@@ -3,18 +3,20 @@ Contributors: polevaultweb
 Plugin URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
 Author URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
 Tags: Instagram, Instagram feed, Instagram Photos, Instagram Posts, Instagram embed
-Requires at least: 3.0
+Requires at least: 4.2
 Tested up to: 7.1
 Requires PHP: 5.5
-Stable Tag: 1.4.1
+Stable Tag: 1.4.2
+License: GPLv3 or later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Automatically post your Instagram images to your WordPress site. Create new WordPress posts from your Instagram images, save the Instagram image to the media library.
+Automatically post and import your Instagram photos to WordPress. Create new posts from your Instagram images and save them to the media library.
 
 == Description ==
 
 **As of Dec 2024 due to [Instagram API changes](https://developers.facebook.com/blog/post/2024/09/04/update-on-instagram-basic-display-api/), only Instagram professional accounts (Creator and Business) can be connected to the plugin.**
 
-Automatically post your [Instagram](https://www.instagram.com/) images to your WordPress site. When ever you post a new photo on Instagram, the plugin will create a post with the Instagram image caption as the title, and the Instagram image in the post content. Choose to save the Instagram image to the media library and set it as the featured image of the post.
+Automatically post and import your [Instagram](https://www.instagram.com/) images to your WordPress site. Whenever you post a new photo on Instagram, the plugin will create a post with the Instagram image caption as the title, and the Instagram image in the post content. Choose to save the Instagram image to the media library and set it as the featured image of the post.
 
 https://www.youtube.com/watch?v=Oa92bZZCpEE
 
@@ -30,7 +32,7 @@ I believe it should be easy to post your Instagram images to WordPress, without 
 
 == Testimonials - WordPress Site Owners Love it ==
 
-Intagrate Lite provides a simple and effective approach to solving the problem of getting your Instagram images posted to WordPress sites. We've helped over 5,000 sites do this and is the best WordPress plugin to create posts from your Instagram images. Don't just take our word for it though:
+Intagrate Lite provides a simple and effective approach to solving the problem of getting your Instagram images posted to WordPress sites. We've helped over 5,000 sites do this. Don't just take our word for it though:
 
 *A great way to make a daily-photo feature* - [Parakoos](https://wordpress.org/support/topic/great-way-to-make-a-daily-photo-feature/).
 
@@ -122,6 +124,17 @@ You can use the built in installer and upgrader, or you can install the plugin m
 If you have to upgrade manually simply repeat the installation steps and re-enable the plugin.
 
 == Changelog ==
+
+= 1.4.2 =
+Release Date: Oct 4th, 2026
+
+* Tweak: Readme documents the external services the plugin connects to
+* Tweak: All strings use the instagrate-to-wordpress text domain so they can be translated
+* Tweak: Plugin files can no longer be loaded directly
+* Tweak: composer.json is included in the plugin
+* Tweak: Output on the settings page and in admin notices is escaped, and saved settings are sanitized
+* Tweak: Readme declares the GPL licence and the minimum WordPress version the plugin needs
+* Tweak: Intagrate logo on the settings page
 
 = 1.4.1 =
 Release Date: Sep 22nd, 2026
@@ -314,6 +327,29 @@ Release Date: December 13th, 2018
 
 * First release, bugs expected.
 
+== External services ==
+
+This plugin connects to two external services. Both are needed to log in to Instagram and to fetch your Instagram posts.
+
+**Intagrate login service (l.intagrate.io)**
+
+Run by the plugin's author. It connects your site to Instagram, so the Instagram app's credentials don't have to be stored on your site.
+
+* When you log in from the plugin's settings page, you are sent to l.intagrate.io and then to Instagram to approve access. l.intagrate.io receives the address of your settings page, so it can return you there.
+* Before your Instagram access token expires, your site sends it to l.intagrate.io to renew it.
+* No other data from your site is sent.
+
+[Terms and conditions](https://intagrate.io/terms-conditions/), [privacy policy](https://intagrate.io/privacy-policy/).
+
+**Instagram API (graph.instagram.com)**
+
+Provided by Meta Platforms, Inc. Your site uses it to read the connected Instagram account's username and its recent posts: images, videos, captions, links and dates.
+
+* Your site sends its Instagram access token to graph.instagram.com each time it checks for new posts (on the schedule set in the plugin's settings) and when you view the settings page.
+* Instagram's login page is also loaded in your browser when you connect an account.
+
+[Instagram terms of use](https://help.instagram.com/581066165581870), [Instagram privacy policy](https://privacycenter.instagram.com/policy), [Meta platform terms](https://developers.facebook.com/terms/).
+
 == Screenshots ==
 
 1. Screenshot of the Instagram images feed
@@ -326,4 +362,4 @@ Please note this plugin supersedes InstaPost Press, which has been discontinued 
 
 == Disclaimer ==
 
-This plugin uses the Instagram(tm) API and is not endorsed or certified by Instagram or Facebook. All Instagram(tm) logos and trademarks displayed on this website are property of Facebook.
+This plugin uses the Instagram(tm) API and is not endorsed or certified by Instagram or Facebook. All Instagram(tm) logos and trademarks are the property of Meta Platforms, Inc.

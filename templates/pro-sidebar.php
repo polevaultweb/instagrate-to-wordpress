@@ -1,3 +1,8 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+?>
 <div id="ipp_sidebar" class="postbox-container">
 
 	<div class="metabox-holder">
@@ -12,7 +17,7 @@
 				<div class="igp-sidebar">
 
 					<a class="igp-banner" href="https://intagrate.io/?utm_source=insideplugin&amp;utm_medium=web&amp;utm_content=sidebar&amp;utm_campaign=intagrate-lite-plugin">
-						<img src="<?php echo instagrate_to_wordpress::image('pro-banner.png' ); ?>">
+						<img src="<?php echo esc_url( instagrate_to_wordpress::image('pro-banner.png' ) ); ?>">
 					</a>
 
 					<div class="inside">
