@@ -3,7 +3,7 @@ Contributors: polevaultweb
 Plugin URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
 Author URI: https://intagrate.io/?utm_source=wordpress.org&utm_medium=free%20plugin%20listing&utm_campaign=intagrate-lite
 Tags: Instagram, Instagram feed, Instagram Photos, Instagram Posts, Instagram embed
-Requires at least: 3.1
+Requires at least: 4.2
 Tested up to: 7.1
 Requires PHP: 5.5
 Stable Tag: 1.4.2
