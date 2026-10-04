@@ -332,11 +332,11 @@ This plugin connects to two external services. Both are needed to log in to Inst
 
 **Intagrate login service (l.intagrate.io)**
 
-Intagrate's own server, run by the plugin's author, handles the Instagram login so that the Instagram app's secret key never has to be stored on your site.
+Run by the plugin's author. It connects your site to Instagram, so the Instagram app's credentials don't have to be stored on your site.
 
-* When you click "Log in" on the plugin's settings page, your browser is sent to l.intagrate.io with the plugin's Instagram app ID, your site's settings page URL and a one-time security key. The service sends you on to Instagram to approve access, then returns you to your site with an encrypted access token.
-* About once every two months, before the access token expires, your site sends the Instagram app ID and the current refresh token to l.intagrate.io to get a new access token.
-* The service does not receive your Instagram password, posts or any other data from your site.
+* When you log in from the plugin's settings page, you are sent to l.intagrate.io and then to Instagram to approve access. l.intagrate.io receives the address of your settings page, so it can return you there.
+* Before your Instagram access token expires, your site sends it to l.intagrate.io to renew it.
+* No other data from your site is sent.
 
 [Terms and conditions](https://intagrate.io/terms-conditions/), [privacy policy](https://intagrate.io/privacy-policy/).
 
