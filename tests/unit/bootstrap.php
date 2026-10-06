@@ -40,9 +40,12 @@ require __DIR__ . '/FakeWpdb.php';
 
 $GLOBALS['wpdb'] = new Fake_Wpdb();
 
-// On PHP 8.3, get_class() with no argument, used where the plugin registers its
-// hooks, is deprecated. These tests don't cover it, so keep it out of the output.
-// Deprecations while the tests run still fail them (phpunit.xml).
-$error_reporting = error_reporting( E_ALL & ~E_DEPRECATED );
+// Stop the run if loading the plugin raises any error, deprecations included:
+// phpunit.xml only turns them into failures while the tests run.
+set_error_handler(
+	function ( $errno, $errstr, $errfile, $errline ) {
+		throw new ErrorException( $errstr, 0, $errno, $errfile, $errline );
+	}
+);
 require_once dirname( __DIR__, 2 ) . '/instagrate-to-wordpress.php';
-error_reporting( $error_reporting );
+restore_error_handler();
