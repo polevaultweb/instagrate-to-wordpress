@@ -4,7 +4,7 @@ Plugin Name: Intagrate Lite
 Plugin URI: https://intagrate.io
 Description: Plugin for automatic posting of Instagram images into a WordPress blog.
 Author: polevaultweb
-Version: 1.4.2
+Version: 1.4.3
 Text Domain: instagrate-to-wordpress
 Author URI: https://polevaultweb.com/
 License: GPLv3+
@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 //plugin version
-define( 'ITW_PLUGIN_VERSION', '1.4.2' );
+define( 'ITW_PLUGIN_VERSION', '1.4.3' );
 define( 'ITW_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ITW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ITW_PLUGIN_BASE', plugin_basename( __FILE__ ) );
@@ -46,21 +46,21 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 		/* Plugin loading method */
 		public static function load_plugin() {
 						//settings menu
-			add_action( 'admin_menu', get_class() . '::register_settings_menu' );
+			add_action( 'admin_menu', __CLASS__ . '::register_settings_menu' );
 			//settings link
-			add_filter( 'plugin_action_links', get_class() . '::register_settings_link', 10, 2 );
+			add_filter( 'plugin_action_links', __CLASS__ . '::register_settings_link', 10, 2 );
 			//styles and scripts
-			add_action( 'admin_init', get_class() . '::register_styles' );
+			add_action( 'admin_init', __CLASS__ . '::register_styles' );
 			//register upgrade check function
-			add_action( 'admin_init', get_class() . '::upgrade_check' );
+			add_action( 'admin_init', __CLASS__ . '::upgrade_check' );
 			//register uninstall hook
-			register_uninstall_hook( __FILE__, get_class() . '::plugin_uninstall' );
+			register_uninstall_hook( __FILE__, __CLASS__ . '::plugin_uninstall' );
 
 			//add notices for prechecks
-			add_action( 'admin_notices', get_class() . '::plugin_admin_notice' );
+			add_action( 'admin_notices', __CLASS__ . '::plugin_admin_notice' );
 
 			//register the listener function
-			add_action( 'template_redirect', get_class() . '::auto_post_images' );
+			add_action( 'template_redirect', __CLASS__ . '::auto_post_images' );
 
 			itw_Instagram::load_admin();
 		}
@@ -68,7 +68,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 		/* Add menu item for plugin to Settings Menu */
 		public static function register_settings_menu() {
 
-			add_options_page( 'Intagrate Lite', 'Intagrate Lite', 'manage_options', ITW_PLUGIN_SETTINGS, get_class() . '::settings_page' );
+			add_options_page( 'Intagrate Lite', 'Intagrate Lite', 'manage_options', ITW_PLUGIN_SETTINGS, __CLASS__ . '::settings_page' );
 
 		}
 
@@ -230,7 +230,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			delete_option( 'itw_ishome' );
 
 			//remove hooks
-			remove_action( 'template_redirect', get_class() . '::auto_post_images' );
+			remove_action( 'template_redirect', __CLASS__ . '::auto_post_images' );
 
 		}
 
@@ -375,6 +375,13 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 		}
 
 		/**
+		 * Get the media posted since the last image posted, newest first.
+		 *
+		 * Pages back until it reaches $starting_id, or an image already posted, which
+		 * covers $starting_id having been deleted or archived on Instagram. If it
+		 * reaches neither, only the first page is returned, so the account's whole
+		 * history is never posted.
+		 *
 		 * @param itw_Instagram $instagram
 		 * @param $token
 		 * @param $user_id
@@ -391,23 +398,30 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			}
 
 			foreach ( $data->data as $item ) {
-				if ( $item->id === $starting_id ) {
+				if ( self::is_posted( $item->id, $starting_id ) ) {
 					return $images;
 				}
 
 				$images[] = $item;
 			}
 
+			if ( empty( $starting_id ) ) {
+				return $images;
+			}
+
+			$first_page = $images;
+
 			$url = isset( $data->paging->next ) ? $data->paging->next : null;
 
 			while ( ! empty( $url ) ) {
 				$data = $instagram->http()->do_http_request( $token, '', '', $url );
 				if ( empty( $data ) ) {
-					return $images;
+					// Retry next time rather than skip the media not reached yet.
+					return array();
 				}
 
 				foreach ( $data->data as $item ) {
-					if ( $item->id === $starting_id ) {
+					if ( self::is_posted( $item->id, $starting_id ) ) {
 						return $images;
 					}
 
@@ -417,7 +431,23 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 				$url = isset( $data->paging->next ) ? $data->paging->next : null;
 			}
 
-			return $images;
+			return $first_page;
+		}
+
+		/**
+		 * Is the image the last one posted, or already posted?
+		 *
+		 * @param $image_id
+		 * @param $starting_id
+		 *
+		 * @return bool
+		 */
+		protected static function is_posted( $image_id, $starting_id ) {
+			if ( empty( $starting_id ) ) {
+				return false;
+			}
+
+			return $image_id === $starting_id || self::instagrate_id_exists( $image_id );
 		}
 
 		protected static function get_access_token() {
@@ -521,12 +551,34 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 		}
 
+		/**
+		 * Strip tags and control characters, and encode quotes, exactly as
+		 * filter_var( $string, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW ) did.
+		 * FILTER_SANITIZE_STRING is deprecated as of PHP 8.1.
+		 *
+		 * @param string $string
+		 *
+		 * @return string
+		 */
+		protected static function sanitize_string( $string ) {
+			if ( ! is_scalar( $string ) ) {
+				return '';
+			}
+
+			$string = preg_replace( '/[\x00-\x1F]/', '', (string) $string );
+			$string = str_replace( array( '"', "'" ), array( '&#34;', '&#39;' ), $string );
+			// The filter treated "<" followed by a space as the start of a tag, strip_tags() doesn't
+			$string = preg_replace( '/<(?= )/', '<x', $string );
+
+			return strip_tags( $string );
+		}
+
 		public static function strip_title( $title ) {
 
 
 			$clean = '';
 
-			$clean = filter_var( $title, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW );
+			$clean = self::sanitize_string( $title );
 
 			$clean = emoji_html_stripped( $clean );
 			$clean = trim( $clean );

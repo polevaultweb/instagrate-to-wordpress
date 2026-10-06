@@ -6,7 +6,7 @@ Tags: Instagram, Instagram feed, Instagram Photos, Instagram Posts, Instagram em
 Requires at least: 4.2
 Tested up to: 7.1
 Requires PHP: 5.5
-Stable Tag: 1.4.2
+Stable Tag: 1.4.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -124,6 +124,12 @@ You can use the built in installer and upgrader, or you can install the plugin m
 If you have to upgrade manually simply repeat the installation steps and re-enable the plugin.
 
 == Changelog ==
+
+= 1.4.3 =
+Release Date: Oct 6th, 2026
+
+* Fix: Old Instagram posts were published again when the last post Intagrate Lite published had been deleted or archived on Instagram
+* Fix: PHP 8 deprecation notices
 
 = 1.4.2 =
 Release Date: Oct 4th, 2026
