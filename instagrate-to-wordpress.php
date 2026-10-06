@@ -4,7 +4,7 @@ Plugin Name: Intagrate Lite
 Plugin URI: https://intagrate.io
 Description: Plugin for automatic posting of Instagram images into a WordPress blog.
 Author: polevaultweb
-Version: 1.4.2
+Version: 1.4.3
 Text Domain: instagrate-to-wordpress
 Author URI: https://polevaultweb.com/
 License: GPLv3+
@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 //plugin version
-define( 'ITW_PLUGIN_VERSION', '1.4.2' );
+define( 'ITW_PLUGIN_VERSION', '1.4.3' );
 define( 'ITW_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ITW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ITW_PLUGIN_BASE', plugin_basename( __FILE__ ) );
