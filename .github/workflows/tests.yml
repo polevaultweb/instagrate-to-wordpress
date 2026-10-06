@@ -1,0 +1,31 @@
+name: Tests
+
+# Unit tests in tests/unit, run without WordPress (see tests/unit/bootstrap.php).
+# .distignore leaves tests/ out of the release zip and wordpress.org SVN.
+
+on:
+  pull_request:
+  push:
+    branches: [develop, master]
+
+jobs:
+  unit:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ["7.4", "8.3"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer, phpunit:9
+          coverage: none
+
+      # The plugin requires vendor/autoload.php as it loads.
+      - run: composer install --no-dev --no-interaction --no-progress --prefer-dist
+
+      - run: phpunit -c tests/unit/phpunit.xml
