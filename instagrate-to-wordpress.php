@@ -521,12 +521,34 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 		}
 
+		/**
+		 * Strip tags and control characters, and encode quotes, exactly as
+		 * filter_var( $string, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW ) did.
+		 * FILTER_SANITIZE_STRING is deprecated as of PHP 8.1.
+		 *
+		 * @param string $string
+		 *
+		 * @return string
+		 */
+		protected static function sanitize_string( $string ) {
+			if ( ! is_scalar( $string ) ) {
+				return '';
+			}
+
+			$string = preg_replace( '/[\x00-\x1F]/', '', (string) $string );
+			$string = str_replace( array( '"', "'" ), array( '&#34;', '&#39;' ), $string );
+			// The filter treated "<" followed by a space as the start of a tag, strip_tags() doesn't
+			$string = preg_replace( '/<(?= )/', '<x', $string );
+
+			return strip_tags( $string );
+		}
+
 		public static function strip_title( $title ) {
 
 
 			$clean = '';
 
-			$clean = filter_var( $title, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW );
+			$clean = self::sanitize_string( $title );
 
 			$clean = emoji_html_stripped( $clean );
 			$clean = trim( $clean );
