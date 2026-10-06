@@ -31,7 +31,7 @@ class itw_Instagram {
 	}
 
 	public static function load_admin() {
-		add_filter( 'pvw_wp_oauth2_provider_display_name', get_class() . '::pvw_wp_oauth2_provider_display_name' );
+		add_filter( 'pvw_wp_oauth2_provider_display_name', __CLASS__ . '::pvw_wp_oauth2_provider_display_name' );
 		self::$wpoauth = WPOAuth2::instance( 'https://l.intagrate.io/', Intagrate_Lite_Instagram_Access_Token::class );
 		self::$wpoauth->register_admin_handler(  ITW_RETURN_URI );
 	}

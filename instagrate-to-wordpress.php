@@ -46,21 +46,21 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 		/* Plugin loading method */
 		public static function load_plugin() {
 						//settings menu
-			add_action( 'admin_menu', get_class() . '::register_settings_menu' );
+			add_action( 'admin_menu', __CLASS__ . '::register_settings_menu' );
 			//settings link
-			add_filter( 'plugin_action_links', get_class() . '::register_settings_link', 10, 2 );
+			add_filter( 'plugin_action_links', __CLASS__ . '::register_settings_link', 10, 2 );
 			//styles and scripts
-			add_action( 'admin_init', get_class() . '::register_styles' );
+			add_action( 'admin_init', __CLASS__ . '::register_styles' );
 			//register upgrade check function
-			add_action( 'admin_init', get_class() . '::upgrade_check' );
+			add_action( 'admin_init', __CLASS__ . '::upgrade_check' );
 			//register uninstall hook
-			register_uninstall_hook( __FILE__, get_class() . '::plugin_uninstall' );
+			register_uninstall_hook( __FILE__, __CLASS__ . '::plugin_uninstall' );
 
 			//add notices for prechecks
-			add_action( 'admin_notices', get_class() . '::plugin_admin_notice' );
+			add_action( 'admin_notices', __CLASS__ . '::plugin_admin_notice' );
 
 			//register the listener function
-			add_action( 'template_redirect', get_class() . '::auto_post_images' );
+			add_action( 'template_redirect', __CLASS__ . '::auto_post_images' );
 
 			itw_Instagram::load_admin();
 		}
@@ -68,7 +68,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 		/* Add menu item for plugin to Settings Menu */
 		public static function register_settings_menu() {
 
-			add_options_page( 'Intagrate Lite', 'Intagrate Lite', 'manage_options', ITW_PLUGIN_SETTINGS, get_class() . '::settings_page' );
+			add_options_page( 'Intagrate Lite', 'Intagrate Lite', 'manage_options', ITW_PLUGIN_SETTINGS, __CLASS__ . '::settings_page' );
 
 		}
 
@@ -230,7 +230,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			delete_option( 'itw_ishome' );
 
 			//remove hooks
-			remove_action( 'template_redirect', get_class() . '::auto_post_images' );
+			remove_action( 'template_redirect', __CLASS__ . '::auto_post_images' );
 
 		}
 
@@ -551,12 +551,34 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 		}
 
+		/**
+		 * Strip tags and control characters, and encode quotes, exactly as
+		 * filter_var( $string, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW ) did.
+		 * FILTER_SANITIZE_STRING is deprecated as of PHP 8.1.
+		 *
+		 * @param string $string
+		 *
+		 * @return string
+		 */
+		protected static function sanitize_string( $string ) {
+			if ( ! is_scalar( $string ) ) {
+				return '';
+			}
+
+			$string = preg_replace( '/[\x00-\x1F]/', '', (string) $string );
+			$string = str_replace( array( '"', "'" ), array( '&#34;', '&#39;' ), $string );
+			// The filter treated "<" followed by a space as the start of a tag, strip_tags() doesn't
+			$string = preg_replace( '/<(?= )/', '<x', $string );
+
+			return strip_tags( $string );
+		}
+
 		public static function strip_title( $title ) {
 
 
 			$clean = '';
 
-			$clean = filter_var( $title, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW );
+			$clean = self::sanitize_string( $title );
 
 			$clean = emoji_html_stripped( $clean );
 			$clean = trim( $clean );
