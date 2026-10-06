@@ -375,6 +375,13 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 		}
 
 		/**
+		 * Get the media posted since the last image posted, newest first.
+		 *
+		 * Pages back until it reaches $starting_id, or an image already posted, which
+		 * covers $starting_id having been deleted or archived on Instagram. If it
+		 * reaches neither, only the first page is returned, so the account's whole
+		 * history is never posted.
+		 *
 		 * @param itw_Instagram $instagram
 		 * @param $token
 		 * @param $user_id
@@ -391,23 +398,30 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			}
 
 			foreach ( $data->data as $item ) {
-				if ( $item->id === $starting_id ) {
+				if ( self::is_posted( $item->id, $starting_id ) ) {
 					return $images;
 				}
 
 				$images[] = $item;
 			}
 
+			if ( empty( $starting_id ) ) {
+				return $images;
+			}
+
+			$first_page = $images;
+
 			$url = isset( $data->paging->next ) ? $data->paging->next : null;
 
 			while ( ! empty( $url ) ) {
 				$data = $instagram->http()->do_http_request( $token, '', '', $url );
 				if ( empty( $data ) ) {
-					return $images;
+					// Retry next time rather than skip the media not reached yet.
+					return array();
 				}
 
 				foreach ( $data->data as $item ) {
-					if ( $item->id === $starting_id ) {
+					if ( self::is_posted( $item->id, $starting_id ) ) {
 						return $images;
 					}
 
@@ -417,7 +431,23 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 				$url = isset( $data->paging->next ) ? $data->paging->next : null;
 			}
 
-			return $images;
+			return $first_page;
+		}
+
+		/**
+		 * Is the image the last one posted, or already posted?
+		 *
+		 * @param $image_id
+		 * @param $starting_id
+		 *
+		 * @return bool
+		 */
+		protected static function is_posted( $image_id, $starting_id ) {
+			if ( empty( $starting_id ) ) {
+				return false;
+			}
+
+			return $image_id === $starting_id || self::instagrate_id_exists( $image_id );
 		}
 
 		protected static function get_access_token() {
