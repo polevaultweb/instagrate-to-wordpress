@@ -1,7 +1,8 @@
 <?php
 /**
  * Stands in for $wpdb, answering only the postmeta count that
- * instagrate_to_wordpress::instagrate_id_exists() runs.
+ * instagrate_to_wordpress::instagrate_id_exists() runs, and the lookup for any
+ * post Lite created that Intagrate_Lite_Optin_Notice::first_post_at() runs.
  */
 class Fake_Wpdb {
 
@@ -26,6 +27,15 @@ class Fake_Wpdb {
 	 */
 	public function get_var( $query ) {
 		$this->queries[] = $query;
+
+		if ( 1 === count( $this->prepared_args ) ) {
+			// meta_key = %s LIMIT 1: the post ID of any image posted
+			if ( 'instagrate_id' !== $this->prepared_args[0] || empty( $this->posted ) ) {
+				return null;
+			}
+
+			return '1';
+		}
 
 		list( $meta_key, $pattern ) = $this->prepared_args;
 		if ( 'instagrate_id' !== $meta_key ) {

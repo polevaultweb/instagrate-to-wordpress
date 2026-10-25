@@ -125,6 +125,11 @@ If you have to upgrade manually simply repeat the installation steps and re-enab
 
 == Changelog ==
 
+= Unreleased =
+
+* New: After Intagrate Lite creates its first post, a one-time notice on the Dashboard, Plugins and Posts screens offers a 20% coupon for Intagrate. Each user can dismiss it for good, and nothing is sent unless you submit the form
+* Tweak: The upgrade sidebar on the settings page lists what Intagrate adds today, and its text can be translated
+
 = 1.4.3 =
 Release Date: Oct 6th, 2026
 
@@ -335,7 +340,7 @@ Release Date: December 13th, 2018
 
 == External services ==
 
-This plugin connects to two external services. Both are needed to log in to Instagram and to fetch your Instagram posts.
+This plugin connects to two external services to log in to Instagram and to fetch your Instagram posts, and to a third only if you ask for a coupon.
 
 **Intagrate login service (l.intagrate.io)**
 
@@ -355,6 +360,15 @@ Provided by Meta Platforms, Inc. Your site uses it to read the connected Instagr
 * Instagram's login page is also loaded in your browser when you connect an account.
 
 [Instagram terms of use](https://help.instagram.com/581066165581870), [Instagram privacy policy](https://privacycenter.instagram.com/policy), [Meta platform terms](https://developers.facebook.com/terms/).
+
+**Intagrate mailing list (sendy.polevaultweb.com)**
+
+Run by the plugin's author. The settings page sidebar, and a notice shown once after the plugin's first post, offer a 20% coupon for Intagrate.
+
+* Only when you submit one of these forms, your browser sends the email address and name you entered to sendy.polevaultweb.com, which emails you to confirm your address and then sends the coupon.
+* The notice fills in your WordPress email address and first name for you to check, but sends nothing until you submit it. Nothing is sent from your site in the background.
+
+[Terms and conditions](https://intagrate.io/terms-conditions/), [privacy policy](https://intagrate.io/privacy-policy/).
 
 == Screenshots ==
 
