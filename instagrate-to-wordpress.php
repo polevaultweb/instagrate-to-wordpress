@@ -63,6 +63,9 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			add_action( 'template_redirect', __CLASS__ . '::auto_post_images' );
 
 			itw_Instagram::load_admin();
+
+			//coupon notice after the first post
+			Intagrate_Lite_Optin_Notice::load();
 		}
 
 		/* Add menu item for plugin to Settings Menu */
@@ -228,6 +231,8 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			delete_option( 'itw_posttype' );
 			delete_option( 'itw_defaulttitle' );
 			delete_option( 'itw_ishome' );
+
+			Intagrate_Lite_Optin_Notice::uninstall();
 
 			//remove hooks
 			remove_action( 'template_redirect', __CLASS__ . '::auto_post_images' );
@@ -1090,6 +1095,11 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			// Update the post into the database
 			wp_update_post( $update_post );
 
+			// wp_insert_post() returns 0 if it fails
+			if ( $new_post ) {
+				Intagrate_Lite_Optin_Notice::record_first_post();
+			}
+
 
 			$debug .= "--------------END wp_insert_post " . gmdate( DATE_RFC822 ) . "\n";
 
@@ -1429,6 +1439,7 @@ if ( class_exists( "instagrate_to_wordpress" ) ) {
 		require_once ITW_PLUGIN_PATH . 'includes/emoji.php';
 		require_once ITW_PLUGIN_PATH . 'includes/class-http.php';
 		require_once ITW_PLUGIN_PATH . 'includes/class-wpoauth-access-token.php';
+		require_once ITW_PLUGIN_PATH . 'includes/class-optin-notice.php';
 
 		// Load plugin
 		instagrate_to_wordpress::load_plugin();
