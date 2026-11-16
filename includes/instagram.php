@@ -61,6 +61,11 @@ class itw_Instagram {
 			return false;
 		}
 
+		if ( self::is_token_expired() ) {
+			// Instagram won't refresh an expired token, so don't ask l.intagrate.io. It needs reconnecting.
+			return false;
+		}
+
 		// Instagram only refreshes a token that hasn't expired, so refresh in its last week
 		if ( ( time() + WEEK_IN_SECONDS ) < $expires ) {
 			return $token;
@@ -68,12 +73,30 @@ class itw_Instagram {
 
 		$new_token = self::$wpoauth->refresh_access_token( $this->client_id, 'instagram-facebook' );
 
-		if ( ! $new_token && time() < $expires ) {
+		if ( ! $new_token ) {
 			// Refresh failed but the current token is still valid, try again next time
 			return $token;
 		}
 
 		return $new_token;
+	}
+
+	/**
+	 * Has the Instagram token expired?
+	 *
+	 * Reconnecting saves a new token and expiry, which clears this.
+	 *
+	 * @return bool
+	 */
+	public static function is_token_expired() {
+		$token   = get_option( 'itw_accesstoken' );
+		$expires = get_option( 'itw_accesstoken_expires' );
+
+		if ( empty( $token ) || empty( $expires ) ) {
+			return false;
+		}
+
+		return time() >= (int) $expires;
 	}
 
 	/**

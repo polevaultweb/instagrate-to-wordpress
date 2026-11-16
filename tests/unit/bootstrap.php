@@ -2,10 +2,10 @@
 /**
  * Loads instagrate-to-wordpress.php without WordPress.
  *
- * Stubs only the WordPress functions the plugin calls as it loads (constants,
- * hooks), and sets a $wpdb whose postmeta count tests control through
- * Fake_Wpdb::$posted. The plugin requires vendor/autoload.php, so run
- * `composer install` first.
+ * Stubs the WordPress functions the plugin calls as it loads (constants, hooks)
+ * here, and the ones it calls while it runs in WpStubs.php, and sets a $wpdb
+ * whose postmeta count tests control through Fake_Wpdb::$posted. The plugin
+ * requires vendor/autoload.php, so run `composer install` first.
  */
 
 define( 'ABSPATH', __DIR__ . '/' );
@@ -35,6 +35,7 @@ function add_filter() {
 function register_uninstall_hook() {
 }
 
+require __DIR__ . '/WpStubs.php';
 require __DIR__ . '/FakeInstagram.php';
 require __DIR__ . '/FakeWpdb.php';
 
