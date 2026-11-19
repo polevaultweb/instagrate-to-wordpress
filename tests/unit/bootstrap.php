@@ -48,6 +48,7 @@ function register_uninstall_hook() {
 require __DIR__ . '/WpStubs.php';
 require __DIR__ . '/FakeInstagram.php';
 require __DIR__ . '/FakeWpdb.php';
+require __DIR__ . '/MediaStubs.php';
 
 $GLOBALS['wpdb'] = new Fake_Wpdb();
 
