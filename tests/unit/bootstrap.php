@@ -26,10 +26,20 @@ function admin_url( $path = '' ) {
 	return 'https://example.test/wp-admin/' . ltrim( $path, '/' );
 }
 
-function add_action() {
+function add_action( $hook, $callback ) {
+	WP_Stubs::$hooks[ $hook ][] = $callback;
 }
 
-function add_filter() {
+function add_filter( $hook, $callback ) {
+	add_action( $hook, $callback );
+}
+
+function register_activation_hook( $file, $callback ) {
+	add_action( 'activate_' . plugin_basename( $file ), $callback );
+}
+
+function register_deactivation_hook( $file, $callback ) {
+	add_action( 'deactivate_' . plugin_basename( $file ), $callback );
 }
 
 function register_uninstall_hook() {

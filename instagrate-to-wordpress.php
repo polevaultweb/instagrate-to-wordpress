@@ -43,6 +43,8 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 	class instagrate_to_wordpress {
 
+		const TOKEN_REFRESH_HOOK = 'itw_refresh_access_token';
+
 		/* Plugin loading method */
 		public static function load_plugin() {
 						//settings menu
@@ -55,6 +57,11 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			add_action( 'admin_init', __CLASS__ . '::upgrade_check' );
 			//register uninstall hook
 			register_uninstall_hook( __FILE__, __CLASS__ . '::plugin_uninstall' );
+			//schedule the daily token refresh on activation, and on load for sites that update without reactivating
+			register_activation_hook( __FILE__, __CLASS__ . '::schedule_token_refresh' );
+			add_action( 'init', __CLASS__ . '::schedule_token_refresh' );
+			register_deactivation_hook( __FILE__, __CLASS__ . '::clear_token_refresh' );
+			add_action( self::TOKEN_REFRESH_HOOK, __CLASS__ . '::refresh_access_token' );
 
 			//add notices for prechecks
 			add_action( 'admin_notices', __CLASS__ . '::plugin_admin_notice' );
@@ -231,7 +238,26 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 
 			//remove hooks
 			remove_action( 'template_redirect', __CLASS__ . '::auto_post_images' );
+			self::clear_token_refresh();
 
+		}
+
+		/* Schedule the daily access token refresh, if it isn't already */
+		public static function schedule_token_refresh() {
+			if ( ! wp_next_scheduled( self::TOKEN_REFRESH_HOOK ) ) {
+				wp_schedule_event( time(), 'daily', self::TOKEN_REFRESH_HOOK );
+			}
+		}
+
+		/* Clear the daily access token refresh */
+		public static function clear_token_refresh() {
+			wp_clear_scheduled_hook( self::TOKEN_REFRESH_HOOK );
+		}
+
+		/* Refresh the access token in its last week, even if nothing posts before it expires */
+		public static function refresh_access_token() {
+			// Only calls l.intagrate.io for a token that expires within a week and hasn't expired
+			self::get_access_token();
 		}
 
 		protected static function maybe_display_basic_display_reconnect_notice() {

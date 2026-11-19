@@ -1,7 +1,7 @@
 <?php
 /**
  * WordPress functions the plugin calls while it runs rather than as it loads:
- * options, the current user's capabilities, translation and escaping. Tests set
+ * options, the current user's capabilities, translation, escaping and cron. Tests set
  * WP_Stubs::$options and WP_Stubs::$capabilities, and call WP_Stubs::reset().
  */
 class WP_Stubs {
@@ -12,9 +12,16 @@ class WP_Stubs {
 	/** @var string[] Capabilities current_user_can() grants. */
 	public static $capabilities = array();
 
+	/** @var array Callbacks add_action() added, hook => callbacks. reset() keeps them, as the plugin adds them as it loads. */
+	public static $hooks = array();
+
+	/** @var array Scheduled cron events, as array( 'timestamp', 'recurrence', 'hook' ). */
+	public static $cron_events = array();
+
 	public static function reset() {
 		self::$options      = array();
 		self::$capabilities = array();
+		self::$cron_events  = array();
 	}
 }
 
@@ -74,5 +81,57 @@ if ( ! function_exists( 'esc_url' ) ) {
 if ( ! function_exists( 'date_i18n' ) ) {
 	function date_i18n( $format, $timestamp = false ) {
 		return gmdate( $format, (int) $timestamp );
+	}
+}
+
+if ( ! function_exists( 'delete_option' ) ) {
+	function delete_option( $option ) {
+		unset( WP_Stubs::$options[ $option ] );
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'remove_action' ) ) {
+	function remove_action( $hook, $callback, $priority = 10 ) {
+		return true;
+	}
+}
+
+if ( ! function_exists( 'wp_next_scheduled' ) ) {
+	function wp_next_scheduled( $hook, $args = array() ) {
+		foreach ( WP_Stubs::$cron_events as $event ) {
+			if ( $event['hook'] === $hook ) {
+				return $event['timestamp'];
+			}
+		}
+
+		return false;
+	}
+}
+
+if ( ! function_exists( 'wp_schedule_event' ) ) {
+	function wp_schedule_event( $timestamp, $recurrence, $hook, $args = array() ) {
+		WP_Stubs::$cron_events[] = array(
+			'timestamp'  => $timestamp,
+			'recurrence' => $recurrence,
+			'hook'       => $hook,
+		);
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'wp_clear_scheduled_hook' ) ) {
+	function wp_clear_scheduled_hook( $hook, $args = array() ) {
+		$cleared = 0;
+		foreach ( WP_Stubs::$cron_events as $key => $event ) {
+			if ( $event['hook'] === $hook ) {
+				unset( WP_Stubs::$cron_events[ $key ] );
+				$cleared++;
+			}
+		}
+
+		return $cleared;
 	}
 }
