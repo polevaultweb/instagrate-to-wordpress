@@ -263,9 +263,50 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 			<?php
 		}
 
+		/**
+		 * Warn when the Instagram token has expired: nothing is fetched or posted until
+		 * it's reconnected. The settings page says so beside its Log in link instead.
+		 */
+		protected static function maybe_display_expired_token_notice() {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+
+			if ( isset( $_GET['page'] ) && $_GET['page'] == ITW_PLUGIN_SETTINGS ) {
+				return;
+			}
+
+			if ( ! itw_Instagram::is_token_expired() ) {
+				return;
+			}
+
+			$expired_on    = date_i18n( get_option( 'date_format' ), (int) get_option( 'itw_accesstoken_expires' ) );
+			$settings_link = '<a href="' . esc_url( admin_url( 'options-general.php?page=' . ITW_PLUGIN_SETTINGS ) ) . '">' . esc_html__( 'Log in to Instagram again', 'instagrate-to-wordpress' ) . '</a>';
+			/* translators: 1: date the connection expired, 2: link to the settings page */
+			$message = sprintf( esc_html__( 'The connection to Instagram expired on %1$s, so no new images will be posted. %2$s to reconnect.', 'instagrate-to-wordpress' ), esc_html( $expired_on ), $settings_link );
+			printf( '<div class="notice notice-error"><p><strong>Intagrate Lite</strong>: %s</p></div>', $message );
+		}
+
+		/**
+		 * The prompt beside the settings page's Log in link, when there's no usable token.
+		 *
+		 * @return string
+		 */
+		protected static function login_message() {
+			if ( ! itw_Instagram::is_token_expired() ) {
+				return 'Please login securely to Instagram to authorise the plugin - ';
+			}
+
+			$expired_on = date_i18n( get_option( 'date_format' ), (int) get_option( 'itw_accesstoken_expires' ) );
+
+			/* translators: %s: date the connection expired */
+			return sprintf( __( 'The connection to Instagram expired on %s, so no new images will be posted. Please log in again to reconnect - ', 'instagrate-to-wordpress' ), $expired_on );
+		}
+
 		/* Display check for user to make sure a blog page is selected */
 		public static function plugin_admin_notice() {
 			self::maybe_display_basic_display_reconnect_notice();
+			self::maybe_display_expired_token_notice();
 			if ( isset( $_GET['page'] ) && $_GET['page'] == ITW_PLUGIN_SETTINGS ) {
 
 				if ( 'page' == get_option( 'show_on_front' ) ) {
@@ -1131,7 +1172,7 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 					if ( ! $access_token ) {
 						// no access token in db
 
-						$msg       = 'Please login securely to Instagram to authorise the plugin - ';
+						$msg       = self::login_message();
 						$msg_class = 'notice-info notice';
 						$loginUrl  = $instagram->authorizeUrl( ITW_RETURN_URI );
 
