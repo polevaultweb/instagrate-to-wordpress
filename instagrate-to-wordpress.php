@@ -837,26 +837,26 @@ if ( ! class_exists( "instagrate_to_wordpress" ) ) {
 					'tmp_name' => $tmp,
 				);
 
-				// Check for download errors
+				// Check for download errors. download_url() leaves no temp file when it fails.
 				if ( is_wp_error( $tmp ) ) {
 					$debug .= '------------------Download Error: ' . $url . '-- ' . gmdate( DATE_RFC822 ) . "\n";
 					$debug .= '------------------Download Error: ' . $tmp->get_error_message() . '-- ' . gmdate( DATE_RFC822 ) . "\n";
-					wp_delete_file( $file_array['tmp_name'] );
-					$attach[0] = 0;
-				}
-
-				$id = media_handle_sideload( $file_array, $postid );
-				// Check for handle sideload errors.
-
-				if ( is_wp_error( $id ) ) {
-					$debug .= '------------------media_handle_sideload Error: ' . $url . '-- ' . gmdate( DATE_RFC822 ) . "\n";
-					$debug .= '------------------media_handle_sideload Error: ' . $id->get_error_message() . '-- ' . gmdate( DATE_RFC822 ) . "\n";
-					wp_delete_file( $file_array['tmp_name'] );
 					$attach[0] = 0;
 				} else {
 
-					$attach[0] = $id;
-					$debug .= '------------------media_handle_sideload success - ID: ' . $id . '-- ' . gmdate( DATE_RFC822 ) . "\n";
+					$id = media_handle_sideload( $file_array, $postid );
+					// Check for handle sideload errors.
+
+					if ( is_wp_error( $id ) ) {
+						$debug .= '------------------media_handle_sideload Error: ' . $url . '-- ' . gmdate( DATE_RFC822 ) . "\n";
+						$debug .= '------------------media_handle_sideload Error: ' . $id->get_error_message() . '-- ' . gmdate( DATE_RFC822 ) . "\n";
+						wp_delete_file( $file_array['tmp_name'] );
+						$attach[0] = 0;
+					} else {
+
+						$attach[0] = $id;
+						$debug .= '------------------media_handle_sideload success - ID: ' . $id . '-- ' . gmdate( DATE_RFC822 ) . "\n";
+					}
 				}
 
 			} catch ( Exception $e ) {
