@@ -18,10 +18,14 @@ class WP_Stubs {
 	/** @var array Scheduled cron events, as array( 'timestamp', 'recurrence', 'hook' ). */
 	public static $cron_events = array();
 
+	/** @var array Site transients, name => value. */
+	public static $site_transients = array();
+
 	public static function reset() {
-		self::$options      = array();
-		self::$capabilities = array();
-		self::$cron_events  = array();
+		self::$options         = array();
+		self::$capabilities    = array();
+		self::$cron_events     = array();
+		self::$site_transients = array();
 	}
 }
 
@@ -133,5 +137,37 @@ if ( ! function_exists( 'wp_clear_scheduled_hook' ) ) {
 		}
 
 		return $cleared;
+	}
+}
+
+if ( ! function_exists( 'get_site_transient' ) ) {
+	function get_site_transient( $transient ) {
+		return array_key_exists( $transient, WP_Stubs::$site_transients ) ? WP_Stubs::$site_transients[ $transient ] : false;
+	}
+}
+
+if ( ! function_exists( 'set_site_transient' ) ) {
+	function set_site_transient( $transient, $value, $expiration = 0 ) {
+		WP_Stubs::$site_transients[ $transient ] = $value;
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'wp_generate_password' ) ) {
+	function wp_generate_password( $length = 12, $special_chars = true, $extra_special_chars = false ) {
+		return bin2hex( random_bytes( 8 ) );
+	}
+}
+
+if ( ! function_exists( 'add_query_arg' ) ) {
+	function add_query_arg( $args, $url ) {
+		$parts = explode( '?', $url, 2 );
+		$query = array();
+		if ( isset( $parts[1] ) ) {
+			parse_str( $parts[1], $query );
+		}
+
+		return $parts[0] . '?' . http_build_query( array_merge( $query, $args ), '', '&' );
 	}
 }

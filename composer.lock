@@ -4,26 +4,26 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "224d02b32272836ad73283d018cdc094",
+    "content-hash": "e09354a4c5ec3a9684dfe26df98a2c64",
     "packages": [
         {
             "name": "polevaultweb/wp-oauth2",
-            "version": "dev-more-configurable",
+            "version": "dev-fix/368-instance-per-plugin",
             "source": {
                 "type": "git",
                 "url": "https://github.com/polevaultweb/wp-oauth2.git",
-                "reference": "ca7290d43e61c7fdb09d6a956be349a1926bdb97"
+                "reference": "89909ca52bf7c8b5e842477bb9e9981fd149d7cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/polevaultweb/wp-oauth2/zipball/ca7290d43e61c7fdb09d6a956be349a1926bdb97",
-                "reference": "ca7290d43e61c7fdb09d6a956be349a1926bdb97",
+                "url": "https://api.github.com/repos/polevaultweb/wp-oauth2/zipball/89909ca52bf7c8b5e842477bb9e9981fd149d7cd",
+                "reference": "89909ca52bf7c8b5e842477bb9e9981fd149d7cd",
                 "shasum": ""
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Polevaultweb\\WPOAuth2\\": "src/"
+                    "Polevaultweb\\WPOAuth2\\V3\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -39,9 +39,9 @@
             "description": "WordPress library for connecting to services via oAuth from inside a WordPress plugin.",
             "support": {
                 "issues": "https://github.com/polevaultweb/wp-oauth2/issues",
-                "source": "https://github.com/polevaultweb/wp-oauth2/tree/more-configurable"
+                "source": "https://github.com/polevaultweb/wp-oauth2/tree/fix/368-instance-per-plugin"
             },
-            "time": "2023-12-11T16:30:10+00:00"
+            "time": "2026-11-25T11:15:27+00:00"
         }
     ],
     "packages-dev": [

@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Polevaultweb\WPOAuth2\TokenManager;
+use Polevaultweb\WPOAuth2\V3\TokenManager;
 
 /**
  * A daily WP-Cron event refreshes the access token (GitHub #5), so a token in

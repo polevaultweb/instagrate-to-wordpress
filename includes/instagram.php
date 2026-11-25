@@ -3,16 +3,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use Polevaultweb\WPOAuth2\WPOAuth2;
+use Polevaultweb\WPOAuth2\V3\WPOAuth2;
 
 class itw_Instagram {
+
+	/**
+	 * Names Lite's WPOAuth2 instance, its login key transient and its filters
+	 */
+	const OAUTH_INSTANCE = 'intagrate_lite';
 
 	protected $client_id = '827131036205995';
 	protected $redirect_uri = 'https://l.intagrate.io/';
 	protected $access_token;
 
 	/**
-	 * @var Polevaultweb\WPOAuth2\WPOAuth2
+	 * @var Polevaultweb\WPOAuth2\V3\WPOAuth2
 	 */
 	protected static $wpoauth;
 
@@ -31,8 +36,9 @@ class itw_Instagram {
 	}
 
 	public static function load_admin() {
-		add_filter( 'pvw_wp_oauth2_provider_display_name', __CLASS__ . '::pvw_wp_oauth2_provider_display_name' );
-		self::$wpoauth = WPOAuth2::instance( 'https://l.intagrate.io/', Intagrate_Lite_Instagram_Access_Token::class );
+		// Lite's own WPOAuth2 instance, so Intagrate (Pro) running on the same site can't take over its login or token
+		self::$wpoauth = WPOAuth2::instance( 'https://l.intagrate.io/', Intagrate_Lite_Instagram_Access_Token::class, self::OAUTH_INSTANCE );
+		add_filter( self::$wpoauth->get_filter_name( 'provider_display_name' ), __CLASS__ . '::pvw_wp_oauth2_provider_display_name' );
 		self::$wpoauth->register_admin_handler(  ITW_RETURN_URI );
 	}
 
