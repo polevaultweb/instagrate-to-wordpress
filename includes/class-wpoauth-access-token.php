@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use Polevaultweb\WPOAuth2\AbstractAccessToken;
+use Polevaultweb\WPOAuth2\V3\AbstractAccessToken;
 
 class Intagrate_Lite_Instagram_Access_Token extends AbstractAccessToken {
 

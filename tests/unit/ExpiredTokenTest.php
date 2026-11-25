@@ -24,7 +24,7 @@ class ExpiredTokenTest extends TestCase {
 	/** @var ReflectionProperty itw_Instagram::$wpoauth */
 	private $wpoauth_property;
 
-	/** @var Polevaultweb\WPOAuth2\WPOAuth2 The instance the plugin set up as it loaded. */
+	/** @var Polevaultweb\WPOAuth2\V3\WPOAuth2 The instance the plugin set up as it loaded. */
 	private $original_wpoauth;
 
 	protected function setUp(): void {
@@ -40,7 +40,7 @@ class ExpiredTokenTest extends TestCase {
 			public $new_token = false;
 
 			public function __construct() {
-				$this->token_manager = new Polevaultweb\WPOAuth2\TokenManager( Intagrate_Lite_Instagram_Access_Token::class );
+				$this->token_manager = new Polevaultweb\WPOAuth2\V3\TokenManager( Intagrate_Lite_Instagram_Access_Token::class );
 			}
 
 			public function refresh_access_token( $client_id, $provider ) {
